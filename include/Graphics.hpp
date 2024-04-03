@@ -4,11 +4,12 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
+#include "Paddle.hpp"
+
 class Graphics
 {
 protected:
     SDL_Window *pWindow = nullptr;
-    SDL_Surface *pSurface = nullptr;
     SDL_Renderer *pRenderer = nullptr;
 
     static Graphics *pInstance;
@@ -16,9 +17,7 @@ protected:
 public:
     Graphics();
 
-    // non cloneable
     Graphics(const Graphics &) = delete;
-    // non assignable
     void operator=(const Graphics &) = delete;
 
     static Graphics *getInstance();
@@ -29,6 +28,8 @@ public:
     void clear();
     void draw();
     void quit();
+
+    SDL_Texture *loadTexture(const char *pFilename);
 
     SDL_Renderer *getRenderer();
 };

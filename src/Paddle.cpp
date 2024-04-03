@@ -1,7 +1,10 @@
 #include "Paddle.hpp"
 
+Paddle *Paddle::instance = nullptr;
+
 Paddle::Paddle(double x, double y, double width, double height, double speed)
 {
+    pTexture = Graphics::getInstance()->loadTexture("src/paddle.bmp");
 }
 
 Paddle::~Paddle()
@@ -30,4 +33,13 @@ void Paddle::draw()
 
 void Paddle::collide(GameObject *other)
 {
+}
+
+Paddle *Paddle::getInstance()
+{
+    if (instance == nullptr)
+    {
+        instance = new Paddle(250, 250, 0, 0, 0);
+    }
+    return instance;
 }

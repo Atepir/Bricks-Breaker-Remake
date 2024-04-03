@@ -34,6 +34,7 @@ int main()
         if (keys[SDL_SCANCODE_ESCAPE])
             quit = true;
 
+        graphics.draw();
         graphics.update();
         // Limit frame rate to 60 fps
         SDL_Delay(16); // utiliser SDL_GetTicks64() pour plus de precisions
