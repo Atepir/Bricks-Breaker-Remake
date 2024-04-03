@@ -1,14 +1,4 @@
-#include <SDL2/SDL.h>
-#include <iostream>
-
-SDL_Window *pWindow = nullptr;
-SDL_Surface *win_surf = nullptr;
-
-void init()
-{
-    pWindow = SDL_CreateWindow("BricksBreaker Remake!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1024, 720, SDL_WINDOW_SHOWN);
-    win_surf = SDL_GetWindowSurface(pWindow);
-}
+#include "main.hpp"
 
 int main()
 {
@@ -18,7 +8,8 @@ int main()
         return 1;
     }
 
-    init();
+    Graphics graphics = Graphics();
+    graphics.init();
 
     // Main loop
     bool quit = false;
@@ -43,7 +34,7 @@ int main()
         if (keys[SDL_SCANCODE_ESCAPE])
             quit = true;
 
-        SDL_UpdateWindowSurface(pWindow);
+        graphics.update();
         // Limit frame rate to 60 fps
         SDL_Delay(16); // utiliser SDL_GetTicks64() pour plus de precisions
     }
