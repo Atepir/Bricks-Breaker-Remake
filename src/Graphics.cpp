@@ -1,6 +1,7 @@
 #include "Graphics.hpp"
 
 Graphics *Graphics::pInstance = nullptr;
+SDL_Renderer *pRenderer_copy = nullptr;
 
 Graphics *Graphics::getInstance()
 {
@@ -40,9 +41,10 @@ void Graphics::init()
     pRenderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (pRenderer == nullptr)
     {
-        std::cerr << "Failed to create renderer " << SDL_GetError() << std::endl;
+        std::cerr << "Failed to create renderer for window " << SDL_GetError() << std::endl;
         exit(1);
     }
+    pRenderer_copy = pRenderer;
 }
 
 void Graphics::update()
@@ -77,7 +79,20 @@ SDL_Texture *Graphics::loadTexture(const char *pFilename)
         exit(1);
     }
 
-    SDL_Texture *pTexture = SDL_CreateTextureFromSurface(pRenderer, pSurface);
+    SDL_Texture *pTexture = nullptr;
+
+    if (pRenderer == nullptr)
+    {
+        //std::cerr << "pRenderer is null " << SDL_GetError() << std::endl;
+        if (pRenderer_copy == nullptr)
+        {
+            std::cerr << "pRenderer_copy is null " << SDL_GetError() << std::endl;
+            exit(1);
+        }
+        else {pTexture = SDL_CreateTextureFromSurface(pRenderer_copy, pSurface);}
+    }
+    else {pTexture = SDL_CreateTextureFromSurface(pRenderer, pSurface);}
+
     if (pTexture == nullptr)
     {
         std::cerr << "Failed to create texture " << SDL_GetError() << std::endl;
@@ -91,5 +106,15 @@ SDL_Texture *Graphics::loadTexture(const char *pFilename)
 
 SDL_Renderer *Graphics::getRenderer()
 {
+    if (pRenderer == nullptr)
+    {
+        //std::cerr << "pRenderer is null" << std::endl;
+        if (pRenderer_copy == nullptr)
+        {
+            std::cerr << "pRenderer_copy is null" << std::endl;
+            exit(1);
+        }
+        else {return pRenderer_copy;}
+    }
     return pRenderer;
 }

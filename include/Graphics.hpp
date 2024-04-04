@@ -9,8 +9,8 @@
 class Graphics
 {
 protected:
-    SDL_Window *pWindow = nullptr;
-    SDL_Renderer *pRenderer = nullptr;
+    SDL_Window *pWindow;
+    SDL_Renderer *pRenderer;
 
     static Graphics *pInstance;
 
