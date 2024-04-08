@@ -1,9 +1,9 @@
 #include "Graphics.hpp"
 
-Graphics* Graphics::pInstance = nullptr;
-SDL_Renderer* pRenderer_copy = nullptr;
+Graphics *Graphics::pInstance = nullptr;
+SDL_Renderer *pRenderer_copy = nullptr;
 
-Graphics* Graphics::getInstance()
+Graphics *Graphics::getInstance()
 {
     if (pInstance == nullptr)
     {
@@ -59,7 +59,7 @@ void Graphics::clear()
 
 void Graphics::draw()
 {
-    SDL_Rect rect = { 0, 0, 1024, 720 };
+    SDL_Rect rect = {0, 0, 1024, 720};
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
     Paddle::getInstance()->draw();
 }
@@ -70,28 +70,34 @@ void Graphics::quit()
     SDL_Quit();
 }
 
-SDL_Texture* Graphics::loadTexture(const char* pFilename)
+SDL_Texture *Graphics::loadTexture(const char *pFilename)
 {
-    SDL_Surface* pSurface = SDL_LoadBMP(pFilename);
+    SDL_Surface *pSurface = SDL_LoadBMP(pFilename);
     if (pSurface == nullptr)
     {
         std::cerr << "Failed to load image " << pFilename << " " << SDL_GetError() << std::endl;
         exit(1);
     }
 
-    SDL_Texture* pTexture = nullptr;
+    SDL_Texture *pTexture = nullptr;
 
     if (pRenderer == nullptr)
     {
-        //std::cerr << "pRenderer is null " << SDL_GetError() << std::endl;
+        // std::cerr << "pRenderer is null " << SDL_GetError() << std::endl;
         if (pRenderer_copy == nullptr)
         {
             std::cerr << "pRenderer_copy is null " << SDL_GetError() << std::endl;
             exit(1);
         }
-        else { pTexture = SDL_CreateTextureFromSurface(pRenderer_copy, pSurface); }
+        else
+        {
+            pTexture = SDL_CreateTextureFromSurface(pRenderer_copy, pSurface);
+        }
     }
-    else { pTexture = SDL_CreateTextureFromSurface(pRenderer, pSurface); }
+    else
+    {
+        pTexture = SDL_CreateTextureFromSurface(pRenderer, pSurface);
+    }
 
     if (pTexture == nullptr)
     {
@@ -104,17 +110,20 @@ SDL_Texture* Graphics::loadTexture(const char* pFilename)
     return pTexture;
 }
 
-SDL_Renderer* Graphics::getRenderer()
+SDL_Renderer *Graphics::getRenderer()
 {
     if (pRenderer == nullptr)
     {
-        //std::cerr << "pRenderer is null" << std::endl;
+        // std::cerr << "pRenderer is null" << std::endl;
         if (pRenderer_copy == nullptr)
         {
             std::cerr << "pRenderer_copy is null" << std::endl;
             exit(1);
         }
-        else { return pRenderer_copy; }
+        else
+        {
+            return pRenderer_copy;
+        }
     }
     return pRenderer;
 }
