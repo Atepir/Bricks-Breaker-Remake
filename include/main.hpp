@@ -6,5 +6,7 @@
 
 #include "Graphics.hpp"
 #include "GameObject.hpp"
+#include "Enums.hpp"
+
 
 #endif // __MAIN_HPP

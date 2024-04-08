@@ -47,8 +47,9 @@ void Graphics::init()
     pRenderer_copy = pRenderer;
 }
 
-void Graphics::update()
+void Graphics::update(eMapType pMapType)
 {
+    Paddle::getInstance()->update(pMapType);
     SDL_RenderPresent(pRenderer);
 }
 
