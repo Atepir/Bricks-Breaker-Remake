@@ -11,6 +11,8 @@ int main()
     Graphics graphics = Graphics();
     graphics.init();
 
+    Paddle* paddle = Paddle::getInstance();
+
     // Main loop
     bool quit = false;
     while (!quit)
@@ -30,12 +32,15 @@ int main()
 
         // Keyboard input management
         int nbk;
-        const Uint8 *keys = SDL_GetKeyboardState(&nbk);
+        const Uint8* keys = SDL_GetKeyboardState(&nbk);
         if (keys[SDL_SCANCODE_ESCAPE])
             quit = true;
 
         graphics.draw();
         graphics.update();
+
+        paddle->draw();
+        paddle->update();
         // Limit frame rate to 60 fps
         SDL_Delay(16); // utiliser SDL_GetTicks64() pour plus de precisions
     }
@@ -44,3 +49,4 @@ int main()
 
     return 0;
 }
+

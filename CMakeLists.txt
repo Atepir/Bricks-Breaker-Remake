@@ -1,9 +1,57 @@
-cmake_minimum_required (VERSION 3.7)
+﻿# CMakeList.txt : projet CMake pour pa, incluez la source et définissez
+# la logique spécifique au projet ici.
+#
+cmake_minimum_required (VERSION 3.8)
+
+# Activez Rechargement à chaud pour les compilateurs MSVC si cela est pris en charge.
+if (POLICY CMP0141)
+  cmake_policy(SET CMP0141 NEW)
+  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
+endif()
 
 project (BricksBreaker
 	VERSION "0.0.1"
 	DESCRIPTION "A Remake of the classic Bricks Breaker game."
-	LANGUAGES CXX
-)
+	LANGUAGES CXX)
 
-add_subdirectory(src)
+# CMake parameters
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -s")
+
+# Include directories
+include_directories(${BricksBreaker_SOURCE_DIR}/include)
+
+# Environment variables
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+file(GLOB SRC_FILES "src/*.cpp")
+
+# Require SDL2
+file(COPY ${BricksBreaker_SOURCE_DIR}/assets/
+	    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)	
+    
+# Require SDL2
+set(SDL2_DIR ${BricksBreaker_SOURCE_DIR}/SDL2-2.30.2/cmake)
+find_package(SDL2 REQUIRED)
+if(SDL2_FOUND)
+    include_directories(PRIVATE ${SDL2_INCLUDE_DIRS})
+    add_executable(${PROJECT_NAME} ${SRC_FILES})
+    target_compile_definitions(${PROJECT_NAME} PRIVATE "SDL_MAIN_HANDLED")
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES})
+else()
+    message(WARNING "SDL2 is not found.")
+endif()
+
+if(MSVC)
+	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
+endif()
+
+if (CMAKE_VERSION VERSION_GREATER 3.12)
+  set_property(TARGET BricksBreaker PROPERTY CXX_STANDARD 20)
+endif()
+
+# TODO: Ajoutez des tests et installez des cibles si nécessaire.

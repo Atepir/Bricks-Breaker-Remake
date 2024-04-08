@@ -1,7 +1,7 @@
 #ifndef __GRAPHICS_HPP
 #define __GRAPHICS_HPP
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <iostream>
 
 #include "Paddle.hpp"
@@ -9,18 +9,18 @@
 class Graphics
 {
 protected:
-    SDL_Window *pWindow = nullptr;
-    SDL_Renderer *pRenderer = nullptr;
+    SDL_Window* pWindow;
+    SDL_Renderer* pRenderer;
 
-    static Graphics *pInstance;
+    static Graphics* pInstance;
 
 public:
     Graphics();
 
-    Graphics(const Graphics &) = delete;
-    void operator=(const Graphics &) = delete;
+    Graphics(const Graphics&) = delete;
+    void operator=(const Graphics&) = delete;
 
-    static Graphics *getInstance();
+    static Graphics* getInstance();
 
     ~Graphics();
     void init();
@@ -29,9 +29,9 @@ public:
     void draw();
     void quit();
 
-    SDL_Texture *loadTexture(const char *pFilename);
+    SDL_Texture* loadTexture(const char* pFilename);
 
-    SDL_Renderer *getRenderer();
+    SDL_Renderer* getRenderer();
 };
 
 #endif // __GRAPHICS_HPP
