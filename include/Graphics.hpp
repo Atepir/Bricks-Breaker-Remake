@@ -1,7 +1,7 @@
 #ifndef __GRAPHICS_HPP
 #define __GRAPHICS_HPP
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <iostream>
 
 #include "Paddle.hpp"

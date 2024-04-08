@@ -32,7 +32,7 @@ int main()
 
         // Keyboard input management
         int nbk;
-        const Uint8 *keys = SDL_GetKeyboardState(&nbk);
+        const Uint8* keys = SDL_GetKeyboardState(&nbk);
         if (keys[SDL_SCANCODE_ESCAPE])
             quit = true;
 
@@ -49,3 +49,4 @@ int main()
 
     return 0;
 }
+

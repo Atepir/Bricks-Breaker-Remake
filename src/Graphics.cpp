@@ -83,15 +83,21 @@ SDL_Texture *Graphics::loadTexture(const char *pFilename)
 
     if (pRenderer == nullptr)
     {
-        //std::cerr << "pRenderer is null " << SDL_GetError() << std::endl;
+        // std::cerr << "pRenderer is null " << SDL_GetError() << std::endl;
         if (pRenderer_copy == nullptr)
         {
             std::cerr << "pRenderer_copy is null " << SDL_GetError() << std::endl;
             exit(1);
         }
-        else {pTexture = SDL_CreateTextureFromSurface(pRenderer_copy, pSurface);}
+        else
+        {
+            pTexture = SDL_CreateTextureFromSurface(pRenderer_copy, pSurface);
+        }
     }
-    else {pTexture = SDL_CreateTextureFromSurface(pRenderer, pSurface);}
+    else
+    {
+        pTexture = SDL_CreateTextureFromSurface(pRenderer, pSurface);
+    }
 
     if (pTexture == nullptr)
     {
@@ -108,13 +114,16 @@ SDL_Renderer *Graphics::getRenderer()
 {
     if (pRenderer == nullptr)
     {
-        //std::cerr << "pRenderer is null" << std::endl;
+        // std::cerr << "pRenderer is null" << std::endl;
         if (pRenderer_copy == nullptr)
         {
             std::cerr << "pRenderer_copy is null" << std::endl;
             exit(1);
         }
-        else {return pRenderer_copy;}
+        else
+        {
+            return pRenderer_copy;
+        }
     }
     return pRenderer;
 }

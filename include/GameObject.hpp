@@ -1,7 +1,7 @@
 #ifndef __GAMEOBJECT_HPP
 #define __GAMEOBJECT_HPP
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <iostream>
 
 #include "Point.hpp"

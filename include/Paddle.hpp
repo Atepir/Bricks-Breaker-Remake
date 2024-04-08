@@ -14,7 +14,6 @@ private:
     double height;
     double speed;
 
-
     static Paddle *instance;
     SDL_Texture *pTexture;
 
