@@ -4,12 +4,9 @@
 #include <iostream>
 
 #include "GameObject.hpp"
+#include "Enums.hpp"
 
-enum BrickType
-{
-    NORMAL,
-    UNBREAKABLE
-};
+class Graphics;
 
 class Brick : public GameObject
 {
@@ -18,11 +15,15 @@ private:
     int health;
 
 public:
+    double width;
+    double height;
     Brick(double x, double y, double width, double height, BrickType type, int health);
     ~Brick();
-    void update();
+    void update(eMapType pMapType);
     void draw();
     void collide(GameObject *other);
 };
+
+#include "Graphics.hpp"
 
 #endif // __BRICK_HPP

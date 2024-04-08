@@ -76,14 +76,40 @@ void Paddle::update(eMapType pMapType)
     }
 }
 
-void Paddle::draw()
+void Paddle::draw(eMapType pMapType)
 {
     if (this->pTexture != nullptr)
     {
         SDL_Renderer *renderer = Graphics::getInstance()->getRenderer();
         if (renderer != nullptr)
         {
-            SDL_RenderClear(renderer); // clears the renderer
+            switch (pMapType)
+            {
+            case eMapType::Basic:
+            {
+                for (int i = 0; i < 1024; i += 80)
+                {
+                    // clear bottom of the screen
+                    SDL_Rect rect = {i, 600, 80, 40};
+                    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+                    SDL_RenderFillRect(renderer, &rect);
+                }
+                break;
+            }
+            case eMapType::Circular:
+            {
+                // clear a circle without clearing the center
+                for (int i = 0; i < 360; i++)
+                {
+                    SDL_Rect rect = {490 + 296 * cos(i * M_PI / 180), 320 + 296 * sin(i * M_PI / 180), 80, 80};
+                    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+                    SDL_RenderFillRect(renderer, &rect);
+                }
+            }
+            default:
+                break;
+            }
+
             SDL_Rect dstRect = {(int)position.x - 80, (int)position.y - 20, (int)width, (int)height};
             // render with angle
             std::cout << "new angle in draw: " << Paddle::getInstance()->angle << std::endl;
@@ -109,7 +135,7 @@ Paddle *Paddle::getInstance()
 {
     if (instance == nullptr)
     {
-        instance = new Paddle(430, 600, 200, 80, 30, 10);
+        instance = new Paddle(420, 600, 200, 80, 30, 10);
     }
     return instance;
 }

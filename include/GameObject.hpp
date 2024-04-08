@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "Point.hpp"
-#include "Direction.hpp"
+#include "Enums.hpp"
 #include "Vector.hpp"
 
 class GameObject

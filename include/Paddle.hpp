@@ -5,8 +5,9 @@
 #include <cmath>
 
 #include "GameObject.hpp"
-#include "Graphics.hpp"
 #include "Enums.hpp"
+
+class Graphics;
 
 #define ROTATION_SPEED_MULTIPLIER 200
 
@@ -24,7 +25,7 @@ public:
     Paddle(double x, double y, double width, double height, double speed, double angularVelocity);
     ~Paddle();
     void update(eMapType pMapType);
-    void draw();
+    void draw(eMapType pMapType);
     void collide(GameObject *other);
 
     Paddle(const Paddle &) = delete;
@@ -42,5 +43,7 @@ public:
     SDL_Texture *getTexture();
     void setTexture(SDL_Texture *pTexture);
 };
+
+#include "Graphics.hpp"
 
 #endif // __PADDLE_HPP

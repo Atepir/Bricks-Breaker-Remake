@@ -7,13 +7,12 @@ int main()
         std::cerr << "Echec de l'initialisation de la SDL " << SDL_GetError() << std::endl;
         return 1;
     }
+    eMapType mapType = eMapType::Basic;
 
-    Graphics graphics = Graphics();
+    Graphics graphics = Graphics(mapType);
     graphics.init();
 
     Paddle *paddle = Paddle::getInstance();
-
-    eMapType mapType = eMapType::Circular;
 
     // Main loop
     bool quit = false;
@@ -39,7 +38,7 @@ int main()
             quit = true;
 
         graphics.draw();
-        graphics.update(mapType);
+        graphics.update();
 
         // Limit frame rate to 60 fps
         SDL_Delay(16); // utiliser SDL_GetTicks64() pour plus de precisions

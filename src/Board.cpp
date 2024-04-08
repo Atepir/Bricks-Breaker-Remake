@@ -1,13 +1,47 @@
 #include "Board.hpp"
 
-Board::Board() : GameObject()
+Board *Board::instance = nullptr;
+
+Board *Board::getInstance(eMapType mapType)
 {
-    for (int i = 0; i < 10; i++)
+    if (instance == nullptr)
     {
-        for (int j = 0; j < 5; j++)
+        instance = new Board(mapType);
+    }
+    return instance;
+}
+
+Board::Board(eMapType pMapType)
+{
+    mapType = pMapType;
+
+    switch (mapType)
+    {
+    case eMapType::Basic:
+    {
+        bricks = std::vector<Brick *>();
+        for (int i = 0; i < 18; i++)
         {
-            bricks.push_back(new Brick(50 + i * 50, 50 + j * 20, 50, 20, BrickType::NORMAL, 1));
+            for (int j = 0; j < 12; j++)
+            {
+                bricks.push_back(new Brick(50 + i * 51, 50 + j * 21, 50, 20, BrickType::NORMAL, 1));
+            }
         }
+        break;
+    }
+    case eMapType::Circular:
+    {
+        bricks = std::vector<Brick *>();
+        for (int i = 0; i < 360; i += 30)
+        {
+            // must be different layers from
+            // the center of the circle
+            bricks.push_back(new Brick(512 + 100 * cos(i * M_PI / 180), 360 + 100 * sin(i * M_PI / 180), 50, 20, BrickType::NORMAL, 1));
+        }
+        break;
+    }
+    default:
+        break;
     }
 }
 
@@ -23,7 +57,7 @@ void Board::update()
 {
     for (auto brick : bricks)
     {
-        brick->update();
+        brick->update(mapType);
     }
 }
 

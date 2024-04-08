@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "Paddle.hpp"
+#include "Board.hpp"
 #include "Enums.hpp"
 
 class Graphics
@@ -12,11 +13,12 @@ class Graphics
 protected:
     SDL_Window *pWindow;
     SDL_Renderer *pRenderer;
+    eMapType mapType;
 
     static Graphics *pInstance;
 
 public:
-    Graphics();
+    Graphics(eMapType pMapType);
 
     Graphics(const Graphics &) = delete;
     void operator=(const Graphics &) = delete;
@@ -25,7 +27,7 @@ public:
 
     ~Graphics();
     void init();
-    void update(eMapType pMapType);
+    void update();
     void clear();
     void draw();
     void quit();

@@ -7,15 +7,16 @@ Graphics *Graphics::getInstance()
 {
     if (pInstance == nullptr)
     {
-        pInstance = new Graphics();
+        pInstance = new Graphics(eMapType::Basic);
     }
     return pInstance;
 }
 
-Graphics::Graphics()
+Graphics::Graphics(eMapType pMapType)
 {
     pWindow = nullptr;
     pRenderer = nullptr;
+    mapType = pMapType;
 }
 
 Graphics::~Graphics()
@@ -47,9 +48,10 @@ void Graphics::init()
     pRenderer_copy = pRenderer;
 }
 
-void Graphics::update(eMapType pMapType)
+void Graphics::update()
 {
-    Paddle::getInstance()->update(pMapType);
+    Paddle::getInstance()->update(mapType);
+    Board::getInstance(mapType)->update();
     SDL_RenderPresent(pRenderer);
 }
 
@@ -62,7 +64,8 @@ void Graphics::draw()
 {
     SDL_Rect rect = {0, 0, 1024, 720};
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
-    Paddle::getInstance()->draw();
+    Paddle::getInstance()->draw(mapType);
+    Board::getInstance(mapType)->draw();
 }
 
 void Graphics::quit()
