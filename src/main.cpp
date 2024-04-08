@@ -13,6 +13,8 @@ int main()
 
     Paddle* paddle = Paddle::getInstance();
 
+    eMapType mapType = eMapType::Circular;
+
     // Main loop
     bool quit = false;
     while (!quit)
@@ -37,10 +39,8 @@ int main()
             quit = true;
 
         graphics.draw();
-        graphics.update();
+        graphics.update(mapType);
 
-        paddle->draw();
-        paddle->update();
         // Limit frame rate to 60 fps
         SDL_Delay(16); // utiliser SDL_GetTicks64() pour plus de precisions
     }

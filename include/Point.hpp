@@ -76,6 +76,14 @@ struct Point
     {
         return is >> p.x >> p.y;
     }
+
+    const SDL_Point *toSDLPoint() const
+    {
+        SDL_Point *p = new SDL_Point();
+        p->x = x;
+        p->y = y;
+        return p;
+    }
 };
 
 #endif // __POINT_HPP

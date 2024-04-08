@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "Paddle.hpp"
+#include "Enums.hpp"
 
 class Graphics
 {
@@ -24,7 +25,7 @@ public:
 
     ~Graphics();
     void init();
-    void update();
+    void update(eMapType pMapType);
     void clear();
     void draw();
     void quit();

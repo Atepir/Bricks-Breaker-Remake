@@ -2,7 +2,9 @@
 
 Paddle *Paddle::instance = nullptr;
 
-Paddle::Paddle(double x, double y, double width, double height, double speed)
+Point gravityCenterPoint = Point(512, 360 - 20);
+
+Paddle::Paddle(double x, double y, double width, double height, double speed, double angularVelocity)
 {
     this->pTexture = Graphics::getInstance()->loadTexture("paddle.bmp");
     this->position.x = x;
@@ -10,38 +12,82 @@ Paddle::Paddle(double x, double y, double width, double height, double speed)
     this->width = width;
     this->height = height;
     this->speed = speed;
+    this->angularVelocity = angularVelocity;
 }
 
 Paddle::~Paddle()
 {
 }
 
-void Paddle::update()
+void Paddle::update(eMapType pMapType)
 {
+    // std::cout << "Paddle Update" << std::endl;
     const Uint8 *state = SDL_GetKeyboardState(NULL);
 
-    if (state[SDL_SCANCODE_LEFT])
+    switch (pMapType)
     {
-        position.x -= speed;
+    case eMapType::Basic:
+    {
+
+        if (state[SDL_SCANCODE_LEFT])
+        {
+            position.x -= speed;
+            std::cout << "Position: " << position.x << std::endl;
+        }
+        if (state[SDL_SCANCODE_RIGHT])
+        {
+            position.x += speed;
+        }
+        break;
     }
-    if (state[SDL_SCANCODE_RIGHT])
+    case eMapType::Circular:
     {
-        position.x += speed;
+        SDL_Rect gravityCenter = {gravityCenterPoint.x, gravityCenterPoint.y, 12, 12};
+        SDL_SetRenderDrawColor(Graphics::getInstance()->getRenderer(), 255, 0, 0, 255);
+        SDL_RenderFillRect(Graphics::getInstance()->getRenderer(), &gravityCenter);
+
+        double angle = 0;
+
+        if (state[SDL_SCANCODE_LEFT])
+        {
+            angle = angularVelocity * M_PI / 180;
+        }
+        if (state[SDL_SCANCODE_RIGHT])
+        {
+            angle = -angularVelocity * M_PI / 180;
+        }
+
+        double xM = position.x - gravityCenterPoint.x;
+        double yM = position.y - gravityCenterPoint.y;
+        position.x = round(xM * cos(angle) - yM * sin(angle) + gravityCenterPoint.x);
+        position.y = round(xM * sin(angle) + yM * cos(angle) + gravityCenterPoint.y);
+
+        // update the angle of the paddle
+        double newAngle = atan2(position.y - gravityCenterPoint.y, position.x - gravityCenterPoint.x);
+        this->angle = newAngle * 180 / M_PI;
+        this->angle += 90;
+
+        std::cout << "new angle: " << this->angle << std::endl;
+
+        break;
+    }
+    default:
+        break;
     }
 }
 
 void Paddle::draw()
 {
-    // SDL_Rect dstRect = {(int)position.x, (int)position.y, (int)width, (int)height};
-    // SDL_RenderCopyEx(Graphics::getInstance()->getRenderer(), pTexture, NULL, &dstRect, 0, NULL, SDL_FLIP_NONE);
     if (this->pTexture != nullptr)
     {
         SDL_Renderer *renderer = Graphics::getInstance()->getRenderer();
         if (renderer != nullptr)
         {
             SDL_RenderClear(renderer); // clears the renderer
-            SDL_Rect dstRect = {(int)position.x, (int)position.y, (int)width, (int)height};
-            SDL_RenderCopy(renderer, pTexture, NULL, &dstRect);
+            SDL_Rect dstRect = {(int)position.x - 80, (int)position.y - 20, (int)width, (int)height};
+            // render with angle
+            std::cout << "new angle in draw: " << Paddle::getInstance()->angle << std::endl;
+            SDL_RenderCopyEx(renderer, pTexture, NULL, &dstRect, Paddle::getInstance()->angle, NULL, SDL_FLIP_NONE);
             SDL_RenderPresent(renderer); // updates the screen
         }
         else
@@ -63,7 +109,7 @@ Paddle *Paddle::getInstance()
 {
     if (instance == nullptr)
     {
-        instance = new Paddle(250, 250, 329, 143, 0);
+        instance = new Paddle(430, 600, 200, 80, 30, 10);
     }
     return instance;
 }

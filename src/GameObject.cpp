@@ -12,6 +12,12 @@ GameObject::GameObject(Point position, Vector velocity, double angle, double ang
 
 GameObject::GameObject()
 {
+    this->position = Point(0, 0);
+    this->velocity = Vector(0, 0);
+    this->angle = 0;
+    this->angularVelocity = 0;
+    this->scale = 1;
+    this->pTexture = nullptr;
 }
 
 GameObject::~GameObject()
