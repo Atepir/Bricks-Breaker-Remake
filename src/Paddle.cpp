@@ -4,7 +4,7 @@ Paddle *Paddle::instance = nullptr;
 
 Paddle::Paddle(double x, double y, double width, double height, double speed)
 {
-    this->pTexture = Graphics::getInstance()->loadTexture("src/paddle.bmp");
+    this->pTexture = Graphics::getInstance()->loadTexture("paddle.bmp");
     this->position.x = x;
     this->position.y = y;
     this->width = width;
