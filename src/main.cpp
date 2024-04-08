@@ -11,6 +11,8 @@ int main()
     Graphics graphics = Graphics();
     graphics.init();
 
+    Paddle* paddle = Paddle::getInstance();
+
     // Main loop
     bool quit = false;
     while (!quit)
@@ -34,7 +36,11 @@ int main()
         if (keys[SDL_SCANCODE_ESCAPE])
             quit = true;
 
+        graphics.draw();
         graphics.update();
+
+        paddle->draw();
+        paddle->update();
         // Limit frame rate to 60 fps
         SDL_Delay(16); // utiliser SDL_GetTicks64() pour plus de precisions
     }
