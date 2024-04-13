@@ -7,31 +7,26 @@
 
 #include "geometry/Point.hpp"
 
-class Game;
-
 class Renderer
 {
-    private:
-        Game *mGame;
-        SDL_Window *mWindow;
-        SDL_Renderer *mRenderer;
+private:
+    SDL_Window* mWindow;
+    SDL_Renderer* mRenderer;
 
-    public:
-        Renderer(Game *pGame);
-        ~Renderer();
+public:
+    Renderer();
+    ~Renderer();
 
-        void clear();
-        void render();
+    void clear();
+    void render();
 
-        SDL_Renderer *getRenderer();
+    SDL_Renderer* getRenderer();
 
-        void draw(SDL_Texture *pTexture, Point pPosition);
-        void draw(SDL_Texture *pTexture, Point pPosition, int pWidth, int pHeight);
+    void draw(SDL_Texture* pTexture, Point pPosition);
+    void draw(SDL_Texture* pTexture, Point pPosition, int pWidth, int pHeight);
 
-        void drawRect(Point pPosition, int pWidth, int pHeight);
-        void drawRect(Point pPosition, int pWidth, int pHeight, int pR, int pG, int pB, int pA);
-}
-
-#include "Game.hpp";
+    void drawRect(Point pPosition, int pWidth, int pHeight);
+    void drawRect(Point pPosition, int pWidth, int pHeight, int pR, int pG, int pB, int pA);
+};
 
 #endif

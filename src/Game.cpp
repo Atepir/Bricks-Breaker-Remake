@@ -6,13 +6,14 @@ Game::Game()
 {
     mRunning = true;
     mWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
-    mRenderer = new Renderer(mWindow);
+    mRenderer = new Renderer(this);
 }
 
 Game::~Game()
 {
     delete mRenderer;
     SDL_DestroyWindow(mWindow);
+    quit();
 }
 
 void Game::run()
@@ -60,3 +61,11 @@ void Game::buttonPressed(SDL_Keycode pKey)
     }
 }
 
+Game *Game::getInstance()
+{
+    if (pInstance == nullptr)
+    {
+        pInstance = new Game();
+    }
+    return pInstance;
+}

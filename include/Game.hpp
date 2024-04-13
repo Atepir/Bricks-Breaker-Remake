@@ -4,7 +4,6 @@
 #include <SDL.h>
 
 #include "graphics/Renderer.hpp"
-#include "input/InputManager.hpp"
 
 class Game
 {

@@ -1,8 +1,7 @@
 #include "graphics/Renderer.hpp"
 
-Renderer::Renderer(Game *pGame)
+Renderer::Renderer()
 {
-    mGame = pGame;
     mWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
     mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED);
 }
