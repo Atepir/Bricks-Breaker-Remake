@@ -4,14 +4,13 @@
 #include <unordered_map>
 #include <vector>
 
-#include "graphics/Texture.hpp"
 
 class GraphicsManager;
 
 class ResourceManager
 {
     private:
-        std::unordered_map<std::string, Texture *> mTextures;
+        std::unordered_map<std::string, SDL_Texture *> mTextures;
 
         void loadTextures();
 
@@ -19,8 +18,8 @@ class ResourceManager
         ResourceManager();
         ~ResourceManager();
 
-        void addTexture(const std::string &pName, Texture *pTexture);
-        Texture *getTexture(const std::string &pName);
+        void addTexture(const std::string &pName, SDL_Texture *pTexture);
+        SDL_Texture *getTexture(const std::string &pName);
 };
 
 #include "graphics/GraphicsManager.hpp"

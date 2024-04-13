@@ -12,12 +12,12 @@ ResourceManager::~ResourceManager()
     }
 }
 
-void ResourceManager::addTexture(const std::string &pName, Texture *pTexture)
+void ResourceManager::addTexture(const std::string &pName, SDL_Texture *pTexture)
 {
     mTextures[pName] = pTexture;
 }
 
-Texture *ResourceManager::getTexture(const std::string &pName)
+SDL_Texture *ResourceManager::getTexture(const std::string &pName)
 {
     return mTextures[pName];
 }
@@ -25,10 +25,10 @@ Texture *ResourceManager::getTexture(const std::string &pName)
 void ResourceManager::loadTextures()
 {
     // one texture file from which to load textures
-    SDL_Surface *pSurface = IMG_Load("assets/spritesheet.png");
+    SDL_Surface *pSurface = SDL_LoadBMP("assets/spritesheet.bmp");
     if (pSurface == nullptr)
     {
-        std::cerr << "Failed to load image " << "assets/spritesheet.png" << " " << IMG_GetError() << std::endl;
+        std::cerr << "Failed to load image " << "assets/spritesheet.png" << " " << SDL_GetError() << std::endl;
         exit(1);
     }
 
@@ -37,20 +37,20 @@ void ResourceManager::loadTextures()
     SDL_Rect rect = {0, 0, 64, 16};
     SDL_Surface *pPaddleSurface = SDL_CreateRGBSurface(0, 64, 16, 32, 0, 0, 0, 0);
     SDL_BlitSurface(pSurface, &rect, pPaddleSurface, NULL);
-    Texture *pPaddleTexture = new Texture(SDL_CreateTextureFromSurface(GraphicsManager::getInstance()->getRenderer(), pPaddleSurface));
+    SDL_Texture *pPaddleTexture = SDL_CreateTextureFromSurface(GraphicsManager::getInstance()->getRenderer(), pPaddleSurface);
     addTexture("paddle", pPaddleTexture);
 
     // ball
     rect = {0, 16, 16, 16};
     SDL_Surface *pBallSurface = SDL_CreateRGBSurface(0, 16, 16, 32, 0, 0, 0, 0);
     SDL_BlitSurface(pSurface, &rect, pBallSurface, NULL);
-    Texture *pBallTexture = new Texture(SDL_CreateTextureFromSurface(GraphicsManager::getInstance()->getRenderer(), pBallSurface));
+    SDL_Texture *pBallTexture = SDL_CreateTextureFromSurface(GraphicsManager::getInstance()->getRenderer(), pBallSurface);
     addTexture("ball", pBallTexture);
 
     // brick
     rect = {0, 32, 64, 16};
     SDL_Surface *pBrickSurface = SDL_CreateRGBSurface(0, 64, 16, 32, 0, 0, 0, 0);
     SDL_BlitSurface(pSurface, &rect, pBrickSurface, NULL);
-    Texture *pBrickTexture = new Texture(SDL_CreateTextureFromSurface(GraphicsManager::getInstance()->getRenderer(), pBrickSurface));
+    SDL_Texture *pBrickTexture = SDL_CreateTextureFromSurface(GraphicsManager::getInstance()->getRenderer(), pBrickSurface);
     addTexture("brick", pBrickTexture);
 }

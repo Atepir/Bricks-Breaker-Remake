@@ -16,6 +16,6 @@ class InputManager
         void update();
 };
 
-#include "Game.hpp";
+#include "Game.hpp"
 
 #endif

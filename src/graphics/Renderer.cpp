@@ -29,23 +29,23 @@ SDL_Renderer *Renderer::getRenderer()
     return mRenderer;
 }
 
-void Renderer::draw(Texture *pTexture, Point pPosition)
+void Renderer::draw(SDL_Texture *pTexture, Point pPosition)
 {
     SDL_Rect dest;
     dest.x = pPosition.x;
     dest.y = pPosition.y;
-    SDL_QueryTexture(pTexture->getTexture(), NULL, NULL, &dest.w, &dest.h);
-    SDL_RenderCopy(mRenderer, pTexture->getTexture(), NULL, &dest);
+    SDL_QueryTexture(pTexture, NULL, NULL, &dest.w, &dest.h);
+    SDL_RenderCopy(mRenderer, pTexture, NULL, &dest);
 }
 
-void Renderer::draw(Texture *pTexture, Point pPosition, int pWidth, int pHeight)
+void Renderer::draw(SDL_Texture *pTexture, Point pPosition, int pWidth, int pHeight)
 {
     SDL_Rect dest;
     dest.x = pPosition.x;
     dest.y = pPosition.y;
     dest.w = pWidth;
     dest.h = pHeight;
-    SDL_RenderCopy(mRenderer, pTexture->getTexture(), NULL, &dest);
+    SDL_RenderCopy(mRenderer, pTexture, NULL, &dest);
 }
 
 void Renderer::drawRect(Point pPosition, int pWidth, int pHeight)

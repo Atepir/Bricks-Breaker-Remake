@@ -7,7 +7,6 @@
 
 #include "geometry/Point.hpp"
 
-class Texture;
 class Game;
 
 class Renderer
@@ -26,14 +25,13 @@ class Renderer
 
         SDL_Renderer *getRenderer();
 
-        void draw(Texture *pTexture, Point pPosition);
-        void draw(Texture *pTexture, Point pPosition, int pWidth, int pHeight);
+        void draw(SDL_Texture *pTexture, Point pPosition);
+        void draw(SDL_Texture *pTexture, Point pPosition, int pWidth, int pHeight);
 
         void drawRect(Point pPosition, int pWidth, int pHeight);
         void drawRect(Point pPosition, int pWidth, int pHeight, int pR, int pG, int pB, int pA);
 }
 
-#include "graphics/Texture.hpp";
 #include "Game.hpp";
 
 #endif
