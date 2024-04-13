@@ -1,0 +1,5 @@
+#ifndef __RESOURCE_MANAGER_HPP
+#define __RESOURCE_MANAGER_HPP
+
+
+#endif
