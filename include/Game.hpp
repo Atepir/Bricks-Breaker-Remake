@@ -13,13 +13,23 @@ class Game
         SDL_Window *mWindow;
         Renderer *mRenderer;
 
+        static Game *pInstance;
+
     public:
         Game();
+
+        Game(const Game &) = delete;
+        void operator=(const Game &) = delete;
+
         ~Game();
 
+        static Game *getInstance();
+
         void run();
-        void update();
-        void render();
-        void handleEvents();
-        void clean();
+        
+        void quit();
+
+        void buttonPressed(SDL_Keycode pKey);
 };
+
+#endif

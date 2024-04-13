@@ -4,7 +4,8 @@
 #include <SDL.h>
 #include <vector>
 #include <iterator>
-#include <algorithm>
+
+class Game;
 
 class InputManager
 {
@@ -14,5 +15,7 @@ class InputManager
 
         void update();
 };
+
+#include "Game.hpp";
 
 #endif

@@ -6,7 +6,7 @@
 #include "gameobjects/GameObject.hpp"
 #include "resources/Enums.hpp"
 
-class Graphics;
+class GraphicsManager;
 
 class Brick : public GameObject
 {
@@ -24,6 +24,6 @@ public:
     void collide(GameObject *other);
 };
 
-#include "Graphics.hpp"
+#include "graphics/GraphicsManager.hpp"
 
 #endif // __BRICK_HPP

@@ -1,5 +1,5 @@
-#ifndef __GRAPHICS_HPP
-#define __GRAPHICS_HPP
+#ifndef __GRAPHICS_MANAGER_HPP
+#define __GRAPHICS_MANAGER_HPP
 
 #include <SDL.h>
 #include <iostream>
@@ -8,24 +8,24 @@
 #include "gameobjects/Board.hpp"
 #include "resources/Enums.hpp"
 
-class Graphics
+class GraphicsManager
 {
 protected:
     SDL_Window *pWindow;
     SDL_Renderer *pRenderer;
     eMapType mapType;
 
-    static Graphics *pInstance;
+    static GraphicsManager *pInstance;
 
 public:
-    Graphics(eMapType pMapType);
+    GraphicsManager(eMapType pMapType);
 
-    Graphics(const Graphics &) = delete;
-    void operator=(const Graphics &) = delete;
+    GraphicsManager(const GraphicsManager &) = delete;
+    void operator=(const GraphicsManager &) = delete;
 
-    static Graphics *getInstance();
+    static GraphicsManager *getInstance();
 
-    ~Graphics();
+    ~GraphicsManager();
     void init();
     void update();
     void clear();
@@ -37,4 +37,4 @@ public:
     SDL_Renderer *getRenderer();
 };
 
-#endif // __GRAPHICS_HPP
+#endif // __GRAPHICS_MANAGER_HPP

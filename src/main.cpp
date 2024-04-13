@@ -9,7 +9,7 @@ int main()
     }
     eMapType mapType = eMapType::Basic;
 
-    Graphics graphics = Graphics(mapType);
+    GraphicsManager graphics = GraphicsManager(mapType);
     graphics.init();
 
     Paddle *paddle = Paddle::getInstance();

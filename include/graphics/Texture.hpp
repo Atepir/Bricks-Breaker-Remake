@@ -1,13 +1,13 @@
 #ifndef __TEXTURE_HPP__
 #define __TEXTURE_HPP__
 
-#indlude <SDL.h>
+#include <SDL.h>
 #include <iostream>
 
-#include "graphics/Renderer.hpp"
-#include "geometry/Point.hpp"
+#include "graphics/Renderer.hpp";
+#include "geometry/Point.hpp";
 
-class Texture
+class Texture 
 {
     private:
         std::string mFilename;

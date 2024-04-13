@@ -25,8 +25,8 @@ void Brick::update(eMapType pMapType)
 void Brick::draw()
 {
     SDL_Rect destRect = {position.x, position.y, width, height};
-    SDL_SetRenderDrawColor(Graphics::getInstance()->getRenderer(), 0, 255, 0, 255);
-    SDL_RenderFillRect(Graphics::getInstance()->getRenderer(), &destRect);
+    SDL_SetRenderDrawColor(GraphicsManager::getInstance()->getRenderer(), 0, 255, 0, 255);
+    SDL_RenderFillRect(GraphicsManager::getInstance()->getRenderer(), &destRect);
 }
 
 void Brick::collide(GameObject *other)

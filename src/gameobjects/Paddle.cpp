@@ -6,7 +6,7 @@ Point gravityCenterPoint = Point(512, 360 - 20);
 
 Paddle::Paddle(double x, double y, double width, double height, double speed, double angularVelocity)
 {
-    this->pTexture = Graphics::getInstance()->loadTexture("paddle.bmp");
+    this->pTexture = GraphicsManager::getInstance()->loadTexture("paddle.bmp");
     this->position.x = x;
     this->position.y = y;
     this->width = width;
@@ -43,8 +43,8 @@ void Paddle::update(eMapType pMapType)
     case eMapType::Circular:
     {
         SDL_Rect gravityCenter = {gravityCenterPoint.x, gravityCenterPoint.y, 12, 12};
-        SDL_SetRenderDrawColor(Graphics::getInstance()->getRenderer(), 255, 0, 0, 255);
-        SDL_RenderFillRect(Graphics::getInstance()->getRenderer(), &gravityCenter);
+        SDL_SetRenderDrawColor(GraphicsManager::getInstance()->getRenderer(), 255, 0, 0, 255);
+        SDL_RenderFillRect(GraphicsManager::getInstance()->getRenderer(), &gravityCenter);
 
         double angle = 0;
 
@@ -80,7 +80,7 @@ void Paddle::draw(eMapType pMapType)
 {
     if (this->pTexture != nullptr)
     {
-        SDL_Renderer *renderer = Graphics::getInstance()->getRenderer();
+        SDL_Renderer *renderer = GraphicsManager::getInstance()->getRenderer();
         if (renderer != nullptr)
         {
             switch (pMapType)

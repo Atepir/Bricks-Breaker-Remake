@@ -7,7 +7,7 @@
 #include "gameobjects/GameObject.hpp"
 #include "resources/Enums.hpp"
 
-class Graphics;
+class GraphicsManager;
 
 #define ROTATION_SPEED_MULTIPLIER 200
 
@@ -44,6 +44,6 @@ public:
     void setTexture(SDL_Texture *pTexture);
 };
 
-#include "Graphics.hpp"
+#include "graphics/GraphicsManager.hpp"
 
 #endif // __PADDLE_HPP

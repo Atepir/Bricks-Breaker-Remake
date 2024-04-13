@@ -1,5 +1,5 @@
-#ifndef __RENDERER_HPP__
-#define __RENDERER_HPP__
+#ifndef __RENDERER_HPP
+#define __RENDERER_HPP
 
 #include <SDL.h>
 #include <array>
@@ -8,6 +8,7 @@
 #include "geometry/Point.hpp"
 
 class Texture;
+class Game;
 
 class Renderer
 {
@@ -32,5 +33,7 @@ class Renderer
         void drawRect(Point pPosition, int pWidth, int pHeight, int pR, int pG, int pB, int pA);
 }
 
+#include "graphics/Texture.hpp";
+#include "Game.hpp";
 
 #endif

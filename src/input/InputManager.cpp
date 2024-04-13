@@ -21,20 +21,7 @@ void InputManager::update()
             pGame->quit();
             break;
         case SDL_KEYDOWN:
-            switch (event.key.keysym.sym)
-            {
-            case SDLK_ESCAPE:
-                pGame->quit();
-                break;
-            case SDLK_LEFT:
-                pGame->buttonPressed(eButton::LEFT);
-            case SDLK_RIGHT:
-                pGame->buttonPressed(eButton::RIGHT);
-            case SDLK_SPACE:
-                pGame->buttonPressed(eButton::SPACE);
-            default:
-                break;
-            }
+            pGame->buttonPressed((event.key.keysym.sym));
             break;
         case SDL_KEYUP:
             break;

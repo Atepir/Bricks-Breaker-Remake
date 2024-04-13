@@ -1,30 +1,30 @@
 #include "graphics/GraphicsManager.hpp"
 
-Graphics *Graphics::pInstance = nullptr;
+GraphicsManager *GraphicsManager::pInstance = nullptr;
 SDL_Renderer *pRenderer_copy = nullptr;
 
-Graphics *Graphics::getInstance()
+GraphicsManager *GraphicsManager::getInstance()
 {
     if (pInstance == nullptr)
     {
-        pInstance = new Graphics(eMapType::Basic);
+        pInstance = new GraphicsManager(eMapType::Basic);
     }
     return pInstance;
 }
 
-Graphics::Graphics(eMapType pMapType)
+GraphicsManager::GraphicsManager(eMapType pMapType)
 {
     pWindow = nullptr;
     pRenderer = nullptr;
     mapType = pMapType;
 }
 
-Graphics::~Graphics()
+GraphicsManager::~GraphicsManager()
 {
     quit();
 }
 
-void Graphics::init()
+void GraphicsManager::init()
 {
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
@@ -48,19 +48,19 @@ void Graphics::init()
     pRenderer_copy = pRenderer;
 }
 
-void Graphics::update()
+void GraphicsManager::update()
 {
     Paddle::getInstance()->update(mapType);
     Board::getInstance(mapType)->update();
     SDL_RenderPresent(pRenderer);
 }
 
-void Graphics::clear()
+void GraphicsManager::clear()
 {
     SDL_RenderClear(pRenderer);
 }
 
-void Graphics::draw()
+void GraphicsManager::draw()
 {
     SDL_Rect rect = {0, 0, 1024, 720};
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
@@ -68,13 +68,13 @@ void Graphics::draw()
     Board::getInstance(mapType)->draw();
 }
 
-void Graphics::quit()
+void GraphicsManager::quit()
 {
     SDL_DestroyWindow(pWindow);
     SDL_Quit();
 }
 
-SDL_Texture *Graphics::loadTexture(const char *pFilename)
+SDL_Texture *GraphicsManager::loadTexture(const char *pFilename)
 {
     SDL_Surface *pSurface = SDL_LoadBMP(pFilename);
     if (pSurface == nullptr)
@@ -114,7 +114,7 @@ SDL_Texture *Graphics::loadTexture(const char *pFilename)
     return pTexture;
 }
 
-SDL_Renderer *Graphics::getRenderer()
+SDL_Renderer *GraphicsManager::getRenderer()
 {
     if (pRenderer == nullptr)
     {

@@ -20,7 +20,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -s")
 include_directories(${BricksBreaker_SOURCE_DIR}/include)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
-file(GLOB SRC_FILES "src/*.cpp")
+file(GLOB_RECURSE SRC_FILES "src/**/*.cpp" "src/*.cpp")
 
 file(COPY ${BricksBreaker_SOURCE_DIR}/assets/
 	    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)	
