@@ -1,25 +1,43 @@
 #ifndef __RESOURCE_MANAGER_HPP
 #define __RESOURCE_MANAGER_HPP
 
+#include "SDL.h"
+
 #include <unordered_map>
 #include <vector>
+#include <iostream>
 
+#include "resources/Enums.hpp"
 
 class GraphicsManager;
 
+using namespace std;
+
 class ResourceManager
 {
-    private:
-        std::unordered_map<std::string, SDL_Texture *> mTextures;
+private:
+    unordered_map<string, SDL_Texture *> mTextures;
 
-        void loadTextures();
+    void loadTextures();
 
-    public:
-        ResourceManager();
-        ~ResourceManager();
+    static ResourceManager *pInstance;
 
-        void addTexture(const std::string &pName, SDL_Texture *pTexture);
-        SDL_Texture *getTexture(const std::string &pName);
+public:
+    ResourceManager();
+
+    static ResourceManager *getInstance();
+
+    ResourceManager(const ResourceManager &) = delete;
+    ResourceManager &operator=(const ResourceManager &) = delete;
+
+    ~ResourceManager();
+
+    void addTexture(const string &pName, SDL_Texture *pTexture);
+    void addTexture(const string &pName, SDL_Rect &pRect, SDL_Surface *pSurface, SDL_Surface *pTextureSurface, SDL_Rect *pDestRect);
+    SDL_Texture *getTexture(const string &pName);
+    SDL_Texture *getTexture(const string &pName, BrickType type);
+
+    std::string brickTypeToString(BrickType pType);
 };
 
 #include "graphics/GraphicsManager.hpp"

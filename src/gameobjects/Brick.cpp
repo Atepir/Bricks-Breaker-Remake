@@ -8,6 +8,7 @@ Brick::Brick(double x, double y, double width, double height, BrickType type, in
     this->height = height;
     this->type = type;
     this->health = health;
+    this->pTexture = ResourceManager::getInstance()->getTexture("brick", type);
 }
 
 Brick::~Brick()
@@ -25,8 +26,7 @@ void Brick::update(eMapType pMapType)
 void Brick::draw()
 {
     SDL_Rect destRect = {position.x, position.y, width, height};
-    SDL_SetRenderDrawColor(GraphicsManager::getInstance()->getRenderer(), 0, 255, 0, 255);
-    SDL_RenderFillRect(GraphicsManager::getInstance()->getRenderer(), &destRect);
+    SDL_RenderCopy(GraphicsManager::getInstance()->getRenderer(), pTexture, NULL, &destRect);
 }
 
 void Brick::collide(GameObject *other)

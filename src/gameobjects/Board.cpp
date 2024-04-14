@@ -20,11 +20,11 @@ Board::Board(eMapType pMapType)
     case eMapType::Basic:
     {
         bricks = std::vector<Brick *>();
-        for (int i = 0; i < 18; i++)
+        for (int i = 0; i < 6; i++)
         {
-            for (int j = 0; j < 12; j++)
+            for (int j = 0; j < 5; j++)
             {
-                bricks.push_back(new Brick(50 + i * 51, 50 + j * 21, 50, 20, BrickType::NORMAL, 1));
+                bricks.push_back(new Brick(PADDING + i * (BRICK_WIDTH + 1), PADDING + j * (BRICK_HEIGHT + 1), BRICK_WIDTH, BRICK_HEIGHT, BrickType::NORMAL, 1));
             }
         }
         break;

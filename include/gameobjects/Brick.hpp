@@ -6,6 +6,9 @@
 #include "gameobjects/GameObject.hpp"
 #include "resources/Enums.hpp"
 
+#define BRICK_WIDTH 140
+#define BRICK_HEIGHT 48
+
 class GraphicsManager;
 
 class Brick : public GameObject
@@ -13,6 +16,7 @@ class Brick : public GameObject
 private:
     BrickType type;
     int health;
+    SDL_Texture *pTexture;
 
 public:
     double width;

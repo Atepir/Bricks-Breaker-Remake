@@ -8,6 +8,7 @@
 #include "resources/Enums.hpp"
 
 class GraphicsManager;
+class ResourceManager;
 
 #define ROTATION_SPEED_MULTIPLIER 200
 
@@ -45,5 +46,6 @@ public:
 };
 
 #include "graphics/GraphicsManager.hpp"
+#include "resources/ResourceManager.hpp"
 
 #endif // __PADDLE_HPP

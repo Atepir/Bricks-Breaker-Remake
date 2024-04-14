@@ -3,32 +3,32 @@
 
 #include <SDL.h>
 
-#include "graphics/Renderer.hpp"
+#include "graphics/GraphicsManager.hpp"
+#include "gameobjects/GameObject.hpp"
+#include "resources/Enums.hpp"
 
 class Game
 {
-    private:
-        bool mRunning;
-        SDL_Window *mWindow;
-        Renderer *mRenderer;
+private:
+    bool mRunning;
 
-        static Game *pInstance;
+    static Game *pInstance;
 
-    public:
-        Game();
+public:
+    Game();
 
-        Game(const Game &) = delete;
-        void operator=(const Game &) = delete;
+    Game(const Game &) = delete;
+    void operator=(const Game &) = delete;
 
-        ~Game();
+    ~Game();
 
-        static Game *getInstance();
+    static Game *getInstance();
 
-        void run();
-        
-        void quit();
+    void run();
 
-        void buttonPressed(SDL_Keycode pKey);
+    void quit();
+
+    void buttonPressed(SDL_Keycode pKey);
 };
 
 #endif

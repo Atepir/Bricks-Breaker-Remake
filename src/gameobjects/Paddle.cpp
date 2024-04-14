@@ -6,7 +6,7 @@ Point gravityCenterPoint = Point(512, 360 - 20);
 
 Paddle::Paddle(double x, double y, double width, double height, double speed, double angularVelocity)
 {
-    this->pTexture = GraphicsManager::getInstance()->loadTexture("paddle.bmp");
+    this->pTexture = ResourceManager::getInstance()->getTexture("paddle_basic");
     this->position.x = x;
     this->position.y = y;
     this->width = width;
@@ -90,7 +90,7 @@ void Paddle::draw(eMapType pMapType)
                 for (int i = 0; i < 1024; i += 80)
                 {
                     // clear bottom of the screen
-                    SDL_Rect rect = {i, 600, 80, 40};
+                    SDL_Rect rect = {i, 560, 80, 120};
                     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
                     SDL_RenderFillRect(renderer, &rect);
                 }
@@ -135,7 +135,7 @@ Paddle *Paddle::getInstance()
 {
     if (instance == nullptr)
     {
-        instance = new Paddle(420, 600, 200, 80, 30, 10);
+        instance = new Paddle(420, 600, 160, 60, 30, 10);
     }
     return instance;
 }

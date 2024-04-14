@@ -4,38 +4,54 @@ Game *Game::pInstance = nullptr;
 
 Game::Game()
 {
-    mRunning = true;
-    mWindow = SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
-    mRenderer = new Renderer(this);
 }
 
 Game::~Game()
 {
-    delete mRenderer;
-    SDL_DestroyWindow(mWindow);
     quit();
 }
 
 void Game::run()
 {
+    if (SDL_Init(SDL_INIT_VIDEO) != 0)
+    {
+        std::cerr << "Echec de l'initialisation de la SDL " << SDL_GetError() << std::endl;
+    }
+    eMapType mapType = eMapType::Basic;
+
+    GraphicsManager graphics = GraphicsManager(mapType);
+    graphics.init();
+
+    Paddle *paddle = Paddle::getInstance();
+
     while (mRunning)
     {
         SDL_Event event;
-        while (SDL_PollEvent(&event))
+        while (mRunning && SDL_PollEvent(&event))
         {
-            if (event.type == SDL_QUIT)
+            switch (event.type)
             {
-                mRunning = false;
-            }
-            else if (event.type == SDL_KEYDOWN)
-            {
-                buttonPressed(event.key.keysym.sym);
+            case SDL_QUIT:
+                quit();
+                break;
+            default:
+                break;
             }
         }
 
-        mRenderer->clear();
-        mRenderer->render();
+        // Keyboard input management
+        int nbk;
+        const Uint8 *keys = SDL_GetKeyboardState(&nbk);
+        if (keys[SDL_SCANCODE_ESCAPE])
+            quit();
+
+        graphics.draw();
+        graphics.update();
+
+        // Limit frame rate to 60 fps
+        SDL_Delay(16); // utiliser SDL_GetTicks64() pour plus de precisions
     }
+    SDL_Quit(); // Quit SDL
 }
 
 void Game::quit()

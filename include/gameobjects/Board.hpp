@@ -8,6 +8,8 @@
 #include "gameobjects/GameObject.hpp"
 #include "gameobjects/Brick.hpp"
 
+#define PADDING 72
+
 class Board : public GameObject
 {
 private:

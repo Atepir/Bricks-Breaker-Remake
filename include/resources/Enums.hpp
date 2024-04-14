@@ -7,7 +7,7 @@ enum eMapType
 	Circular
 };
 
-enum BrickType
+enum class BrickType
 {
 	NORMAL,
 	UNBREAKABLE
@@ -19,6 +19,12 @@ enum Direction
 	DOWN,
 	LEFT,
 	RIGHT
+};
+
+enum PaddleType
+{
+	BasicPaddle,
+	CircularPaddle,
 };
 
 #endif
