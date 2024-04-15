@@ -23,6 +23,7 @@ void Game::run()
     graphics.init();
 
     Paddle *paddle = Paddle::getInstance();
+    Ball *ball = new Ball(BallType::NORMAL, 512, 360, 30, 1);
 
     while (mRunning)
     {
@@ -47,6 +48,7 @@ void Game::run()
 
         graphics.draw();
         graphics.update();
+        ball->draw();
 
         // Limit frame rate to 60 fps
         SDL_Delay(16); // utiliser SDL_GetTicks64() pour plus de precisions

@@ -37,6 +37,19 @@ std::string ResourceManager::brickTypeToString(BrickType pType)
     }
 }
 
+std::string ResourceManager::ballTypeToString(BallType pType)
+{
+    switch (pType)
+    {
+    case BallType::NORMAL:
+        return "normal";
+    case BallType::EXPLOSIVE:
+        return "explosive";
+    default:
+        return "";
+    }
+}
+
 void ResourceManager::addTexture(const std::string &pName, SDL_Texture *pTexture)
 {
     mTextures[pName] = pTexture;
@@ -63,6 +76,12 @@ SDL_Texture *ResourceManager::getTexture(const string &pName, BrickType type)
     return ResourceManager::getInstance()->getTexture(name);
 }
 
+SDL_Texture *ResourceManager::getTexture(const string &pName, BallType type)
+{
+    string name = pName + "_" + ResourceManager::getInstance()->ballTypeToString(type);
+    return ResourceManager::getInstance()->getTexture(name);
+}
+
 void ResourceManager::loadTextures()
 {
     // one texture file from which to load textures
@@ -84,7 +103,13 @@ void ResourceManager::loadTextures()
 
     // bricks
     SDL_Rect brickRect = {22, 18, 226, 80};
-    SDL_Surface *brickSurface = SDL_CreateRGBSurface(0, 226, 80, 32, 0, 0, 0, 0);
+    SDL_Surface *brickSurface = SDL_CreateRGBSurface(0, 236, 86, 32, 0, 0, 0, 0);
     destRect = {10, 10, 226, 80};
     addTexture("brick_normal", brickRect, pSurface, brickSurface, &destRect);
+
+    // ball
+    SDL_Rect ballRect = {1026, 700, 115, 115};
+    SDL_Surface *ballSurface = SDL_CreateRGBSurface(0, 115, 115, 32, 0, 0, 0, 0);
+    destRect = {10, 10, 115, 115};
+    addTexture("ball_normal", ballRect, pSurface, ballSurface, &destRect);
 }

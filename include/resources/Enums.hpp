@@ -13,6 +13,12 @@ enum class BrickType
 	UNBREAKABLE
 };
 
+enum class BallType
+{
+	NORMAL,
+	EXPLOSIVE
+};
+
 enum Direction
 {
 	UP,

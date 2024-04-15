@@ -36,8 +36,10 @@ public:
     void addTexture(const string &pName, SDL_Rect &pRect, SDL_Surface *pSurface, SDL_Surface *pTextureSurface, SDL_Rect *pDestRect);
     SDL_Texture *getTexture(const string &pName);
     SDL_Texture *getTexture(const string &pName, BrickType type);
+    SDL_Texture *getTexture(const string &pName, BallType type);
 
     std::string brickTypeToString(BrickType pType);
+    std::string ballTypeToString(BallType pType);
 };
 
 #include "graphics/GraphicsManager.hpp"
