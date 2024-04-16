@@ -6,6 +6,7 @@ Point gravityCenterPoint = Point(512, 360 - 20);
 
 Paddle::Paddle(double x, double y, double width, double height, double speed, double angularVelocity)
 {
+    this->entityType = GameObjectType::GameObjectPaddle;
     this->pTexture = ResourceManager::getInstance()->getTexture("paddle_basic");
     this->position.x = x;
     this->position.y = y;
@@ -32,7 +33,6 @@ void Paddle::update(eMapType pMapType)
         if (state[SDL_SCANCODE_LEFT])
         {
             position.x -= speed;
-            std::cout << "Position: " << position.x << std::endl;
         }
         if (state[SDL_SCANCODE_RIGHT])
         {
@@ -42,10 +42,6 @@ void Paddle::update(eMapType pMapType)
     }
     case eMapType::Circular:
     {
-        SDL_Rect gravityCenter = {gravityCenterPoint.x, gravityCenterPoint.y, 12, 12};
-        SDL_SetRenderDrawColor(GraphicsManager::getInstance()->getRenderer(), 255, 0, 0, 255);
-        SDL_RenderFillRect(GraphicsManager::getInstance()->getRenderer(), &gravityCenter);
-
         double angle = 0;
 
         if (state[SDL_SCANCODE_LEFT])
@@ -67,8 +63,6 @@ void Paddle::update(eMapType pMapType)
         this->angle = newAngle * 180 / M_PI;
         this->angle += 90;
 
-        std::cout << "new angle: " << this->angle << std::endl;
-
         break;
     }
     default:
@@ -78,53 +72,8 @@ void Paddle::update(eMapType pMapType)
 
 void Paddle::draw(eMapType pMapType)
 {
-    if (this->pTexture != nullptr)
-    {
-        SDL_Renderer *renderer = GraphicsManager::getInstance()->getRenderer();
-        if (renderer != nullptr)
-        {
-            switch (pMapType)
-            {
-            case eMapType::Basic:
-            {
-                for (int i = 0; i < 1024; i += 80)
-                {
-                    // clear bottom of the screen
-                    SDL_Rect rect = {i, 560, 80, 120};
-                    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-                    SDL_RenderFillRect(renderer, &rect);
-                }
-                break;
-            }
-            case eMapType::Circular:
-            {
-                // clear a circle without clearing the center
-                for (int i = 0; i < 360; i++)
-                {
-                    SDL_Rect rect = {490 + 296 * cos(i * M_PI / 180), 320 + 296 * sin(i * M_PI / 180), 80, 80};
-                    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-                    SDL_RenderFillRect(renderer, &rect);
-                }
-            }
-            default:
-                break;
-            }
-
-            SDL_Rect dstRect = {(int)position.x - 80, (int)position.y - 20, (int)width, (int)height};
-            // render with angle
-            std::cout << "new angle in draw: " << Paddle::getInstance()->angle << std::endl;
-            SDL_RenderCopyEx(renderer, pTexture, NULL, &dstRect, Paddle::getInstance()->angle, NULL, SDL_FLIP_NONE);
-            SDL_RenderPresent(renderer); // updates the screen
-        }
-        else
-        {
-            std::cerr << "Renderer is null" << std::endl;
-        }
-    }
-    else
-    {
-        std::cerr << "Texture is null" << std::endl;
-    }
+    SDL_Rect dstRect = {(int)position.x - 80, (int)position.y - 20, (int)width, (int)height};
+    SDL_RenderCopyEx(GraphicsManager::getInstance()->getRenderer(), pTexture, NULL, &dstRect, angle, NULL, SDL_FLIP_NONE);
 }
 
 void Paddle::collide(GameObject *other)

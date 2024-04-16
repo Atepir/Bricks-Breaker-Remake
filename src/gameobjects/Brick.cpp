@@ -2,6 +2,7 @@
 
 Brick::Brick(double x, double y, double width, double height, BrickType type, int health)
 {
+    this->entityType = GameObjectType::GameObjectBrick;
     this->position.x = x;
     this->position.y = y;
     this->width = width;

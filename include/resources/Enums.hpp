@@ -33,4 +33,11 @@ enum PaddleType
 	CircularPaddle,
 };
 
+enum GameObjectType
+{
+	GameObjectBall,
+	GameObjectPaddle,
+	GameObjectBrick
+};
+
 #endif

@@ -50,8 +50,8 @@ void GraphicsManager::init()
 
 void GraphicsManager::update()
 {
-    Paddle::getInstance()->update(mapType);
     Board::getInstance(mapType)->update();
+    Paddle::getInstance()->update(mapType);
     SDL_RenderPresent(pRenderer);
 }
 
@@ -62,56 +62,17 @@ void GraphicsManager::clear()
 
 void GraphicsManager::draw()
 {
+    this->clear();
     SDL_Rect rect = {0, 0, 1024, 720};
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
-    Paddle::getInstance()->draw(mapType);
     Board::getInstance(mapType)->draw();
+    Paddle::getInstance()->draw(mapType);
 }
 
 void GraphicsManager::quit()
 {
     SDL_DestroyWindow(pWindow);
     SDL_Quit();
-}
-
-SDL_Texture *GraphicsManager::loadTexture(const char *pFilename)
-{
-    SDL_Surface *pSurface = SDL_LoadBMP(pFilename);
-    if (pSurface == nullptr)
-    {
-        std::cerr << "Failed to load image " << pFilename << " " << SDL_GetError() << std::endl;
-        exit(1);
-    }
-
-    SDL_Texture *pTexture = nullptr;
-
-    if (pRenderer == nullptr)
-    {
-        // std::cerr << "pRenderer is null " << SDL_GetError() << std::endl;
-        if (pRenderer_copy == nullptr)
-        {
-            std::cerr << "pRenderer_copy is null " << SDL_GetError() << std::endl;
-            exit(1);
-        }
-        else
-        {
-            pTexture = SDL_CreateTextureFromSurface(pRenderer_copy, pSurface);
-        }
-    }
-    else
-    {
-        pTexture = SDL_CreateTextureFromSurface(pRenderer, pSurface);
-    }
-
-    if (pTexture == nullptr)
-    {
-        std::cerr << "Failed to create texture " << SDL_GetError() << std::endl;
-        exit(1);
-    }
-
-    SDL_FreeSurface(pSurface);
-
-    return pTexture;
 }
 
 SDL_Renderer *GraphicsManager::getRenderer()

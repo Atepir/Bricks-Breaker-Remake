@@ -18,6 +18,7 @@ protected:
     SDL_Texture *pTexture = nullptr;
 
 public:
+    GameObjectType entityType;
     Point position;
     GameObject();
     GameObject(Point position, Vector velocity, double angle, double angularVelocity, double scale, SDL_Texture *pTexture);

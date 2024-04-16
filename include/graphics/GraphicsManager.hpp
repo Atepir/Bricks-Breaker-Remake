@@ -32,8 +32,6 @@ public:
     void draw();
     void quit();
 
-    SDL_Texture *loadTexture(const char *pFilename);
-
     SDL_Renderer *getRenderer();
 };
 

@@ -46,9 +46,17 @@ void Game::run()
         if (keys[SDL_SCANCODE_ESCAPE])
             quit();
 
-        graphics.draw();
         graphics.update();
+        graphics.draw();
+        ball->update();
         ball->draw();
+
+        ball->collide(paddle);
+        std::vector<Brick *> bricks = Board::getInstance(mapType)->getBricks();
+        for (auto &brick : bricks)
+        {
+            ball->collide(brick);
+        }
 
         // Limit frame rate to 60 fps
         SDL_Delay(16); // utiliser SDL_GetTicks64() pour plus de precisions

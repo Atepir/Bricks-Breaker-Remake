@@ -29,6 +29,8 @@ public:
     Board &operator=(const Board &) = delete;
 
     static Board *getInstance(eMapType mapType);
+
+    std::vector<Brick *> getBricks() { return bricks; }
 };
 
 #endif // __BOARD_HPP
