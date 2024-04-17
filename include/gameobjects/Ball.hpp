@@ -6,6 +6,7 @@
 
 #include "gameobjects/GameObject.hpp"
 
+template <eMapType mapType>
 class GraphicsManager;
 
 class Ball : public GameObject
@@ -14,15 +15,14 @@ private:
     BallType type;
     double radius;
     double mass;
-    double x, y;
-    SDL_Texture *pTexture;
 
 public:
-    Ball(BallType type, double x, double y, double radius, double mass);
+    Ball(BallType type, Point point, double radius, double mass);
     ~Ball();
-    void update();
-    void draw();
-    void collide(GameObject *other);
+
+    void update() override;
+    void draw() override;
+    void collide(GameObject *other) override;
 };
 
 #include "graphics/GraphicsManager.hpp"

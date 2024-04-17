@@ -12,37 +12,44 @@ class ResourceManager;
 
 #define ROTATION_SPEED_MULTIPLIER 200
 
+template <eMapType mapType>
 class Paddle : public GameObject
 {
 private:
-    double width;
-    double height;
-    double speed;
-
-    static Paddle *instance;
-    SDL_Texture *pTexture;
+    static Paddle *instance = nullptr;
 
 public:
-    Paddle(double x, double y, double width, double height, double speed, double angularVelocity);
-    ~Paddle();
-    void update(eMapType pMapType);
-    void draw(eMapType pMapType);
-    void collide(GameObject *other);
+    Paddle(Point position, double width, double height, double speed, double angularVelocity)
+        : GameObject(position, width, height, speed, angularVelocity, ResourceManager::getInstance()->getTexture("paddle"))
+    {
+        entityType = GameObjectType::PADDLE;
+    }
+
+    ~Paddle() {}
 
     Paddle(const Paddle &) = delete;
     Paddle &operator=(const Paddle &) = delete;
 
-    static Paddle *getInstance();
-    double getWidth();
-    double getHeight();
-    double getSpeed();
+    static Paddle *getInstance()
+    {
+        if (instance == nullptr)
+        {
+            instance = new Paddle(420, 600, 160, 60, 30, 10);
+        }
+        return instance;
+    }
 
-    void setWidth(double width);
-    void setHeight(double height);
-    void setSpeed(double speed);
+    void update() override;
 
-    SDL_Texture *getTexture();
-    void setTexture(SDL_Texture *pTexture);
+    void draw() override
+    {
+        SDL_Rect dstRect = {(int)position.x - 80, (int)position.y - 20, (int)width, (int)height};
+        SDL_RenderCopyEx(GraphicsManager::getInstance()->getRenderer(), pTexture, NULL, &dstRect, angle, NULL, SDL_FLIP_NONE);
+    }
+
+    void collide(GameObject *other) override
+    {
+    }
 };
 
 #include "graphics/GraphicsManager.hpp"

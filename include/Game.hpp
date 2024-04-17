@@ -6,6 +6,7 @@
 #include "graphics/GraphicsManager.hpp"
 #include "gameobjects/GameObject.hpp"
 #include "gameobjects/Ball.hpp"
+#include "factories/BallFactory.hpp"
 #include "resources/Enums.hpp"
 
 class Game

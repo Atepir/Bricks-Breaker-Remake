@@ -1,5 +1,7 @@
 #include "Game.hpp"
 
+#define mapType eMapType::Basic
+
 Game *Game::pInstance = nullptr;
 
 Game::Game()
@@ -17,13 +19,14 @@ void Game::run()
     {
         std::cerr << "Echec de l'initialisation de la SDL " << SDL_GetError() << std::endl;
     }
-    eMapType mapType = eMapType::Basic;
 
-    GraphicsManager graphics = GraphicsManager(mapType);
-    graphics.init();
+    GraphicsManager<mapType> *graphics = GraphicsManager<mapType>::getInstance();
+    graphics->init();
 
-    Paddle *paddle = Paddle::getInstance();
-    Ball *ball = new Ball(BallType::NORMAL, 512, 360, 30, 1);
+    Paddle<mapType> *paddle = Paddle<mapType>::getInstance();
+    BallFactory ballFactory = BallFactory();
+
+    Ball *ball = ballFactory.createBall(BallType::NORMAL);
 
     while (mRunning)
     {
@@ -46,13 +49,13 @@ void Game::run()
         if (keys[SDL_SCANCODE_ESCAPE])
             quit();
 
-        graphics.update();
-        graphics.draw();
+        graphics->update();
+        graphics->draw();
         ball->update();
         ball->draw();
 
         ball->collide(paddle);
-        std::vector<Brick *> bricks = Board::getInstance(mapType)->getBricks();
+        std::vector<Brick *> bricks = Board<mapType>::getInstance()->getBricks();
         for (auto &brick : bricks)
         {
             ball->collide(brick);

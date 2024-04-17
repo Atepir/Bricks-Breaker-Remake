@@ -1,78 +1,24 @@
 #include "gameobjects/Board.hpp"
 
-Board *Board::instance = nullptr;
-
-Board *Board::getInstance(eMapType mapType)
+Board<eMapType::Basic>::Board()
 {
-    if (instance == nullptr)
+    bricks = std::vector<Brick *>();
+    for (int i = 0; i < 6; i++)
     {
-        instance = new Board(mapType);
-    }
-    return instance;
-}
-
-Board::Board(eMapType pMapType)
-{
-    mapType = pMapType;
-
-    switch (mapType)
-    {
-    case eMapType::Basic:
-    {
-        bricks = std::vector<Brick *>();
-        for (int i = 0; i < 6; i++)
+        for (int j = 0; j < 5; j++)
         {
-            for (int j = 0; j < 5; j++)
-            {
-                bricks.push_back(new Brick(PADDING + i * (BRICK_WIDTH + 1), PADDING + j * (BRICK_HEIGHT + 1), BRICK_WIDTH, BRICK_HEIGHT, BrickType::NORMAL, 1));
-            }
+            bricks.push_back(new Brick(Point(BOARD_PADDING + i * (BRICK_WIDTH + 1), BOARD_PADDING + j * (BRICK_HEIGHT + 1)), BRICK_WIDTH, BRICK_HEIGHT, BrickType::NORMAL, 1));
         }
-        break;
-    }
-    case eMapType::Circular:
-    {
-        bricks = std::vector<Brick *>();
-        for (int i = 0; i < 360; i += 30)
-        {
-            // must be different layers from
-            // the center of the circle
-            bricks.push_back(new Brick(512 + 100 * cos(i * M_PI / 180), 360 + 100 * sin(i * M_PI / 180), 50, 20, BrickType::NORMAL, 1));
-        }
-        break;
-    }
-    default:
-        break;
     }
 }
 
-Board::~Board()
+Board<eMapType::Circular>::Board()
 {
-    for (auto brick : bricks)
+    bricks = std::vector<Brick *>();
+    for (int i = 0; i < 360; i += 30)
     {
-        delete brick;
-    }
-}
-
-void Board::update()
-{
-    for (auto brick : bricks)
-    {
-        brick->update(mapType);
-    }
-}
-
-void Board::draw()
-{
-    for (auto brick : bricks)
-    {
-        brick->draw();
-    }
-}
-
-void Board::collide(GameObject *other)
-{
-    for (auto brick : bricks)
-    {
-        brick->collide(other);
+        // must be different layers from
+        // the center of the circle
+        bricks.push_back(new Brick(Point(512 + 100 * cos(i * M_PI / 180), 360 + 100 * sin(i * M_PI / 180)), 50, 20, BrickType::NORMAL, 1));
     }
 }

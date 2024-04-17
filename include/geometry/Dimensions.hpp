@@ -1,0 +1,10 @@
+#ifndef __DIMENSIONS_HPP
+#define __DIMENSIONS_HPP
+
+#define WINDOW_WIDTH 1024
+#define WINDOW_HEIGHT 768
+
+#define BOARD_WIDTH 800
+#define BOARD_HEIGHT 600
+
+#endif // __DIMENSIONS_HPP

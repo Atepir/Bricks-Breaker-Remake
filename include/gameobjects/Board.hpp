@@ -8,29 +8,56 @@
 #include "gameobjects/GameObject.hpp"
 #include "gameobjects/Brick.hpp"
 
-#define PADDING 72
+#define BOARD_PADDING 72
 
+template <eMapType mapType>
 class Board : public GameObject
 {
 private:
     std::vector<Brick *> bricks;
     eMapType mapType;
 
-    static Board *instance;
+    static Board *instance = nullptr;
 
 public:
-    Board(eMapType pMapType);
-    ~Board();
-    void update();
-    void draw();
-    void collide(GameObject *other);
+    Board();
+    ~Board()
+    {
+        for (auto brick : bricks)
+        {
+            delete brick;
+        }
+    }
 
     Board(const Board &) = delete;
     Board &operator=(const Board &) = delete;
 
-    static Board *getInstance(eMapType mapType);
+    static Board *getInstance()
+    {
+        if (instance == nullptr)
+        {
+            instance = new Board();
+        }
+        return instance;
+    }
 
     std::vector<Brick *> getBricks() { return bricks; }
+
+    void update() override
+    {
+        for (auto brick : bricks)
+        {
+            brick->update(mapType);
+        }
+    }
+
+    void draw() override
+    {
+        for (auto brick : bricks)
+        {
+            brick->draw();
+        }
+    }
 };
 
 #endif // __BOARD_HPP

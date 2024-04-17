@@ -1,94 +1,35 @@
 #include "graphics/GraphicsManager.hpp"
 
-GraphicsManager *GraphicsManager::pInstance = nullptr;
-SDL_Renderer *pRenderer_copy = nullptr;
-
-GraphicsManager *GraphicsManager::getInstance()
+void GraphicsManager<eMapType::Basic>::update()
 {
-    if (pInstance == nullptr)
-    {
-        pInstance = new GraphicsManager(eMapType::Basic);
-    }
-    return pInstance;
-}
-
-GraphicsManager::GraphicsManager(eMapType pMapType)
-{
-    pWindow = nullptr;
-    pRenderer = nullptr;
-    mapType = pMapType;
-}
-
-GraphicsManager::~GraphicsManager()
-{
-    quit();
-}
-
-void GraphicsManager::init()
-{
-    if (SDL_Init(SDL_INIT_VIDEO) != 0)
-    {
-        std::cerr << "Failed to initialize SDL " << SDL_GetError() << std::endl;
-        exit(1);
-    }
-
-    pWindow = SDL_CreateWindow("BricksBreaker Remake!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1024, 720, SDL_WINDOW_SHOWN);
-    if (pWindow == nullptr)
-    {
-        std::cerr << "Failed to create window " << SDL_GetError() << std::endl;
-        exit(1);
-    }
-
-    pRenderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (pRenderer == nullptr)
-    {
-        std::cerr << "Failed to create renderer for window " << SDL_GetError() << std::endl;
-        exit(1);
-    }
-    pRenderer_copy = pRenderer;
-}
-
-void GraphicsManager::update()
-{
-    Board::getInstance(mapType)->update();
-    Paddle::getInstance()->update(mapType);
+    Board<eMapType::Basic>::getInstance()->update();
+    Paddle<eMapType::Basic>::getInstance()->update();
     SDL_RenderPresent(pRenderer);
-}
+};
 
-void GraphicsManager::clear()
+void GraphicsManager<eMapType::Circular>::update()
 {
-    SDL_RenderClear(pRenderer);
-}
+    Board<eMapType::Circular>::getInstance()->update();
+    Paddle<eMapType::Circular>::getInstance()->update();
+    SDL_RenderPresent(pRenderer);
+};
 
-void GraphicsManager::draw()
+void GraphicsManager<eMapType::Basic>::draw()
 {
     this->clear();
     SDL_Rect rect = {0, 0, 1024, 720};
     SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
-    Board::getInstance(mapType)->draw();
-    Paddle::getInstance()->draw(mapType);
+
+    Board<eMapType::Basic>::getInstance()->draw();
+    Paddle<eMapType::Basic>::getInstance()->draw();
 }
 
-void GraphicsManager::quit()
+void GraphicsManager<eMapType::Circular>::draw()
 {
-    SDL_DestroyWindow(pWindow);
-    SDL_Quit();
-}
+    this->clear();
+    SDL_Rect rect = {0, 0, 1024, 720};
+    SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
 
-SDL_Renderer *GraphicsManager::getRenderer()
-{
-    if (pRenderer == nullptr)
-    {
-        // std::cerr << "pRenderer is null" << std::endl;
-        if (pRenderer_copy == nullptr)
-        {
-            std::cerr << "pRenderer_copy is null" << std::endl;
-            exit(1);
-        }
-        else
-        {
-            return pRenderer_copy;
-        }
-    }
-    return pRenderer;
+    Board<eMapType::Circular>::getInstance()->draw();
+    Paddle<eMapType::Circular>::getInstance()->draw();
 }

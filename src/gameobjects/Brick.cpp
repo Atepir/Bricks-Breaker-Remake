@@ -1,22 +1,28 @@
 #include "gameobjects/Brick.hpp"
 
-Brick::Brick(double x, double y, double width, double height, BrickType type, int health)
+Brick::Brick(Point position, double width, double height, BrickType type, int health) : GameObject(position, {0, 0}, 0, 0, nullptr)
 {
-    this->entityType = GameObjectType::GameObjectBrick;
-    this->position.x = x;
-    this->position.y = y;
     this->width = width;
     this->height = height;
     this->type = type;
     this->health = health;
-    this->pTexture = ResourceManager::getInstance()->getTexture("brick", type);
+
+    switch (type)
+    {
+    case BrickType::NORMAL:
+        pTexture = ResourceManager::getInstance()->getTexture("brick_normal");
+        break;
+    case BrickType::UNBREAKABLE:
+        pTexture = ResourceManager::getInstance()->getTexture("brick_unbreakable");
+        break;
+    }
 }
 
 Brick::~Brick()
 {
 }
 
-void Brick::update(eMapType pMapType)
+void Brick::update()
 {
     if (health <= 0)
     {

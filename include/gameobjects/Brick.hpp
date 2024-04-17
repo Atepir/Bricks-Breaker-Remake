@@ -16,16 +16,14 @@ class Brick : public GameObject
 private:
     BrickType type;
     int health;
-    SDL_Texture *pTexture;
 
 public:
-    double width;
-    double height;
-    Brick(double x, double y, double width, double height, BrickType type, int health);
+    Brick(Point position, double width, double height, BrickType type, int health);
     ~Brick();
-    void update(eMapType pMapType);
-    void draw();
-    void collide(GameObject *other);
+
+    void update() override;
+    void draw() override;
+    void collide(GameObject *other) override;
 };
 
 #include "graphics/GraphicsManager.hpp"
