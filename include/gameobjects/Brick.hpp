@@ -5,10 +5,12 @@
 
 #include "gameobjects/GameObject.hpp"
 #include "resources/Enums.hpp"
+#include "resources/Constants.hpp"
 
 #define BRICK_WIDTH 140
 #define BRICK_HEIGHT 48
 
+template <eMapType mapType>
 class GraphicsManager;
 
 class Brick : public GameObject

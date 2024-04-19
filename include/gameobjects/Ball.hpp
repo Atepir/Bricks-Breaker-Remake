@@ -5,6 +5,7 @@
 #include <cmath>
 
 #include "gameobjects/GameObject.hpp"
+#include "resources/Constants.hpp"
 
 template <eMapType mapType>
 class GraphicsManager;

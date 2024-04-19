@@ -1,6 +1,6 @@
 #include "gameobjects/Board.hpp"
 
-Board<eMapType::Basic>::Board()
+Board<eMapType::Basic>::Board<eMapType::Basic>()
 {
     bricks = std::vector<Brick *>();
     for (int i = 0; i < 6; i++)
@@ -12,7 +12,7 @@ Board<eMapType::Basic>::Board()
     }
 }
 
-Board<eMapType::Circular>::Board()
+Board<eMapType::Circular>::Board<eMapType::Circular>()
 {
     bricks = std::vector<Brick *>();
     for (int i = 0; i < 360; i += 30)

@@ -20,13 +20,14 @@ void Game::run()
         std::cerr << "Echec de l'initialisation de la SDL " << SDL_GetError() << std::endl;
     }
 
-    GraphicsManager<mapType> *graphics = GraphicsManager<mapType>::getInstance();
+    GraphicsManager<MAP_TYPE> *graphics = GraphicsManager<MAP_TYPE>::getInstance();
     graphics->init();
 
-    Paddle<mapType> *paddle = Paddle<mapType>::getInstance();
+    Paddle<MAP_TYPE> *paddle = Paddle<MAP_TYPE>::getInstance();
     BallFactory ballFactory = BallFactory();
 
     Ball *ball = ballFactory.createBall(BallType::NORMAL);
+    Board<MAP_TYPE> *board = new Board<MAP_TYPE>();
 
     while (mRunning)
     {

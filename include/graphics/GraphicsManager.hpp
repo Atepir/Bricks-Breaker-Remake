@@ -15,7 +15,7 @@ protected:
     SDL_Window *pWindow;
     SDL_Renderer *pRenderer;
 
-    static GraphicsManager *pInstance = nullptr;
+    static inline GraphicsManager* pInstance = nullptr;
 
 public:
     GraphicsManager() : pWindow(nullptr), pRenderer(nullptr) {}

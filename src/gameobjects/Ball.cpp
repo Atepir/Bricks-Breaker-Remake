@@ -50,7 +50,7 @@ void Ball::update()
 void Ball::draw()
 {
     SDL_Rect destRect = {position.x, position.y, radius, radius};
-    SDL_RenderCopy(GraphicsManager<mapType>::getInstance()->getRenderer(), pTexture, NULL, &destRect);
+    SDL_RenderCopy(GraphicsManager<MAP_TYPE>::getInstance()->getRenderer(), pTexture, NULL, &destRect);
 }
 
 void Ball::collide(GameObject *other)

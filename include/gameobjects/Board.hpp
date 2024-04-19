@@ -15,9 +15,8 @@ class Board : public GameObject
 {
 private:
     std::vector<Brick *> bricks;
-    eMapType mapType;
 
-    static Board *instance = nullptr;
+    static inline Board *instance = nullptr;
 
 public:
     Board();
@@ -47,7 +46,7 @@ public:
     {
         for (auto brick : bricks)
         {
-            brick->update(mapType);
+            brick->update();
         }
     }
 
@@ -58,6 +57,8 @@ public:
             brick->draw();
         }
     }
+
+    void collide(GameObject *other) override {}
 };
 
 #endif // __BOARD_HPP

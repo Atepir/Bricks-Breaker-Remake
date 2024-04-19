@@ -6,7 +6,9 @@
 
 #include "gameobjects/GameObject.hpp"
 #include "resources/Enums.hpp"
+#include "resources/Constants.hpp"
 
+template <eMapType mapType>
 class GraphicsManager;
 class ResourceManager;
 
@@ -16,13 +18,13 @@ template <eMapType mapType>
 class Paddle : public GameObject
 {
 private:
-    static Paddle *instance = nullptr;
+    static inline Paddle *instance = nullptr;
 
 public:
-    Paddle(Point position, double width, double height, double speed, double angularVelocity)
-        : GameObject(position, width, height, speed, angularVelocity, ResourceManager::getInstance()->getTexture("paddle"))
+    Paddle(Point position, double width, double height, Vector velocity, double angularVelocity)
+        : GameObject(position, velocity, angle, angularVelocity, ResourceManager::getInstance()->getTexture("paddle"))
     {
-        entityType = GameObjectType::PADDLE;
+        entityType = GameObjectType::GameObjectPaddle;
     }
 
     ~Paddle() {}
@@ -34,7 +36,7 @@ public:
     {
         if (instance == nullptr)
         {
-            instance = new Paddle(420, 600, 160, 60, 30, 10);
+            instance = new Paddle(Point(420, 600), 160, 60, Vector(30, 30), 10);
         }
         return instance;
     }
@@ -44,7 +46,7 @@ public:
     void draw() override
     {
         SDL_Rect dstRect = {(int)position.x - 80, (int)position.y - 20, (int)width, (int)height};
-        SDL_RenderCopyEx(GraphicsManager::getInstance()->getRenderer(), pTexture, NULL, &dstRect, angle, NULL, SDL_FLIP_NONE);
+        SDL_RenderCopyEx(GraphicsManager<MAP_TYPE>::getInstance()->getRenderer(), pTexture, NULL, &dstRect, angle, NULL, SDL_FLIP_NONE);
     }
 
     void collide(GameObject *other) override

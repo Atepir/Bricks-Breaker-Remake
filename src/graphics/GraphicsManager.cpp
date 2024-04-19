@@ -1,6 +1,6 @@
 #include "graphics/GraphicsManager.hpp"
 
-void GraphicsManager<eMapType::Basic>::update()
+void GraphicsManager<Basic>::update()
 {
     Board<eMapType::Basic>::getInstance()->update();
     Paddle<eMapType::Basic>::getInstance()->update();
