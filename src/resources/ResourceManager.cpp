@@ -61,7 +61,7 @@ void ResourceManager::addTexture(const std::string &pName, SDL_Rect &pRect, SDL_
         SDL_BlitSurface(pSurface, &pRect, pTextureSurface, NULL);
     else
         SDL_BlitScaled(pSurface, &pRect, pTextureSurface, pDestRect);
-    SDL_Texture *pTexture = SDL_CreateTextureFromSurface(GraphicsManager<MAP_TYPE>::getInstance()->getRenderer(), pTextureSurface);
+    SDL_Texture *pTexture = SDL_CreateTextureFromSurface(GraphicsManager::getInstance()->getRenderer(), pTextureSurface);
     addTexture(pName, pTexture);
 }
 
@@ -112,4 +112,7 @@ void ResourceManager::loadTextures()
     SDL_Surface *ballSurface = SDL_CreateRGBSurface(0, 115, 115, 32, 0, 0, 0, 0);
     destRect = {10, 10, 115, 115};
     addTexture("ball_normal", ballRect, pSurface, ballSurface, &destRect);
+
+    std::cout << "Textures loaded" << std::endl;
+    std::cout << "paddle_basic: " << mTextures["paddle_basic"] << std::endl;
 }

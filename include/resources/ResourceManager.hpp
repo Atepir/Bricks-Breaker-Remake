@@ -9,7 +9,6 @@
 
 #include "resources/Enums.hpp"
 
-template <eMapType mapType>
 class GraphicsManager;
 
 using namespace std;

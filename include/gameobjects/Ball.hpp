@@ -7,8 +7,7 @@
 #include "gameobjects/GameObject.hpp"
 #include "resources/Constants.hpp"
 
-template <eMapType mapType>
-class GraphicsManager;
+class ResourceManager;
 
 class Ball : public GameObject
 {
@@ -22,10 +21,9 @@ public:
     ~Ball();
 
     void update() override;
-    void draw() override;
     void collide(GameObject *other) override;
 };
 
-#include "graphics/GraphicsManager.hpp"
+#include "resources/ResourceManager.hpp"
 
 #endif // __BALL_HPP

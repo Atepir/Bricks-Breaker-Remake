@@ -1,7 +1,5 @@
 #include "Game.hpp"
 
-#define mapType eMapType::Basic
-
 Game *Game::pInstance = nullptr;
 
 Game::Game()
@@ -20,13 +18,14 @@ void Game::run()
         std::cerr << "Echec de l'initialisation de la SDL " << SDL_GetError() << std::endl;
     }
 
-    GraphicsManager<MAP_TYPE> *graphics = GraphicsManager<MAP_TYPE>::getInstance();
+    GraphicsManager *graphics = GraphicsManager::getInstance();
     graphics->init();
 
     Paddle<MAP_TYPE> *paddle = Paddle<MAP_TYPE>::getInstance();
-    BallFactory ballFactory = BallFactory();
 
+    BallFactory ballFactory = BallFactory();
     Ball *ball = ballFactory.createBall(BallType::NORMAL);
+
     Board<MAP_TYPE> *board = new Board<MAP_TYPE>();
 
     while (mRunning)
@@ -50,20 +49,31 @@ void Game::run()
         if (keys[SDL_SCANCODE_ESCAPE])
             quit();
 
-        graphics->update();
-        graphics->draw();
-        ball->update();
-        ball->draw();
-
         ball->collide(paddle);
-        std::vector<Brick *> bricks = Board<mapType>::getInstance()->getBricks();
+        std::vector<Brick *> bricks = Board<MAP_TYPE>::getInstance()->getBricks();
         for (auto &brick : bricks)
         {
             ball->collide(brick);
         }
 
+        graphics->clear();
+
+        ball->update();
+        paddle->update();
+        board->update();
+
+        for (auto &brick : bricks)
+        {
+            brick->render(*graphics);
+        }
+
+        ball->render(*graphics);
+        paddle->render(*graphics);
+
+        graphics->render();
+
         // Limit frame rate to 60 fps
-        SDL_Delay(16); // utiliser SDL_GetTicks64() pour plus de precisions
+        SDL_Delay(1000 / 20);
     }
     SDL_Quit(); // Quit SDL
 }

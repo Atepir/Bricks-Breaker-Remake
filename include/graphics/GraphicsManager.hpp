@@ -4,21 +4,19 @@
 #include <SDL.h>
 #include <iostream>
 
-#include "gameobjects/Paddle.hpp"
-#include "gameobjects/Board.hpp"
+#include "geometry/Point.hpp"
 #include "resources/Enums.hpp"
 
-template <eMapType mapType>
 class GraphicsManager
 {
 protected:
     SDL_Window *pWindow;
     SDL_Renderer *pRenderer;
 
-    static inline GraphicsManager* pInstance = nullptr;
+    static inline GraphicsManager *pInstance = nullptr;
 
 public:
-    GraphicsManager() : pWindow(nullptr), pRenderer(nullptr) {}
+    GraphicsManager();
 
     GraphicsManager(const GraphicsManager &) = delete;
     void operator=(const GraphicsManager &) = delete;
@@ -72,8 +70,16 @@ public:
         SDL_Quit();
     }
 
-    void update();
-    void draw();
+    void draw(SDL_Texture *pTexture, Point position, double width, double height, double angle)
+    {
+        SDL_Rect destRect = {position.x, position.y, width, height};
+        SDL_RenderCopyEx(pRenderer, pTexture, NULL, &destRect, angle, NULL, SDL_FLIP_NONE);
+    }
+
+    void render()
+    {
+        SDL_RenderPresent(pRenderer);
+    }
 
     SDL_Renderer *getRenderer()
     {

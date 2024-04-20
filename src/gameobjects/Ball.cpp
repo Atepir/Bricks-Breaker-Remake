@@ -1,10 +1,13 @@
 #include "gameobjects/Ball.hpp"
 
-Ball::Ball(BallType type, Point point, double radius, double mass) : GameObject(point, Vector(0, 0), 0, 0, nullptr)
+Ball::Ball(BallType type, Point point, double radius, double mass) : GameObject(point, 30, 30, Vector(20, 20), 0, 0, nullptr)
 {
     this->type = type;
     this->radius = radius;
     this->mass = mass;
+    pTexture = ResourceManager::getInstance()->getTexture("ball_normal");
+
+    this->entityType = GameObjectType::GameObjectBall;
 }
 
 Ball::~Ball()
@@ -45,12 +48,6 @@ void Ball::update()
     {
         position.x = 0;
     }
-}
-
-void Ball::draw()
-{
-    SDL_Rect destRect = {position.x, position.y, radius, radius};
-    SDL_RenderCopy(GraphicsManager<MAP_TYPE>::getInstance()->getRenderer(), pTexture, NULL, &destRect);
 }
 
 void Ball::collide(GameObject *other)

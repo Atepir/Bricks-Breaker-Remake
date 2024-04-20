@@ -50,14 +50,6 @@ public:
         }
     }
 
-    void draw() override
-    {
-        for (auto brick : bricks)
-        {
-            brick->draw();
-        }
-    }
-
     void collide(GameObject *other) override {}
 };
 

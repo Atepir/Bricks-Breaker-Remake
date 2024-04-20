@@ -8,8 +8,10 @@ GameObject::~GameObject()
 {
 }
 
-GameObject::GameObject(Point position, Vector velocity, double angle, double angularVelocity, SDL_Texture *pTexture)
+GameObject::GameObject(Point position, double width, double height, Vector velocity, double angle, double angularVelocity, SDL_Texture *pTexture)
 {
+    this->width = width;
+    this->height = height;
     this->position = position;
     this->velocity = velocity;
     this->angle = angle;
@@ -18,10 +20,6 @@ GameObject::GameObject(Point position, Vector velocity, double angle, double ang
 }
 
 void GameObject::update()
-{
-}
-
-void GameObject::draw()
 {
 }
 

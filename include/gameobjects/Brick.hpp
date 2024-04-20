@@ -6,12 +6,10 @@
 #include "gameobjects/GameObject.hpp"
 #include "resources/Enums.hpp"
 #include "resources/Constants.hpp"
+#include "resources/ResourceManager.hpp"
 
 #define BRICK_WIDTH 140
 #define BRICK_HEIGHT 48
-
-template <eMapType mapType>
-class GraphicsManager;
 
 class Brick : public GameObject
 {
@@ -24,10 +22,7 @@ public:
     ~Brick();
 
     void update() override;
-    void draw() override;
     void collide(GameObject *other) override;
 };
-
-#include "graphics/GraphicsManager.hpp"
 
 #endif // __BRICK_HPP

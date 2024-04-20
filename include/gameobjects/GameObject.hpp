@@ -7,17 +7,17 @@
 #include "geometry/Point.hpp"
 #include "geometry/Vector.hpp"
 #include "resources/Enums.hpp"
+#include "graphics/Drawable.hpp"
 
 /**
  * @brief Abstract class that represents a game object
  */
-class GameObject
+class GameObject : public Drawable
 {
 protected:
     GameObjectType entityType;
     Point position;
     Vector velocity;
-    SDL_Texture *pTexture = nullptr;
 
     double angle;
     double angularVelocity;
@@ -37,7 +37,7 @@ public:
      * @param angularVelocity The angular velocity of the object
      * @param pTexture The texture of the object
      */
-    GameObject(Point position, Vector velocity, double angle, double angularVelocity, SDL_Texture *pTexture);
+    GameObject(Point position, double width, double height, Vector velocity, double angle, double angularVelocity, SDL_Texture *pTexture);
 
     ~GameObject();
 
@@ -48,9 +48,14 @@ public:
 
     GameObjectType getEntityType() { return entityType; }
 
+    void render(GraphicsManager &renderer) override
+    {
+        // std::cout << "Rendering GameObject: " << entityType << " at position: " << position.x << ", " << position.y << " with texture: " << pTexture << std::endl;
+        renderer.draw(pTexture, position, width, height, angle);
+    }
+
 #pragma region Virtual methods
     virtual void update();
-    virtual void draw();
     virtual void collide(GameObject *other) = 0;
 #pragma endregion
 };
