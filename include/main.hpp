@@ -4,9 +4,6 @@
 #include <SDL.h>
 #include <iostream>
 
-#include "Graphics.hpp"
-#include "GameObject.hpp"
-#include "Enums.hpp"
-
+#include "Game.hpp"
 
 #endif // __MAIN_HPP
