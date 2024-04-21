@@ -1,17 +1,19 @@
 #include "gameobjects/Brick.hpp"
 
-Brick::Brick(Point position, double width, double height, BrickType type, int health) : GameObject(position, width, height, {0, 0}, 0, 0, nullptr)
-{
-    this->type = type;
-    this->health = health;
+using namespace GameObjects;
 
-    switch (type)
+Brick::Brick(Point position, double width, double height, BrickType type, int health) : GameObject(position, width, height, {0, 0}, 0, 0)
+{
+    this->mType = type;
+    this->mHealth = health;
+
+    switch (mType)
     {
     case BrickType::NORMAL:
-        pTexture = ResourceManager::getInstance()->getTexture("brick_normal");
+        texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Normal);
         break;
     case BrickType::UNBREAKABLE:
-        pTexture = ResourceManager::getInstance()->getTexture("brick_unbreakable");
+        texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Unbreakable);
         break;
     }
 
@@ -24,12 +26,12 @@ Brick::~Brick()
 
 void Brick::update()
 {
-    if (health <= 0)
+    if (mHealth <= 0)
     {
         delete this;
     }
 }
 
-void Brick::collide(GameObject *other)
+void Brick::collide(GameObject *pOther)
 {
 }

@@ -1,5 +1,8 @@
 #include "factories/BallFactory.hpp"
 
+using namespace Factories;
+using namespace GameObjects;
+
 Ball *BallFactory::createBall(BallType pType)
 {
     switch (pType)

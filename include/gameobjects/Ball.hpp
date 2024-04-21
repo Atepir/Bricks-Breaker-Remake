@@ -9,20 +9,26 @@
 
 class ResourceManager;
 
-class Ball : public GameObject
+namespace GameObjects
 {
-private:
-    BallType type;
-    double radius;
-    double mass;
+    /**
+     * @brief Represents a ball object
+     */
+    class Ball : public GameObject
+    {
+    private:
+        BallType mType;
+        double mRadius;
+        double mMass;
 
-public:
-    Ball(BallType type, Point point, double radius, double mass);
-    ~Ball();
+    public:
+        Ball(BallType type, Point point, double radius, double mass);
+        ~Ball();
 
-    void update() override;
-    void collide(GameObject *other) override;
-};
+        void update() override;
+        void collide(GameObject *pOther) override;
+    };
+}
 
 #include "resources/ResourceManager.hpp"
 

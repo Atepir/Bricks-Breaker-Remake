@@ -11,18 +11,21 @@
 #define BRICK_WIDTH 140
 #define BRICK_HEIGHT 48
 
-class Brick : public GameObject
+namespace GameObjects
 {
-private:
-    BrickType type;
-    int health;
+    class Brick : public GameObject
+    {
+    private:
+        BrickType mType;
+        int mHealth;
 
-public:
-    Brick(Point position, double width, double height, BrickType type, int health);
-    ~Brick();
+    public:
+        Brick(Point position, double width, double height, BrickType type, int health);
+        ~Brick();
 
-    void update() override;
-    void collide(GameObject *other) override;
-};
+        void update() override;
+        void collide(GameObject *pOther) override;
+    };
+}
 
 #endif // __BRICK_HPP

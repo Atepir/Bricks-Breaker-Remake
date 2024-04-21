@@ -1,5 +1,7 @@
 #include "gameobjects/GameObject.hpp"
 
+using namespace GameObjects;
+
 GameObject::GameObject()
 {
 }
@@ -8,7 +10,7 @@ GameObject::~GameObject()
 {
 }
 
-GameObject::GameObject(Point position, double width, double height, Vector velocity, double angle, double angularVelocity, SDL_Texture *pTexture)
+GameObject::GameObject(Point position, double width, double height, Vector velocity, double angle, double angularVelocity)
 {
     this->width = width;
     this->height = height;
@@ -16,7 +18,6 @@ GameObject::GameObject(Point position, double width, double height, Vector veloc
     this->velocity = velocity;
     this->angle = angle;
     this->angularVelocity = angularVelocity;
-    this->pTexture = pTexture;
 }
 
 void GameObject::update()

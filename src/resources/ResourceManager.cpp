@@ -1,5 +1,7 @@
 #include "resources/ResourceManager.hpp"
 
+using namespace Resources;
+
 ResourceManager *ResourceManager::pInstance = nullptr;
 
 ResourceManager *ResourceManager::getInstance()
@@ -14,105 +16,53 @@ ResourceManager *ResourceManager::getInstance()
 
 ResourceManager::ResourceManager()
 {
+    mTextures = std::unordered_map<eTextureKey, Graphics::Texture *>();
 }
 
 ResourceManager::~ResourceManager()
 {
     for (auto &texture : mTextures)
     {
-        delete texture.second;
+        texture.second->~Texture();
     }
 }
 
-std::string ResourceManager::brickTypeToString(BrickType pType)
+void ResourceManager::addTexture(const eTextureKey &pTextureKey, Graphics::Texture *pTexture)
 {
-    switch (pType)
-    {
-    case BrickType::NORMAL:
-        return "normal";
-    case BrickType::UNBREAKABLE:
-        return "unbreakable";
-    default:
-        return "";
-    }
+    mTextures[pTextureKey] = pTexture;
 }
 
-std::string ResourceManager::ballTypeToString(BallType pType)
+Graphics::Texture *ResourceManager::getTexture(const eTextureKey &pTextureKey)
 {
-    switch (pType)
-    {
-    case BallType::NORMAL:
-        return "normal";
-    case BallType::EXPLOSIVE:
-        return "explosive";
-    default:
-        return "";
-    }
-}
-
-void ResourceManager::addTexture(const std::string &pName, SDL_Texture *pTexture)
-{
-    mTextures[pName] = pTexture;
-}
-
-void ResourceManager::addTexture(const std::string &pName, SDL_Rect &pRect, SDL_Surface *pSurface, SDL_Surface *pTextureSurface, SDL_Rect *pDestRect)
-{
-    if (pDestRect == NULL)
-        SDL_BlitSurface(pSurface, &pRect, pTextureSurface, NULL);
-    else
-        SDL_BlitScaled(pSurface, &pRect, pTextureSurface, pDestRect);
-    SDL_Texture *pTexture = SDL_CreateTextureFromSurface(GraphicsManager::getInstance()->getRenderer(), pTextureSurface);
-    addTexture(pName, pTexture);
-}
-
-SDL_Texture *ResourceManager::getTexture(const string &pName)
-{
-    return mTextures[pName];
-}
-
-SDL_Texture *ResourceManager::getTexture(const string &pName, BrickType type)
-{
-    string name = pName + "_" + ResourceManager::getInstance()->brickTypeToString(type);
-    return ResourceManager::getInstance()->getTexture(name);
-}
-
-SDL_Texture *ResourceManager::getTexture(const string &pName, BallType type)
-{
-    string name = pName + "_" + ResourceManager::getInstance()->ballTypeToString(type);
-    return ResourceManager::getInstance()->getTexture(name);
+    return mTextures[pTextureKey];
 }
 
 void ResourceManager::loadTextures()
 {
-    // one texture file from which to load textures
-    SDL_Surface *pSurface = SDL_LoadBMP("set.bmp");
-    if (pSurface == nullptr)
-    {
-        std::cerr << "Failed to load image "
-                  << "set.bmp"
-                  << " " << SDL_GetError() << std::endl;
-        exit(1);
-    }
+    std::unique_ptr<Graphics::TextureHelper> textureHelper = std::make_unique<Graphics::TextureHelper>();
+    textureHelper->loadTileset("set.bmp");
 
     // load the textures
-    // paddle
-    SDL_Rect paddleRect = {500, 16, 212, 70};
-    SDL_Surface *paddleSurface = SDL_CreateRGBSurface(0, 212, 70, 32, 0, 0, 0, 0);
-    SDL_Rect destRect = {10, 10, 212, 70};
-    addTexture("paddle_basic", paddleRect, pSurface, paddleSurface, &destRect);
+    // paddles
+    addTexture(eTextureKey::Texture_Paddle_Basic,
+               textureHelper->loadTexture("paddle_basic", 500, 16, 212, 70, 10, 10, 212, 70));
 
     // bricks
-    SDL_Rect brickRect = {22, 18, 226, 80};
-    SDL_Surface *brickSurface = SDL_CreateRGBSurface(0, 236, 86, 32, 0, 0, 0, 0);
-    destRect = {10, 10, 226, 80};
-    addTexture("brick_normal", brickRect, pSurface, brickSurface, &destRect);
+    addTexture(eTextureKey::Texture_Brick_Normal,
+               textureHelper->loadTexture("brick_normal", 22, 18, 226, 80, 10, 10, 226, 80));
 
-    // ball
-    SDL_Rect ballRect = {1026, 700, 115, 115};
-    SDL_Surface *ballSurface = SDL_CreateRGBSurface(0, 115, 115, 32, 0, 0, 0, 0);
-    destRect = {10, 10, 115, 115};
-    addTexture("ball_normal", ballRect, pSurface, ballSurface, &destRect);
+    // balls
+    addTexture(eTextureKey::Texture_Ball_Basic,
+               textureHelper->loadTexture("ball_normal", 1026, 700, 115, 115, 10, 10, 115, 115));
+
+    // Graphics::GraphicsManager::getInstance()->draw(getTexture(eTextureKey::Texture_Paddle_Basic)->getTexture(), {50, 50}, 100, 50, 0);
+    // Graphics::GraphicsManager::getInstance()->render();
 
     std::cout << "Textures loaded" << std::endl;
-    std::cout << "paddle_basic: " << mTextures["paddle_basic"] << std::endl;
+    std::cout << "Number of textures loaded: " << mTextures.size() << std::endl;
+
+    for (auto &texture : mTextures)
+    {
+        std::cout << texture.second << std::endl;
+    }
 }

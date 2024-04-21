@@ -1,19 +1,21 @@
 #include "graphics/Drawable.hpp"
 
-Drawable::Drawable() : visible(true)
+using namespace Graphics;
+
+IDrawable::IDrawable() : visible(true)
 {
 }
 
-Drawable::~Drawable()
+IDrawable::~IDrawable()
 {
 }
 
-void Drawable::setVisible(bool visible)
+void IDrawable::setVisible(bool visible)
 {
     this->visible = visible;
 }
 
-bool Drawable::isVisible()
+bool IDrawable::isVisible()
 {
     return visible;
 }

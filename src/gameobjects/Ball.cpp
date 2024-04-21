@@ -1,12 +1,13 @@
 #include "gameobjects/Ball.hpp"
 
-Ball::Ball(BallType type, Point point, double radius, double mass) : GameObject(point, 30, 30, Vector(20, 20), 0, 0, nullptr)
-{
-    this->type = type;
-    this->radius = radius;
-    this->mass = mass;
-    pTexture = ResourceManager::getInstance()->getTexture("ball_normal");
+using namespace GameObjects;
 
+Ball::Ball(BallType type, Point point, double radius, double mass) : GameObject(point, 30, 30, Vector(20, 20), 0, 0)
+{
+    this->mType = type;
+    this->mRadius = radius;
+    this->mMass = mass;
+    this->texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Ball_Basic);
     this->entityType = GameObjectType::GameObjectBall;
 }
 
@@ -50,14 +51,14 @@ void Ball::update()
     }
 }
 
-void Ball::collide(GameObject *other)
+void Ball::collide(GameObject *pOther)
 {
-    if (other->getEntityType() == GameObjectType::GameObjectPaddle)
+    if (pOther->getEntityType() == GameObjectType::GameObjectPaddle)
     {
         // if the collision happen on the left part of the paddle, then the ball will go to the left
-        if (position.x + radius > other->getPosition().x && position.x < other->getPosition().x + other->getWidth())
+        if (position.x + mRadius > pOther->getPosition().x && position.x < pOther->getPosition().x + pOther->getWidth())
         {
-            if (position.y + radius > other->getPosition().y && position.y < other->getPosition().y + other->getHeight())
+            if (position.y + mRadius > pOther->getPosition().y && position.y < pOther->getPosition().y + pOther->getHeight())
             {
                 velocity.y = -velocity.y;
                 velocity.x = -2;
@@ -66,19 +67,19 @@ void Ball::collide(GameObject *other)
 
         // if the collision happen on the right part of the paddle, then the ball will go to the right
 
-        if (position.x + radius > other->getPosition().x && position.x < other->getPosition().x + other->getWidth())
+        if (position.x + mRadius > pOther->getPosition().x && position.x < pOther->getPosition().x + pOther->getWidth())
         {
-            if (position.y + radius > other->getPosition().y && position.y < other->getPosition().y + other->getHeight())
+            if (position.y + mRadius > pOther->getPosition().y && position.y < pOther->getPosition().y + pOther->getHeight())
             {
                 velocity.x = 2;
             }
         }
     }
-    else if (other->getEntityType() == GameObjectType::GameObjectBrick)
+    else if (pOther->getEntityType() == GameObjectType::GameObjectBrick)
     {
-        if (position.y + radius > other->getPosition().y && position.y < other->getPosition().y + other->getHeight())
+        if (position.y + mRadius > pOther->getPosition().y && position.y < pOther->getPosition().y + pOther->getHeight())
         {
-            if (position.x + radius > other->getPosition().x && position.x < other->getPosition().x + other->getWidth())
+            if (position.x + mRadius > pOther->getPosition().x && position.x < pOther->getPosition().x + pOther->getWidth())
             {
                 velocity.y = -velocity.y;
             }

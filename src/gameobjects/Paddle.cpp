@@ -1,5 +1,7 @@
 #include "gameobjects/Paddle.hpp"
 
+using namespace GameObjects;
+
 Point gravityCenterPoint = Point(512, 360 - 20);
 
 void Paddle<eMapType::Basic>::update()
@@ -14,6 +16,8 @@ void Paddle<eMapType::Basic>::update()
     {
         position.x += velocity.x;
     }
+
+    // std::cout << "Paddle position: " << position.x << ", " << position.y << std::endl;
 }
 
 void Paddle<eMapType::Circular>::update()

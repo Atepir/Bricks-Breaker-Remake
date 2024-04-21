@@ -1,3 +1,3 @@
 #include "graphics/GraphicsManager.hpp"
 
-GraphicsManager::GraphicsManager() : pWindow(nullptr), pRenderer(nullptr) {}
+Graphics::GraphicsManager::GraphicsManager() : pWindow(nullptr), pRenderer(nullptr) {}

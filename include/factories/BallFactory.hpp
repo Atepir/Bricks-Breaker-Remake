@@ -4,13 +4,16 @@
 #include "gameobjects/Ball.hpp"
 #include "geometry/Dimensions.hpp"
 
-class BallFactory
+namespace Factories
 {
-public:
-    BallFactory() = default;
-    virtual ~BallFactory() = default;
+    class BallFactory
+    {
+    public:
+        BallFactory() = default;
+        virtual ~BallFactory() = default;
 
-    static Ball *createBall(BallType pType);
-};
+        static GameObjects::Ball *createBall(BallType pType);
+    };
+}
 
 #endif // __BALL_FACTORY_HPP

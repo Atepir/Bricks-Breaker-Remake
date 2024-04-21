@@ -1,47 +1,52 @@
 #ifndef __RESOURCE_MANAGER_HPP
 #define __RESOURCE_MANAGER_HPP
 
-#include "SDL.h"
-
 #include <unordered_map>
 #include <vector>
 #include <iostream>
 
 #include "resources/Enums.hpp"
+#include "resources/ResourceHelper.hpp"
 
-class GraphicsManager;
+#include "graphics/TextureHelper.hpp"
+#include "graphics/Texture.hpp"
 
 using namespace std;
 
-class ResourceManager
+namespace Resources
 {
-private:
-    unordered_map<string, SDL_Texture *> mTextures;
+    class ResourceManager
+    {
+    private:
+        unordered_map<eTextureKey, Graphics::Texture *> mTextures;
 
-    void loadTextures();
+        void loadTextures();
 
-    static ResourceManager *pInstance;
+        static ResourceManager *pInstance;
 
-public:
-    ResourceManager();
+    public:
+        ResourceManager();
 
-    static ResourceManager *getInstance();
+        static ResourceManager *getInstance();
 
-    ResourceManager(const ResourceManager &) = delete;
-    ResourceManager &operator=(const ResourceManager &) = delete;
+        ResourceManager(const ResourceManager &) = delete;
+        ResourceManager &operator=(const ResourceManager &) = delete;
 
-    ~ResourceManager();
+        ~ResourceManager();
 
-    void addTexture(const string &pName, SDL_Texture *pTexture);
-    void addTexture(const string &pName, SDL_Rect &pRect, SDL_Surface *pSurface, SDL_Surface *pTextureSurface, SDL_Rect *pDestRect);
-    SDL_Texture *getTexture(const string &pName);
-    SDL_Texture *getTexture(const string &pName, BrickType type);
-    SDL_Texture *getTexture(const string &pName, BallType type);
+        /**
+         * @brief Adds a texture to the resource manager
+         * @param pTexture
+         */
+        void addTexture(const eTextureKey &pTextureKey, Graphics::Texture *pTexture);
 
-    std::string brickTypeToString(BrickType pType);
-    std::string ballTypeToString(BallType pType);
-};
-
-#include "graphics/GraphicsManager.hpp"
+        /**
+         * @brief Gets a texture from the resource manager
+         * @param pTextureKey
+         * @return Graphics::Texture
+         */
+        Graphics::Texture *getTexture(const eTextureKey &pTextureKey);
+    };
+}
 
 #endif

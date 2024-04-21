@@ -7,54 +7,54 @@
 #include "gameobjects/GameObject.hpp"
 #include "resources/Enums.hpp"
 #include "resources/Constants.hpp"
-
-class ResourceManager;
+#include "resources/ResourceManager.hpp"
 
 #define ROTATION_SPEED_MULTIPLIER 200
 
-template <eMapType mapType>
-class Paddle : public GameObject
+namespace GameObjects
 {
-private:
-    static inline Paddle *instance = nullptr;
-
-public:
-    Paddle(Point position, Vector velocity, double width, double height, double angle, double angularVelocity) : GameObject(position, width, height, velocity, angle, angularVelocity, nullptr)
+    template <eMapType mapType>
+    class Paddle : public GameObject
     {
-        switch (mapType)
+    private:
+        static inline Paddle *pInstance = nullptr;
+
+    public:
+        Paddle(Point position, Vector velocity, double width, double height, double angle, double angularVelocity) : GameObject(position, width, height, velocity, angle, angularVelocity)
         {
-        case eMapType::Basic:
-            pTexture = ResourceManager::getInstance()->getTexture("paddle_basic");
-            break;
-        case eMapType::Circular:
-            pTexture = ResourceManager::getInstance()->getTexture("paddle_circular");
-            break;
+            switch (mapType)
+            {
+            case eMapType::Basic:
+                texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Paddle_Basic);
+                std::cout << "Paddle texture: " << texture->getTexture() << std::endl;
+                break;
+            case eMapType::Circular:
+                texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Paddle_Circular);
+                break;
+            }
+
+            this->entityType = GameObjectType::GameObjectPaddle;
         }
 
-        this->entityType = GameObjectType::GameObjectPaddle;
-    }
+        ~Paddle() {}
 
-    ~Paddle() {}
+        Paddle(const Paddle &) = delete;
+        Paddle &operator=(const Paddle &) = delete;
 
-    Paddle(const Paddle &) = delete;
-    Paddle &operator=(const Paddle &) = delete;
-
-    static Paddle *getInstance()
-    {
-        if (instance == nullptr)
+        static Paddle *getInstance()
         {
-            instance = new Paddle<eMapType::Basic>(Point(120, 600), Vector(30, 30), 140, 40, 0, 0);
+            if (pInstance == nullptr)
+            {
+                pInstance = new Paddle<eMapType::Basic>(Point(120, 600), Vector(30, 30), 140, 40, 0, 0);
+            }
+            return pInstance;
         }
-        return instance;
-    }
 
-    void update() override;
+        void update() override;
 
-    void collide(GameObject *other) override
-    {
-    }
-};
-
-#include "resources/ResourceManager.hpp"
-
+        void collide(GameObject *pOther) override
+        {
+        }
+    };
+}
 #endif // __PADDLE_HPP

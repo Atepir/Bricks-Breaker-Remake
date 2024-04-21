@@ -10,47 +10,50 @@
 
 #define BOARD_PADDING 72
 
-template <eMapType mapType>
-class Board : public GameObject
+namespace GameObjects
 {
-private:
-    std::vector<Brick *> bricks;
-
-    static inline Board *instance = nullptr;
-
-public:
-    Board();
-    ~Board()
+    template <eMapType mapType>
+    class Board : public GameObject
     {
-        for (auto brick : bricks)
+    private:
+        std::vector<Brick *> mBricks;
+
+        static inline Board *pInstance = nullptr;
+
+    public:
+        Board();
+        ~Board()
         {
-            delete brick;
+            for (auto brick : mBricks)
+            {
+                delete brick;
+            }
         }
-    }
 
-    Board(const Board &) = delete;
-    Board &operator=(const Board &) = delete;
+        Board(const Board &) = delete;
+        Board &operator=(const Board &) = delete;
 
-    static Board *getInstance()
-    {
-        if (instance == nullptr)
+        static Board *getInstance()
         {
-            instance = new Board();
+            if (pInstance == nullptr)
+            {
+                pInstance = new Board();
+            }
+            return pInstance;
         }
-        return instance;
-    }
 
-    std::vector<Brick *> getBricks() { return bricks; }
+        std::vector<Brick *> getBricks() { return mBricks; }
 
-    void update() override
-    {
-        for (auto brick : bricks)
+        void update() override
         {
-            brick->update();
+            for (auto brick : mBricks)
+            {
+                brick->update();
+            }
         }
-    }
 
-    void collide(GameObject *other) override {}
-};
+        void collide(GameObject *pOther) override {}
+    };
+}
 
 #endif // __BOARD_HPP

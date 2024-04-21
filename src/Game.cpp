@@ -1,5 +1,9 @@
 #include "Game.hpp"
 
+using namespace GameObjects;
+using namespace Factories;
+using namespace Graphics;
+
 Game *Game::pInstance = nullptr;
 
 Game::Game()
@@ -18,7 +22,7 @@ void Game::run()
         std::cerr << "Echec de l'initialisation de la SDL " << SDL_GetError() << std::endl;
     }
 
-    GraphicsManager *graphics = GraphicsManager::getInstance();
+    Graphics::GraphicsManager *graphics = Graphics::GraphicsManager::getInstance();
     graphics->init();
 
     Paddle<MAP_TYPE> *paddle = Paddle<MAP_TYPE>::getInstance();
