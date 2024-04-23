@@ -50,4 +50,16 @@ enum class eTextureKey
 	Texture_Brick_Unbreakable
 };
 
+enum eColor
+{
+	ColorWhite = 0,
+	ColorBlack = 1,
+	ColorRed = 2,
+	ColorGreen = 3,
+	ColorBlue = 4,
+	ColorYellow = 5,
+	ColorCyan = 6,
+	ColorMagenta = 7
+};
+
 #endif

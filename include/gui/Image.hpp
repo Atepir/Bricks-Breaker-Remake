@@ -6,16 +6,17 @@
 
 using namespace Graphics;
 
-class Image : public UiElement
+namespace Gui
 {
-private:
-    Texture *texture;
+    class Image : public UiElement
+    {
+    public:
+        Image();
 
-public:
-    Image(Texture *texture);
-    Image(Texture *texture, int width, int height);
+        void setTexture(Texture *pTexture);
 
-    virtual void render(GraphicsManager &renderer);
-};
+        virtual void render(GraphicsManager &renderer);
+    };
+}
 
 #endif

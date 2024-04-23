@@ -39,7 +39,7 @@ Graphics::Texture *ResourceManager::getTexture(const eTextureKey &pTextureKey)
 
 void ResourceManager::loadTextures()
 {
-    std::unique_ptr<Graphics::TextureHelper> textureHelper = std::make_unique<Graphics::TextureHelper>();
+    std::shared_ptr<Graphics::TextureHelper> textureHelper = std::make_shared<Graphics::TextureHelper>();
     textureHelper->loadTileset("set.bmp");
 
     // load the textures
