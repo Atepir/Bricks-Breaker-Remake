@@ -2,6 +2,7 @@
 #define __UI_ELEMENT_HPP
 
 #include "graphics/Drawable.hpp"
+#include "gui/EventListener.hpp"
 
 enum PosSystem
 {
@@ -9,7 +10,7 @@ enum PosSystem
     Relative
 };
 
-class UiElement : public Graphics::IDrawable
+class UiElement : public Graphics::IDrawable, public Gui::EventListener
 {
 protected:
     int x, y, width, height;
@@ -25,26 +26,26 @@ public:
 
     void calculateCoordinate(int width, int height);
 
-    virtual void resize(int width, int height);
-    virtual void update(double delta);
+    void resize(int width, int height);
+    void update(double delta);
 
-    virtual int getX() const;
-    virtual int getY() const;
-    virtual int getWidth() const;
-    virtual int getHeight() const;
+    int getX() const;
+    int getY() const;
+    int getWidth() const;
+    int getHeight() const;
 
-    virtual void setWidth(int width);
-    virtual void setHeight(int height);
+    void setWidth(int width);
+    void setHeight(int height);
 
-    UiElement *center();
-    UiElement *centerX();
-    UiElement *centerY();
-    UiElement *offset(int x, int y);
-    UiElement *offsetX(int x);
-    UiElement *offsetY(int y);
-    UiElement *absolute(int x, int y);
-    UiElement *absoluteX(int x);
-    UiElement *absoluteY(int y);
+    std::shared_ptr<UiElement> center();
+    std::shared_ptr<UiElement> centerX();
+    std::shared_ptr<UiElement> centerY();
+    std::shared_ptr<UiElement> offset(int x, int y);
+    std::shared_ptr<UiElement> offsetX(int x);
+    std::shared_ptr<UiElement> offsetY(int y);
+    std::shared_ptr<UiElement> absolute(int x, int y);
+    std::shared_ptr<UiElement> absoluteX(int x);
+    std::shared_ptr<UiElement> absoluteY(int y);
 };
 
 #endif

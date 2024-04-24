@@ -8,68 +8,86 @@
 
 using namespace Graphics;
 
-class Screen : public IDrawable
+namespace Core
 {
-private:
-    std::vector<UiElement *> children;
-
-public:
-    Screen();
-    virtual ~Screen();
-    virtual void init();
-    virtual void render(GraphicsManager &renderer);
-    virtual void update(double delta);
-    virtual void resize(int width, int height);
-
-    virtual void keyUp(SDL_KeyboardEvent *event);
-    virtual void keyDown(SDL_KeyboardEvent *event);
-    virtual void buttonPressed(SDL_MouseButtonEvent *event);
-    virtual void buttonReleased(SDL_MouseButtonEvent *event);
-
-    UiElement *add(UiElement *child);
+    class App;
 };
 
-class GameScreen : public Screen
+namespace Gui
 {
-private:
-    Texture *background;
+    class Screen : public IDrawable
+    {
+    private:
+        std::vector<UiElement *> children;
 
-public:
-    virtual ~GameScreen();
-    virtual void init();
-    virtual void keyUp(SDL_KeyboardEvent *event);
-    virtual void update(double delta);
-    virtual void render(GraphicsManager &renderer);
-    virtual void keyDown(SDL_KeyboardEvent *event);
-};
+    public:
+        Screen();
+        virtual ~Screen();
+        virtual void init();
+        virtual void render(GraphicsManager &renderer);
+        virtual void update(double delta);
+        virtual void resize(int width, int height);
 
-class MainMenuScreen : public Screen, public ClickListener
-{
-private:
-    Texture *background;
+        // virtual void keyUp(std::shared_ptr<SDL_KeyboardEvent> event);
+        // virtual void keyDown(std::shared_ptr<SDL_KeyboardEvent> event);
+        // virtual void buttonPressed(std::shared_ptr<SDL_MouseButtonEvent> event);
+        // virtual void buttonReleased(std::shared_ptr<SDL_MouseButtonEvent> event);
 
-public:
-    MainMenuScreen();
-    virtual ~MainMenuScreen();
-    virtual void render(GraphicsManager &renderer);
-    virtual void init();
+        virtual void handleMouseDown(SDL_MouseButtonEvent *event);
+        virtual void handleMouseUp(SDL_MouseButtonEvent *event);
 
-    virtual void onClick(int buttonId);
-};
+        UiElement *add(UiElement *element);
+    };
 
-class GameOverScreen : public Screen, public ClickListener
-{
-private:
-    Texture *background;
-    int score;
+    class GameScreen : public Screen
+    {
+    private:
+        std::shared_ptr<Texture> background;
 
-public:
-    GameOverScreen(int score);
-    virtual ~GameOverScreen();
-    virtual void render(GraphicsManager &renderer);
-    virtual void init();
+    public:
+        GameScreen();
+        virtual ~GameScreen();
+        virtual void init();
+        virtual void keyUp(std::shared_ptr<SDL_KeyboardEvent> event);
+        virtual void update(double delta);
+        virtual void render(GraphicsManager &renderer);
+        virtual void keyDown(std::shared_ptr<SDL_KeyboardEvent> event);
 
-    virtual void onClick(int buttonId);
-};
+        void update() override{};
+    };
+
+    class MainMenuScreen : public Screen, public ClickListener
+    {
+    private:
+        Texture *background;
+
+    public:
+        MainMenuScreen();
+        virtual ~MainMenuScreen();
+        virtual void render(GraphicsManager &renderer);
+        virtual void init();
+
+        virtual void onClick(int buttonId);
+        void update() override{};
+    };
+
+    class GameOverScreen : public Screen, public ClickListener
+    {
+    private:
+        std::shared_ptr<Texture> background;
+        int score;
+
+    public:
+        GameOverScreen(int score);
+        virtual ~GameOverScreen();
+        virtual void render(GraphicsManager &renderer);
+        virtual void init();
+
+        virtual void onClick(int buttonId);
+        void update() override{};
+    };
+}
+
+#include "core/App.hpp"
 
 #endif

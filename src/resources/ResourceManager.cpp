@@ -39,7 +39,7 @@ Graphics::Texture *ResourceManager::getTexture(const eTextureKey &pTextureKey)
 
 void ResourceManager::loadTextures()
 {
-    std::unique_ptr<Graphics::TextureHelper> textureHelper = std::make_unique<Graphics::TextureHelper>();
+    std::shared_ptr<Graphics::TextureHelper> textureHelper = std::make_shared<Graphics::TextureHelper>();
     textureHelper->loadTileset("set.bmp");
 
     // load the textures
@@ -58,11 +58,15 @@ void ResourceManager::loadTextures()
     // Graphics::GraphicsManager::getInstance()->draw(getTexture(eTextureKey::Texture_Paddle_Basic)->getTexture(), {50, 50}, 100, 50, 0);
     // Graphics::GraphicsManager::getInstance()->render();
 
-    std::cout << "Textures loaded" << std::endl;
-    std::cout << "Number of textures loaded: " << mTextures.size() << std::endl;
+    // Backgrounds
+    addTexture(eTextureKey::Texture_Main_Menu_Background,
+               Graphics::TextureHelper::loadTexture("main_menu_background.bmp", "main_menu_background"));
 
-    for (auto &texture : mTextures)
-    {
-        std::cout << texture.second << std::endl;
-    }
+    // std::cout << "Textures loaded" << std::endl;
+    // std::cout << "Number of textures loaded: " << mTextures.size() << std::endl;
+
+    // for (auto &texture : mTextures)
+    // {
+    //     std::cout << texture.second << std::endl;
+    // }
 }

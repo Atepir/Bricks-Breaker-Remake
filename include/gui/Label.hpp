@@ -3,18 +3,25 @@
 
 #include "gui/UiElement.hpp"
 #include "graphics/GraphicsManager.hpp"
+#include "graphics/Font.hpp"
 
-class Label : public UiElement
+namespace Gui
 {
-private:
-    int id;
-    std::string text;
+    class Label : public UiElement
+    {
+    private:
+        int id;
+        std::string text;
+        Graphics::Font *font;
 
-public:
-    Label(std::string text);
-    Label(std::string text, bool big);
+    public:
+        Label(std::string text, Point position, int width, int height);
 
-    virtual void render(Graphics::GraphicsManager &renderer);
-};
+        Label *setText(std::string text);
+
+        virtual void render(Graphics::GraphicsManager &renderer);
+        void update() override{};
+    };
+}
 
 #endif

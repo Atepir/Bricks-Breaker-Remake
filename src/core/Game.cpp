@@ -1,8 +1,9 @@
-#include "Game.hpp"
+#include "core/Game.hpp"
 
 using namespace GameObjects;
 using namespace Factories;
 using namespace Graphics;
+using namespace Core;
 
 Game *Game::pInstance = nullptr;
 
@@ -17,13 +18,7 @@ Game::~Game()
 
 void Game::run()
 {
-    if (SDL_Init(SDL_INIT_VIDEO) != 0)
-    {
-        std::cerr << "Echec de l'initialisation de la SDL " << SDL_GetError() << std::endl;
-    }
-
     Graphics::GraphicsManager *graphics = Graphics::GraphicsManager::getInstance();
-    graphics->init();
 
     Paddle<MAP_TYPE> *paddle = Paddle<MAP_TYPE>::getInstance();
 

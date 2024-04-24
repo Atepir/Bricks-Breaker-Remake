@@ -47,7 +47,20 @@ enum class eTextureKey
 	Texture_Ball_Basic,
 	Texture_Ball_Circular,
 	Texture_Brick_Normal,
-	Texture_Brick_Unbreakable
+	Texture_Brick_Unbreakable,
+	Texture_Main_Menu_Background,
+};
+
+enum eColor
+{
+	ColorWhite = 0,
+	ColorBlack = 1,
+	ColorRed = 2,
+	ColorGreen = 3,
+	ColorBlue = 4,
+	ColorYellow = 5,
+	ColorCyan = 6,
+	ColorMagenta = 7
 };
 
 #endif

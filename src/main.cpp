@@ -1,9 +1,12 @@
 #include "main.hpp"
 
+using namespace Gui;
+
 int main()
 {
-    Game *game = Game::getInstance();
-    game->run();
+    Core::App *app = Core::App::getInstance();
+    app->setScreen(new MainMenuScreen());
+    app->run();
 
     return 0;
 }

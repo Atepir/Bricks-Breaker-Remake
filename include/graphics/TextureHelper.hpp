@@ -55,10 +55,24 @@ namespace Graphics
             SDL_Surface *surface = SDL_CreateRGBSurface(0, pWidth + pDestX, pHeight + pDestY, 32, 0, 0, 0, 0);
 
             SDL_BlitScaled(setSurface, &srcRect, surface, &destRect);
-
-            SDL_Texture *texture = SDL_CreateTextureFromSurface(GraphicsManager::getInstance()->getRenderer(), surface);
+            SDL_Renderer *renderer = *Graphics::GraphicsManager::getInstance()->getRenderer();
+            SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
 
             return new Texture(texture, pWidth, pHeight, pName);
+        }
+
+        /**
+         * @brief Loads a texture from a file
+         * @param path the path to the file
+         * @param name the name of the texture
+         */
+        static inline Texture *loadTexture(string path, string name)
+        {
+            SDL_Surface *surface = SDL_LoadBMP(path.c_str());
+            SDL_Renderer *renderer = *Graphics::GraphicsManager::getInstance()->getRenderer();
+            SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+            return new Texture(texture, surface->w, surface->h, name);
         }
     };
 }

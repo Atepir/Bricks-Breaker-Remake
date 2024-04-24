@@ -2,7 +2,11 @@
 #define __BUTTON_HPP
 
 #include "gui/UiElement.hpp"
+#include "graphics/Font.hpp"
+#include "graphics/GraphicsManager.hpp"
 #include <iostream>
+
+using namespace Graphics;
 
 class ClickListener
 {
@@ -17,16 +21,19 @@ private:
     std::string text;
     int textWidth, textHeight;
     ClickListener *listener;
+    Font *font;
 
 public:
-    Button(int id, std::string text, int width, int height);
+    Button(int id, std::string text, Point position, int width, int height);
     virtual ~Button();
 
-    Button *setListener(ClickListener *listener);
+    Button *setClickListener(ClickListener *listener);
 
-    virtual void buttonReleased(SDL_MouseButtonEvent *event);
+    void handleMouseUp(SDL_MouseButtonEvent *event) override;
 
     virtual void render(Graphics::GraphicsManager &renderer);
+
+    void update() override {}
 };
 
 #endif
