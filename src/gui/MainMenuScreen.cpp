@@ -11,25 +11,10 @@ MainMenuScreen::MainMenuScreen()
 
 void MainMenuScreen::init()
 {
-    Graphics::GraphicsManager *graphics = Graphics::GraphicsManager::getInstance();
-    graphics->init();
+    add(new Label("BricksBreaker Remake!", {300, 100}, 100, 50));
+    add((new Button(0, "Play", {300, 500}, 100, 50))->setClickListener(this));
 
-    if (TTF_Init() == -1)
-    {
-        printf("Erreur - TTF_Init()\n");
-        SDL_Delay(5000);
-    }
-
-    TTF_Font *smallFont = TTF_OpenFont("font.ttf", 24);
-    if (smallFont == nullptr)
-    {
-        std::cerr << "Failed to load font.ttf" << std::endl;
-        std::cerr << TTF_GetError() << std::endl;
-    }
-    std::cout << "smallFont: " << smallFont << std::endl;
-    Font::setDefaultFonts(smallFont, smallFont);
-    add(new Label("BricksBreaker Remake!", {300, 100}));
-    add(new Button(0, "Play", {300, 500}, 100, 50));
+    background = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Main_Menu_Background);
 
     std::cout << "Main menu screen initialized" << std::endl;
 }
@@ -39,20 +24,22 @@ void MainMenuScreen::render(Graphics::GraphicsManager &renderer)
 
     Graphics::GraphicsManager *graphics = Graphics::GraphicsManager::getInstance();
 
+    graphics->draw(background->getTexture(), {0, 0}, 1024, 800, 0);
     Screen::render(renderer);
-    graphics->render();
-    SDL_Delay(10000);
 }
 
 void MainMenuScreen::onClick(int buttonId)
 {
-    // switch (buttonId)
-    // {
-    // case 0:
-    //     break;
-    // }
+    std::cout << "Button clicked: " << buttonId << std::endl;
+    switch (buttonId)
+    {
+    case 0:
+        Core::App::getInstance()->setScreen(new GameScreen());
+        break;
+    }
 }
 
 MainMenuScreen::~MainMenuScreen()
 {
+    delete background;
 }

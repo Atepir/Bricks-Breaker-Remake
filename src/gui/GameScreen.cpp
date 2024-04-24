@@ -1,5 +1,5 @@
 #include "gui/Screen.hpp"
-#include "Game.hpp"
+#include "core/Game.hpp"
 
 using namespace Gui;
 
@@ -17,7 +17,7 @@ void GameScreen::init()
     Graphics::GraphicsManager *graphics = Graphics::GraphicsManager::getInstance();
     graphics->init();
 
-    Game *game = Game::getInstance();
+    Core::Game *game = Core::Game::getInstance();
     game->run();
 }
 

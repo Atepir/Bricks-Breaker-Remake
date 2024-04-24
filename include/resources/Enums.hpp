@@ -47,7 +47,8 @@ enum class eTextureKey
 	Texture_Ball_Basic,
 	Texture_Ball_Circular,
 	Texture_Brick_Normal,
-	Texture_Brick_Unbreakable
+	Texture_Brick_Unbreakable,
+	Texture_Main_Menu_Background,
 };
 
 enum eColor

@@ -3,7 +3,7 @@
 using namespace Gui;
 using namespace Graphics;
 
-Label::Label(std::string text, Point position) : UiElement(position.x, position.y, 100, 10)
+Label::Label(std::string text, Point position, int width, int height) : UiElement(position.x, position.y, width, height)
 {
     std::cout << "Creating label" << std::endl;
     font = new Font(text, eColor::ColorWhite);

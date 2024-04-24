@@ -1,8 +1,9 @@
-#include "Game.hpp"
+#include "core/Game.hpp"
 
 using namespace GameObjects;
 using namespace Factories;
 using namespace Graphics;
+using namespace Core;
 
 Game *Game::pInstance = nullptr;
 

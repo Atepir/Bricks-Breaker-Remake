@@ -8,6 +8,11 @@
 
 using namespace Graphics;
 
+namespace Core
+{
+    class App;
+};
+
 namespace Gui
 {
     class Screen : public IDrawable
@@ -27,6 +32,9 @@ namespace Gui
         // virtual void keyDown(std::shared_ptr<SDL_KeyboardEvent> event);
         // virtual void buttonPressed(std::shared_ptr<SDL_MouseButtonEvent> event);
         // virtual void buttonReleased(std::shared_ptr<SDL_MouseButtonEvent> event);
+
+        virtual void handleMouseDown(SDL_MouseButtonEvent *event);
+        virtual void handleMouseUp(SDL_MouseButtonEvent *event);
 
         UiElement *add(UiElement *element);
     };
@@ -51,7 +59,7 @@ namespace Gui
     class MainMenuScreen : public Screen, public ClickListener
     {
     private:
-        std::shared_ptr<Texture> background;
+        Texture *background;
 
     public:
         MainMenuScreen();
@@ -79,5 +87,7 @@ namespace Gui
         void update() override{};
     };
 }
+
+#include "core/App.hpp"
 
 #endif

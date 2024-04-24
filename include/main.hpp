@@ -4,7 +4,9 @@
 #include <SDL.h>
 #include <iostream>
 
-#include "Game.hpp"
+#include "core/Game.hpp"
+#include "core/App.hpp"
+#include "core/EventManager.hpp"
 #include "gui/Screen.hpp"
 #include "graphics/Font.hpp"
 

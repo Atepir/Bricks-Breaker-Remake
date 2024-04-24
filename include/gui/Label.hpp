@@ -15,7 +15,7 @@ namespace Gui
         Graphics::Font *font;
 
     public:
-        Label(std::string text, Point position);
+        Label(std::string text, Point position, int width, int height);
 
         Label *setText(std::string text);
 

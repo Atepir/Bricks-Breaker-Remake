@@ -16,18 +16,22 @@ void Button::render(Graphics::GraphicsManager &renderer)
                       y + getHeight() / 2 - font->getHeight() / 2);
 }
 
-std::shared_ptr<Button> Button::setClickListener(std::shared_ptr<ClickListener> listener)
+Button *Button::setClickListener(ClickListener *listener)
 {
     this->listener = listener;
-    return std::shared_ptr<Button>(this);
+    return this;
 }
 
-void Button::buttonReleased(std::shared_ptr<SDL_MouseButtonEvent> event)
+void Button::handleMouseUp(SDL_MouseButtonEvent *event)
 {
+    std::cout << "hmu btn" << std::endl;
     if (listener == nullptr)
         return;
     if (event->button == SDL_BUTTON_LEFT)
+    {
+        std::cout << "left click" << std::endl;
         listener->onClick(id);
+    }
 }
 
 Button::~Button()

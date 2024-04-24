@@ -11,7 +11,7 @@ namespace Gui
     class Image : public UiElement
     {
     public:
-        Image();
+        Image(Texture *texture, Point position, int width, int height);
 
         void setTexture(Texture *pTexture);
 

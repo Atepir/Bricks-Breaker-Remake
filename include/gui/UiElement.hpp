@@ -2,6 +2,7 @@
 #define __UI_ELEMENT_HPP
 
 #include "graphics/Drawable.hpp"
+#include "gui/EventListener.hpp"
 
 enum PosSystem
 {
@@ -9,7 +10,7 @@ enum PosSystem
     Relative
 };
 
-class UiElement : public Graphics::IDrawable
+class UiElement : public Graphics::IDrawable, public Gui::EventListener
 {
 protected:
     int x, y, width, height;

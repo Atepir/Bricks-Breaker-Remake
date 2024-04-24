@@ -36,6 +36,22 @@ void Screen::update(double delta)
     }
 }
 
+void Screen::handleMouseDown(SDL_MouseButtonEvent *event)
+{
+    for (auto &element : children)
+    {
+        element->handleMouseDown(event);
+    }
+}
+
+void Screen::handleMouseUp(SDL_MouseButtonEvent *event)
+{
+    for (auto &element : children)
+    {
+        element->handleMouseUp(event);
+    }
+}
+
 void Screen::resize(int width, int height)
 {
     for (auto &element : children)

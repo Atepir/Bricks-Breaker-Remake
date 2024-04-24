@@ -2,8 +2,9 @@
 
 using namespace Gui;
 
-Image::Image()
+Image::Image(Texture *texture, Point position, int width, int height) : UiElement(position.x, position.y, width, height)
 {
+    this->texture = texture;
 }
 
 void Image::setTexture(Texture *pTexture)
