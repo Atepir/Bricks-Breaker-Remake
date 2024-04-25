@@ -89,15 +89,15 @@ namespace Graphics
             SDL_RenderFillRect(*Graphics::GraphicsManager::getInstance()->getRenderer(), &rect);
         }
 
-        void drawText(Font *font, int x, int y)
+        void drawText(Font *font, int x, int y, int width, int height)
         {
             SDL_Rect dest;
 
             dest.x = x;
             dest.y = y;
-            dest.w = font->getWidth();
-            dest.h = font->getHeight();
-            std::cout << "Drawing text at " << x << ", " << y << " with width " << font->getWidth() << " and height " << font->getHeight() << " and texture " << font->getTexture() << std::endl;
+            dest.w = width;
+            dest.h = height;
+            std::cout << "Drawing text at " << x << ", " << y << " with width " << width << " and height " << height << " and texture " << font->getTexture() << std::endl;
 
             SDL_RenderCopy(*Graphics::GraphicsManager::getInstance()->getRenderer(), font->getTexture(), NULL, &dest);
         }
@@ -109,7 +109,7 @@ namespace Graphics
 
         std::unique_ptr<SDL_Renderer *> getRenderer() const
         {
-            std::cout << "Returning renderer " << pRenderer << std::endl;
+            // std::cout << "Returning renderer " << pRenderer << std::endl;
             return std::make_unique<SDL_Renderer *>(pRenderer);
         }
     };

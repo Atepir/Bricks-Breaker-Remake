@@ -32,7 +32,7 @@ Font::Font(std::string text, eColor pColor) : text(text), width(100), height(10)
 {
     font = defaultFont;
     std::cout << "Default font: " << defaultFont << std::endl;
-    SDL_Surface *surface = TTF_RenderText_Blended(font, "YOLO", colors[pColor]);
+    SDL_Surface *surface = TTF_RenderText_Blended(font, text.c_str(), colors[pColor]);
     if (surface == nullptr)
     {
         std::cout << "Surface is null" << std::endl;

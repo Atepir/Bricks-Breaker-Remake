@@ -19,7 +19,7 @@ namespace Graphics
         static inline TTF_Font *defaultFont = nullptr;
         static inline TTF_Font *defaultBigFont = nullptr;
         std::string text;
-        int width = 100, height = 100;
+        int width = 600, height = 100;
         TTF_Font *font;
         SDL_Texture *texture;
 

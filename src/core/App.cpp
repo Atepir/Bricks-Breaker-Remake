@@ -37,7 +37,7 @@ void App::init()
         SDL_Delay(5000);
     }
 
-    TTF_Font *smallFont = TTF_OpenFont("font.ttf", 24);
+    TTF_Font *smallFont = TTF_OpenFont("font.ttf", 64);
     if (smallFont == nullptr)
     {
         std::cerr << "Failed to load font.ttf" << std::endl;

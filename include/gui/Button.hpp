@@ -5,31 +5,25 @@
 #include "graphics/Font.hpp"
 #include "graphics/GraphicsManager.hpp"
 #include <iostream>
+#include <functional>
 
 using namespace Graphics;
-
-class ClickListener
-{
-public:
-    virtual void onClick(int buttonId) = 0;
-};
 
 class Button : public UiElement
 {
 private:
-    int id;
     std::string text;
     int textWidth, textHeight;
-    ClickListener *listener;
     Font *font;
+    std::function<void()> onClickCallback;
 
 public:
-    Button(int id, std::string text, Point position, int width, int height);
+    Button(std::string text, Point position, int width, int height, eColor fgColor);
     virtual ~Button();
 
-    Button *setClickListener(ClickListener *listener);
-
     void handleMouseUp(SDL_MouseButtonEvent *event) override;
+
+    void setOnClickCallback(std::function<void()> callback) { onClickCallback = callback; }
 
     virtual void render(Graphics::GraphicsManager &renderer);
 

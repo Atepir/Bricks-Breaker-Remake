@@ -1,5 +1,6 @@
 #include "gui/Screen.hpp"
 #include "core/Game.hpp"
+#include "gui/Button.hpp"
 
 using namespace Gui;
 
@@ -9,15 +10,13 @@ GameScreen::GameScreen()
 
 void GameScreen::init()
 {
-    if (SDL_Init(SDL_INIT_VIDEO) != 0)
-    {
-        std::cerr << "Echec de l'initialisation de la SDL " << SDL_GetError() << std::endl;
-    }
-
-    Graphics::GraphicsManager *graphics = Graphics::GraphicsManager::getInstance();
-    graphics->init();
-
     Core::Game *game = Core::Game::getInstance();
+    Button *pauseButton = new Button("Pause", {50, 600}, 200, 50, eColor::ColorBlue);
+    pauseButton->setOnClickCallback(
+        []()
+        {
+            Core::App::getInstance()->setScreen(new MainMenuScreen());
+        });
     game->run();
 }
 

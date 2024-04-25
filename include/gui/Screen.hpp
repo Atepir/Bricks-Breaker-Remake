@@ -56,7 +56,7 @@ namespace Gui
         void update() override{};
     };
 
-    class MainMenuScreen : public Screen, public ClickListener
+    class MainMenuScreen : public Screen
     {
     private:
         Texture *background;
@@ -67,11 +67,10 @@ namespace Gui
         virtual void render(GraphicsManager &renderer);
         virtual void init();
 
-        virtual void onClick(int buttonId);
         void update() override{};
     };
 
-    class GameOverScreen : public Screen, public ClickListener
+    class GameOverScreen : public Screen
     {
     private:
         std::shared_ptr<Texture> background;
@@ -83,7 +82,6 @@ namespace Gui
         virtual void render(GraphicsManager &renderer);
         virtual void init();
 
-        virtual void onClick(int buttonId);
         void update() override{};
     };
 }

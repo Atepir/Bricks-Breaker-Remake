@@ -19,5 +19,5 @@ Label *Label::setText(std::string text)
 void Label::render(Graphics::GraphicsManager &renderer)
 {
     std::cout << "Rendering label" << std::endl;
-    renderer.drawText(font, 200, 200);
+    renderer.drawText(font, x, y, width, height);
 }
