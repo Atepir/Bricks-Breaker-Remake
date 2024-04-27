@@ -90,6 +90,6 @@ void App::mainloop()
 
         currentScreen->render(*graphics);
         graphics->render();
-        SDL_Delay(1000);
+        SDL_Delay(10000);
     }
 }

@@ -2,6 +2,7 @@
 #include "gui/Screen.hpp"
 #include "gui/Button.hpp"
 #include "gui/Label.hpp"
+#include "gui/Image.hpp"
 
 using namespace Gui;
 
@@ -28,21 +29,18 @@ void MainMenuScreen::init()
         });
     add(std::make_shared<Button>(exitButton));
 
-    background = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Main_Menu_Background);
+    Image bg = Image(Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Main_Menu_Background), {0, 0}, 1024, 800);
+    add(std::make_shared<Image>(bg));
 
     std::cout << "Main menu screen initialized" << std::endl;
 }
 
 void MainMenuScreen::render(Graphics::Renderer &renderer)
 {
-
-    std::shared_ptr<Graphics::Renderer> graphics = Graphics::Renderer::getInstance();
-
-    graphics->draw(background->getTexture(), {0, 0}, 1024, 800, 0);
     Screen::render(renderer);
 }
 
 MainMenuScreen::~MainMenuScreen()
 {
-    background.reset();
+    // background.reset();
 }

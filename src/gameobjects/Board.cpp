@@ -9,7 +9,7 @@ Board<eMapType::Basic>::Board<eMapType::Basic>()
     {
         for (int j = 0; j < 5; j++)
         {
-            mBricks.push_back(std::make_unique<Brick>(Point(BOARD_PADDING + i * (BRICK_WIDTH + 1), BOARD_PADDING + j * (BRICK_HEIGHT + 1)), BRICK_WIDTH, BRICK_HEIGHT, BrickType::NORMAL, 1));
+            mBricks.push_back(std::make_shared<Brick>(Point(BOARD_PADDING + i * (BRICK_WIDTH + 1), BOARD_PADDING + j * (BRICK_HEIGHT + 1)), BRICK_WIDTH, BRICK_HEIGHT, BrickType::NORMAL, 1));
         }
     }
 }
@@ -21,6 +21,6 @@ Board<eMapType::Circular>::Board<eMapType::Circular>()
     {
         // must be different layers from
         // the center of the circle
-        mBricks.push_back(std::make_unique<Brick>(Point(512 + 100 * cos(i * M_PI / 180), 360 + 100 * sin(i * M_PI / 180)), 50, 20, BrickType::NORMAL, 1));
+        mBricks.push_back(std::make_shared<Brick>(Point(512 + 100 * cos(i * M_PI / 180), 360 + 100 * sin(i * M_PI / 180)), 50, 20, BrickType::NORMAL, 1));
     }
 }
