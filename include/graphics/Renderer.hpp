@@ -25,7 +25,7 @@ namespace Graphics
         static inline std::shared_ptr<Renderer> pInstance = nullptr;
 
     public:
-        Renderer();
+        Renderer() : pWindow(nullptr), pRenderer(nullptr) {}
 
         Renderer(const Renderer &) = delete;
         void operator=(const Renderer &) = delete;
@@ -65,10 +65,14 @@ namespace Graphics
                 std::cerr << "Failed to create renderer for window " << SDL_GetError() << std::endl;
                 exit(1);
             }
+
+            SDL_SetRenderDrawBlendMode(pRenderer, SDL_BLENDMODE_BLEND);
+            SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 0);
         }
 
         void clear()
         {
+            SDL_SetRenderDrawBlendMode(pRenderer, SDL_BLENDMODE_BLEND);
             SDL_RenderClear(pRenderer);
         }
 
@@ -84,6 +88,8 @@ namespace Graphics
             // std::cout << "Drawing texture " << pTexture << " at " << pPosition.x << ", " << pPosition.y << " with width " << pWidth << " and height " << pHeight << " and angle " << pAngle << std::endl;
             // std::cout << "IN DRAW - Renderer: " << pRenderer << std::endl;
             SDL_Rect destRect = {pPosition.x, pPosition.y, pWidth, pHeight};
+            // make sure to render with transparent background
+            SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 0);
             SDL_RenderCopyEx(Graphics::Renderer::getInstance()->getRenderer(), pTexture, NULL, &destRect, pAngle, NULL, SDL_FLIP_NONE);
         }
 

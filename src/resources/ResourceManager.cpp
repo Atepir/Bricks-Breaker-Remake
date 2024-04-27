@@ -41,15 +41,15 @@ void ResourceManager::loadTextures()
     // load the textures
     // paddles
     addTexture(eTextureKey::Texture_Paddle_Basic,
-               textureHelper->loadTexture("paddle_basic", 500, 16, 212, 70, 10, 10, 212, 70));
+               textureHelper->loadTexture("paddle_basic", 500, 16, 212, 70, 0, 0, 212, 70));
 
     // bricks
     addTexture(eTextureKey::Texture_Brick_Normal,
-               textureHelper->loadTexture("brick_normal", 22, 18, 226, 80, 10, 10, 226, 80));
+               textureHelper->loadTexture("brick_normal", 26, 22, 214, 72, 0, 0, 214, 72));
 
     // balls
     addTexture(eTextureKey::Texture_Ball_Basic,
-               textureHelper->loadTexture("ball_normal", 1026, 700, 115, 115, 10, 10, 115, 115));
+               textureHelper->loadTexture("ball_normal", 1026, 700, 115, 115, 0, 0, 115, 115));
 
     // Graphics::Renderer::getInstance()->draw(getTexture(eTextureKey::Texture_Paddle_Basic)->getTexture(), {50, 50}, 100, 50, 0);
     // Graphics::Renderer::getInstance()->render();

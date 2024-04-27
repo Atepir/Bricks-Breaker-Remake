@@ -52,7 +52,7 @@ namespace Graphics
             SDL_Rect srcRect = {pX, pY, pWidth, pHeight};
             SDL_Rect destRect = {pDestX, pDestY, pDestWidth, pDestHeight};
 
-            Type_SDL_Surface surface = SDL_CreateRGBSurface(0, pWidth + pDestX, pHeight + pDestY, 32, 0, 0, 0, 0);
+            Type_SDL_Surface surface = SDL_CreateRGBSurfaceWithFormat(0, pWidth, pHeight, 64, SDL_PIXELFORMAT_RGBA4444);
 
             SDL_BlitScaled(setSurface, &srcRect, surface, &destRect);
             Type_SDL_Renderer renderer = Graphics::Renderer::getInstance()->getRenderer();

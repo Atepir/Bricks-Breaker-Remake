@@ -9,6 +9,7 @@
 #include "gameobjects/Brick.hpp"
 
 #define BOARD_PADDING 72
+#define INITIAL_BRICK_HEALTH 100
 
 namespace GameObjects
 {

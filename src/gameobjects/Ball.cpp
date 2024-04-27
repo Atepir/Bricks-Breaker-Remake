@@ -53,36 +53,39 @@ void Ball::update()
 
 void Ball::collide(std::shared_ptr<GameObject> pOther)
 {
-    if (pOther->getEntityType() == GameObjectType::GameObjectPaddle)
-    {
-        // if the collision happen on the left part of the paddle, then the ball will go to the left
-        if (position.x + mRadius > pOther->getPosition().x && position.x < pOther->getPosition().x + pOther->getWidth())
-        {
-            if (position.y + mRadius > pOther->getPosition().y && position.y < pOther->getPosition().y + pOther->getHeight())
-            {
-                velocity.y = -velocity.y;
-                velocity.x = -2;
-            }
-        }
+    // Calculate the minimum and maximum coordinates of both objects
+    double thisLeft = position.x;
+    double thisRight = position.x + getWidth();
+    double thisTop = position.y;
+    double thisBottom = position.y + getHeight();
 
-        // if the collision happen on the right part of the paddle, then the ball will go to the right
+    double otherLeft = pOther->getPosition().x;
+    double otherRight = pOther->getPosition().x + pOther->getWidth();
+    double otherTop = pOther->getPosition().y;
+    double otherBottom = pOther->getPosition().y + pOther->getHeight();
 
-        if (position.x + mRadius > pOther->getPosition().x && position.x < pOther->getPosition().x + pOther->getWidth())
-        {
-            if (position.y + mRadius > pOther->getPosition().y && position.y < pOther->getPosition().y + pOther->getHeight())
-            {
-                velocity.x = 2;
-            }
-        }
-    }
-    else if (pOther->getEntityType() == GameObjectType::GameObjectBrick)
+    // Check for overlap between the bounding boxes of the two objects
+    if (thisRight >= otherLeft && thisLeft <= otherRight &&
+        thisBottom >= otherTop && thisTop <= otherBottom)
     {
-        if (position.y + mRadius > pOther->getPosition().y && position.y < pOther->getPosition().y + pOther->getHeight())
+        if (pOther->getEntityType() == GameObjectType::GameObjectPaddle)
         {
-            if (position.x + mRadius > pOther->getPosition().x && position.x < pOther->getPosition().x + pOther->getWidth())
-            {
-                velocity.y = -velocity.y;
-            }
+            // bounce the ball off the paddle
+            // when more at the center of the paddle, bounce straight up
+            // when more at the edges of the paddle, bounce at an angle
+            double paddleCenter = pOther->getPosition().x + pOther->getWidth() / 2;
+            double ballCenter = position.x + getWidth() / 2;
+            double distance = ballCenter - paddleCenter;
+            double normalizedDistance = distance / (pOther->getWidth() / 2);
+            double angle = normalizedDistance * 45;
+            velocity.x = 20 * cos(angle * M_PI / 180);
+            velocity.y = -20 * sin(angle * M_PI / 180);
+        }
+        else if (pOther->getEntityType() == GameObjectType::GameObjectBrick)
+        {
+            // bounce the ball off the brick
+            velocity.y = -velocity.y;
+            // std::cout << "Ball collided with brick" << std::endl;
         }
     }
 }
