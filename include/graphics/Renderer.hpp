@@ -1,5 +1,5 @@
-#ifndef __GRAPHICS_MANAGER_HPP
-#define __GRAPHICS_MANAGER_HPP
+#ifndef __RENDERER_HPP
+#define __RENDERER_HPP
 
 #include <SDL.h>
 
@@ -84,7 +84,7 @@ namespace Graphics
             // std::cout << "Drawing texture " << pTexture << " at " << pPosition.x << ", " << pPosition.y << " with width " << pWidth << " and height " << pHeight << " and angle " << pAngle << std::endl;
             // std::cout << "IN DRAW - Renderer: " << pRenderer << std::endl;
             SDL_Rect destRect = {pPosition.x, pPosition.y, pWidth, pHeight};
-            SDL_RenderCopyEx(pRenderer, pTexture, NULL, &destRect, pAngle, NULL, SDL_FLIP_NONE);
+            SDL_RenderCopyEx(Graphics::Renderer::getInstance()->getRenderer(), pTexture, NULL, &destRect, pAngle, NULL, SDL_FLIP_NONE);
         }
 
         void drawRect(int x, int y, int w, int h)

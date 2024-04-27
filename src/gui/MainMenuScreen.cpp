@@ -29,14 +29,15 @@ void MainMenuScreen::init()
         });
     add(std::make_shared<Button>(exitButton));
 
-    Image bg = Image(Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Main_Menu_Background), {0, 0}, 1024, 800);
-    add(std::make_shared<Image>(bg));
+    background = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Main_Menu_Background);
 
-    std::cout << "Main menu screen initialized" << std::endl;
+    std::cout
+        << "Main menu screen initialized" << std::endl;
 }
 
 void MainMenuScreen::render(Graphics::Renderer &renderer)
 {
+    renderer.draw(background->getTexture(), {0, 0}, 1024, 800, 0);
     Screen::render(renderer);
 }
 

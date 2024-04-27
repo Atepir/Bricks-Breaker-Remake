@@ -8,8 +8,11 @@ Texture::Texture()
 }
 
 Texture::Texture(Type_SDL_Texture pTexture, int pWidth, int pHeight, std::string pName)
-	: mTexture(pTexture), mWidth(pWidth), mHeight(pHeight), mName(pName)
 {
+	mTexture = pTexture;
+	mWidth = pWidth;
+	mHeight = pHeight;
+	mName = pName;
 }
 
 Texture::~Texture()

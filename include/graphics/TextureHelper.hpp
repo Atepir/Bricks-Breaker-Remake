@@ -38,7 +38,7 @@ namespace Graphics
          * @param pDestWidth the width of the texture in the window
          * @param pDestHeight the height of the texture in the window
          */
-        inline Texture loadTexture(
+        inline std::shared_ptr<Texture> loadTexture(
             string pName,
             int pX,
             int pY,
@@ -57,7 +57,7 @@ namespace Graphics
             SDL_BlitScaled(setSurface, &srcRect, surface, &destRect);
             Type_SDL_Renderer renderer = Graphics::Renderer::getInstance()->getRenderer();
             Type_SDL_Texture texture = SDL_CreateTextureFromSurface(renderer, surface);
-            return Texture(texture, pWidth, pHeight, pName);
+            return std::make_shared<Texture>(texture, pWidth, pHeight, pName);
         }
 
         /**
@@ -65,14 +65,14 @@ namespace Graphics
          * @param path the path to the file
          * @param name the name of the texture
          */
-        static inline Texture loadTexture(string path, string name)
+        static inline std::shared_ptr<Texture> loadTexture(string path, string name)
         {
             Type_SDL_Surface surface = SDL_LoadBMP(path.c_str());
             Type_SDL_Renderer renderer = Graphics::Renderer::getInstance()->getRenderer();
             Type_SDL_Texture texture = SDL_CreateTextureFromSurface(renderer, surface);
             std::cout << "Load texture: " << texture << std::endl;
 
-            return Texture(texture, surface->w, surface->h, name);
+            return std::make_shared<Texture>(texture, surface->w, surface->h, name);
         }
     };
 }

@@ -15,7 +15,7 @@ namespace Graphics
 
     protected:
         IDrawable();
-        Texture texture;
+        std::shared_ptr<Texture> texture;
 
     public:
         virtual ~IDrawable();

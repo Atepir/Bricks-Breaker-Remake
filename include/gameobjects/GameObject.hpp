@@ -56,7 +56,7 @@ namespace GameObjects
             // std::cout << "Rendering GameObject: "
             //           << " at position: " << position.x << ", " << position.y << " with texture: " << texture << std::endl;
             // std::cout << "Width: " << width << " Height: " << height << " Angle: " << angle << std::endl;
-            pRenderer.draw(texture.getTexture(), position, width, height, angle);
+            pRenderer.draw(texture->getTexture(), position, width, height, angle);
         }
 
 #pragma region Virtual methods

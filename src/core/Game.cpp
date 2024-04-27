@@ -25,7 +25,7 @@ void Game::run()
     BallFactory ballFactory = BallFactory();
     std::shared_ptr<Ball> ball = ballFactory.createBall(BallType::NORMAL);
 
-    Board<MAP_TYPE> board = Board<MAP_TYPE>();
+    std::shared_ptr<Board<MAP_TYPE>> board = std::make_shared<Board<MAP_TYPE>>();
 
     while (mRunning)
     {
@@ -59,7 +59,7 @@ void Game::run()
 
         ball->update();
         paddle->update();
-        board.update();
+        board->update();
 
         for (auto &brick : bricks)
         {

@@ -26,7 +26,7 @@ namespace GameObjects
             {
             case eMapType::Basic:
                 texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Paddle_Basic);
-                std::cout << "Paddle texture: " << texture.getTexture() << std::endl;
+                std::cout << "Paddle texture: " << texture->getTexture() << std::endl;
                 break;
             case eMapType::Circular:
                 texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Paddle_Circular);

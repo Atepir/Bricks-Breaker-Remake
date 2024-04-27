@@ -11,9 +11,9 @@ namespace Gui
     class Image : public UiElement
     {
     public:
-        Image(Texture texture, Point position, int width, int height);
+        Image(std::shared_ptr<Texture> texture, Point position, int width, int height);
 
-        void setTexture(Texture pTexture);
+        void setTexture(std::shared_ptr<Texture> pTexture);
 
         virtual void render(Renderer &renderer);
 

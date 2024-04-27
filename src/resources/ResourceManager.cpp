@@ -16,19 +16,19 @@ std::shared_ptr<ResourceManager> ResourceManager::getInstance()
 
 ResourceManager::ResourceManager()
 {
-    mTextures = std::unordered_map<eTextureKey, Graphics::Texture>();
+    mTextures = std::unordered_map<eTextureKey, std::shared_ptr<Graphics::Texture>>();
 }
 
 ResourceManager::~ResourceManager()
 {
 }
 
-void ResourceManager::addTexture(const eTextureKey &pTextureKey, Graphics::Texture pTexture)
+void ResourceManager::addTexture(const eTextureKey &pTextureKey, std::shared_ptr<Graphics::Texture> pTexture)
 {
     mTextures[pTextureKey] = pTexture;
 }
 
-Graphics::Texture ResourceManager::getTexture(const eTextureKey &pTextureKey)
+std::shared_ptr<Graphics::Texture> ResourceManager::getTexture(const eTextureKey &pTextureKey)
 {
     return mTextures[pTextureKey];
 }

@@ -17,7 +17,7 @@ namespace Resources
     class ResourceManager
     {
     private:
-        unordered_map<eTextureKey, Graphics::Texture> mTextures;
+        unordered_map<eTextureKey, std::shared_ptr<Graphics::Texture>> mTextures;
 
         void loadTextures();
 
@@ -37,14 +37,14 @@ namespace Resources
          * @brief Adds a texture to the resource manager
          * @param pTexture
          */
-        void addTexture(const eTextureKey &pTextureKey, Graphics::Texture pTexture);
+        void addTexture(const eTextureKey &pTextureKey, std::shared_ptr<Graphics::Texture> pTexture);
 
         /**
          * @brief Gets a texture from the resource manager
          * @param pTextureKey
          * @return Graphics::Texture
          */
-        Graphics::Texture getTexture(const eTextureKey &pTextureKey);
+        std::shared_ptr<Graphics::Texture> getTexture(const eTextureKey &pTextureKey);
     };
 }
 
