@@ -16,9 +16,9 @@ namespace GameObjects
     class Board : public GameObject
     {
     private:
-        std::vector<Brick *> mBricks;
+        std::vector<std::shared_ptr<Brick>> mBricks;
 
-        static inline Board *pInstance = nullptr;
+        static inline std::shared_ptr<Board> pInstance = nullptr;
 
     public:
         Board();
@@ -26,23 +26,23 @@ namespace GameObjects
         {
             for (auto brick : mBricks)
             {
-                delete brick;
+                brick.reset();
             }
         }
 
         Board(const Board &) = delete;
         Board &operator=(const Board &) = delete;
 
-        static Board *getInstance()
+        static std::shared_ptr<Board> getInstance()
         {
             if (pInstance == nullptr)
             {
-                pInstance = new Board();
+                pInstance = std::make_shared<Board>();
             }
             return pInstance;
         }
 
-        std::vector<Brick *> getBricks() { return mBricks; }
+        std::vector<std::shared_ptr<Brick>> getBricks() { return mBricks; }
 
         void update() override
         {
@@ -52,7 +52,7 @@ namespace GameObjects
             }
         }
 
-        void collide(GameObject *pOther) override {}
+        void collide(std::shared_ptr<GameObject> pOther) override {}
     };
 }
 

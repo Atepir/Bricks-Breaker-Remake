@@ -5,7 +5,7 @@
 #include <string>
 
 #include "graphics/Texture.hpp"
-#include "graphics/GraphicsManager.hpp"
+#include "graphics/Renderer.hpp"
 
 using namespace std;
 
@@ -14,7 +14,7 @@ namespace Graphics
     class TextureHelper
     {
     private:
-        SDL_Surface *setSurface;
+        Type_SDL_Surface setSurface;
 
     public:
         /**
@@ -38,7 +38,7 @@ namespace Graphics
          * @param pDestWidth the width of the texture in the window
          * @param pDestHeight the height of the texture in the window
          */
-        inline Texture *loadTexture(
+        inline std::shared_ptr<Texture> loadTexture(
             string pName,
             int pX,
             int pY,
@@ -52,13 +52,12 @@ namespace Graphics
             SDL_Rect srcRect = {pX, pY, pWidth, pHeight};
             SDL_Rect destRect = {pDestX, pDestY, pDestWidth, pDestHeight};
 
-            SDL_Surface *surface = SDL_CreateRGBSurface(0, pWidth + pDestX, pHeight + pDestY, 32, 0, 0, 0, 0);
+            Type_SDL_Surface surface = SDL_CreateRGBSurface(0, pWidth + pDestX, pHeight + pDestY, 32, 0, 0, 0, 0);
 
             SDL_BlitScaled(setSurface, &srcRect, surface, &destRect);
-            SDL_Renderer *renderer = *Graphics::GraphicsManager::getInstance()->getRenderer();
-            SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-
-            return new Texture(texture, pWidth, pHeight, pName);
+            Type_SDL_Renderer renderer = Graphics::Renderer::getInstance()->getRenderer();
+            Type_SDL_Texture texture = SDL_CreateTextureFromSurface(renderer, surface);
+            return std::make_shared<Texture>(Texture(texture, pWidth, pHeight, pName));
         }
 
         /**
@@ -66,13 +65,13 @@ namespace Graphics
          * @param path the path to the file
          * @param name the name of the texture
          */
-        static inline Texture *loadTexture(string path, string name)
+        static inline std::shared_ptr<Texture> loadTexture(string path, string name)
         {
-            SDL_Surface *surface = SDL_LoadBMP(path.c_str());
-            SDL_Renderer *renderer = *Graphics::GraphicsManager::getInstance()->getRenderer();
-            SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
+            Type_SDL_Surface surface = SDL_LoadBMP(path.c_str());
+            Type_SDL_Renderer renderer = Graphics::Renderer::getInstance()->getRenderer();
+            Type_SDL_Texture texture = SDL_CreateTextureFromSurface(renderer, surface);
 
-            return new Texture(texture, surface->w, surface->h, name);
+            return std::make_shared<Texture>(Texture(texture, surface->w, surface->h, name));
         }
     };
 }

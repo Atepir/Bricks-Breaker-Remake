@@ -24,7 +24,7 @@ namespace GameObjects
         ~Brick();
 
         void update() override;
-        void collide(GameObject *pOther) override;
+        void collide(std::shared_ptr<GameObject> pOther) override;
     };
 }
 

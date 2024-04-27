@@ -30,14 +30,14 @@ std::map<int, SDL_Color> colors = {
 
 Font::Font(std::string text, eColor pColor) : text(text), width(100), height(10)
 {
-    font = defaultFont;
+    font = std::move(defaultFont);
     std::cout << "Default font: " << defaultFont << std::endl;
-    SDL_Surface *surface = TTF_RenderText_Blended(font, text.c_str(), colors[pColor]);
+    Type_SDL_Surface surface = TTF_RenderText_Blended(font, text.c_str(), colors[pColor]);
     if (surface == nullptr)
     {
         std::cout << "Surface is null" << std::endl;
     }
-    SDL_Renderer *renderer = *Graphics::GraphicsManager::getInstance()->getRenderer().get();
+    Type_SDL_Renderer renderer = Graphics::Renderer::getInstance()->getRenderer();
     texture = SDL_CreateTextureFromSurface(renderer, surface);
     std::cout << "texture: " << texture << std::endl;
     std::cout << "Width: " << width << " Height: " << height << std::endl;
@@ -62,12 +62,12 @@ void Font::setText(std::string text, eColor pColor)
     // {
     //     SDL_DestroyTexture(texture);
     // }
-    SDL_Surface *surface = TTF_RenderText_Blended(font, text.c_str(), colors[(int)pColor]);
+    Type_SDL_Surface surface = TTF_RenderText_Blended(font, text.c_str(), colors[pColor]);
     if (surface == nullptr)
     {
         std::cout << "Surface is null" << std::endl;
     }
-    SDL_Renderer *renderer = *Graphics::GraphicsManager::getInstance()->getRenderer();
+    Type_SDL_Renderer renderer = Graphics::Renderer::getInstance()->getRenderer();
     texture = SDL_CreateTextureFromSurface(
         renderer, surface);
     std::cout << "texture: " << texture << std::endl;
@@ -75,13 +75,12 @@ void Font::setText(std::string text, eColor pColor)
     // SDL_FreeSurface(surface);
 }
 
-SDL_Texture *Font::getTexture() const
+Type_SDL_Texture Font::getTexture() const
 {
     return texture;
 }
 
-void Font::setDefaultFonts(TTF_Font *small, TTF_Font *large)
+void Font::setDefaultFont(Type_TTF_Font pFont)
 {
-    defaultFont = small;
-    defaultBigFont = large;
+    defaultFont = pFont;
 }

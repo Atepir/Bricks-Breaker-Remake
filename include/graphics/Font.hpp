@@ -11,17 +11,20 @@
 
 namespace Graphics
 {
-    class GraphicsManager;
+    class Renderer;
+
+    using Type_TTF_Font = TTF_Font *;
+    using Type_SDL_Texture = SDL_Texture *;
+    using Type_SDL_Surface = SDL_Surface *;
 
     class Font
     {
     private:
-        static inline TTF_Font *defaultFont = nullptr;
-        static inline TTF_Font *defaultBigFont = nullptr;
+        static inline Type_TTF_Font defaultFont = nullptr;
         std::string text;
         int width = 600, height = 100;
-        TTF_Font *font;
-        SDL_Texture *texture;
+        Type_TTF_Font font;
+        Type_SDL_Texture texture;
 
     public:
         Font() = default;
@@ -30,15 +33,16 @@ namespace Graphics
 
         std::string getText() const;
         void setText(std::string text, eColor pColor);
-        SDL_Texture *getTexture() const;
+
+        Type_SDL_Texture getTexture() const;
 
         int getWidth() const { return width; }
         int getHeight() const { return height; }
 
-        static void setDefaultFonts(TTF_Font *small, TTF_Font *large);
+        static void setDefaultFont(Type_TTF_Font pFont);
     };
 }
 
-#include "graphics/GraphicsManager.hpp"
+#include "graphics/Renderer.hpp"
 
 #endif

@@ -51,7 +51,7 @@ namespace GameObjects
 
         GameObjectType getEntityType() { return entityType; }
 
-        void render(Graphics::GraphicsManager &pRenderer) override
+        void render(Graphics::Renderer &pRenderer) override
         {
             // std::cout << "Rendering GameObject: "
             //           << " at position: " << position.x << ", " << position.y << " with texture: " << texture << std::endl;
@@ -72,7 +72,7 @@ namespace GameObjects
          *
          * @param pOther The other object that this object collided with
          */
-        virtual void collide(GameObject *pOther) = 0;
+        virtual void collide(std::shared_ptr<GameObject> pOther) = 0;
 #pragma endregion
     };
 }

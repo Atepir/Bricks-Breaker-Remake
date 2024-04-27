@@ -2,13 +2,13 @@
 
 using namespace Resources;
 
-ResourceManager *ResourceManager::pInstance = nullptr;
+std::shared_ptr<ResourceManager> ResourceManager::pInstance = nullptr;
 
-ResourceManager *ResourceManager::getInstance()
+std::shared_ptr<ResourceManager> ResourceManager::getInstance()
 {
     if (pInstance == nullptr)
     {
-        pInstance = new ResourceManager();
+        pInstance = std::make_shared<ResourceManager>();
         pInstance->loadTextures();
     }
     return pInstance;
@@ -16,7 +16,7 @@ ResourceManager *ResourceManager::getInstance()
 
 ResourceManager::ResourceManager()
 {
-    mTextures = std::unordered_map<eTextureKey, Graphics::Texture *>();
+    mTextures = std::unordered_map<eTextureKey, std::shared_ptr<Graphics::Texture>>();
 }
 
 ResourceManager::~ResourceManager()
@@ -27,12 +27,12 @@ ResourceManager::~ResourceManager()
     }
 }
 
-void ResourceManager::addTexture(const eTextureKey &pTextureKey, Graphics::Texture *pTexture)
+void ResourceManager::addTexture(const eTextureKey &pTextureKey, std::shared_ptr<Graphics::Texture> pTexture)
 {
     mTextures[pTextureKey] = pTexture;
 }
 
-Graphics::Texture *ResourceManager::getTexture(const eTextureKey &pTextureKey)
+std::shared_ptr<Graphics::Texture> ResourceManager::getTexture(const eTextureKey &pTextureKey)
 {
     return mTextures[pTextureKey];
 }
@@ -55,8 +55,8 @@ void ResourceManager::loadTextures()
     addTexture(eTextureKey::Texture_Ball_Basic,
                textureHelper->loadTexture("ball_normal", 1026, 700, 115, 115, 10, 10, 115, 115));
 
-    // Graphics::GraphicsManager::getInstance()->draw(getTexture(eTextureKey::Texture_Paddle_Basic)->getTexture(), {50, 50}, 100, 50, 0);
-    // Graphics::GraphicsManager::getInstance()->render();
+    // Graphics::Renderer::getInstance()->draw(getTexture(eTextureKey::Texture_Paddle_Basic)->getTexture(), {50, 50}, 100, 50, 0);
+    // Graphics::Renderer::getInstance()->render();
 
     // Backgrounds
     addTexture(eTextureKey::Texture_Main_Menu_Background,

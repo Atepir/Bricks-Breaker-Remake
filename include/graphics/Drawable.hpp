@@ -3,7 +3,7 @@
 
 #include <SDL.h>
 
-#include "graphics/GraphicsManager.hpp"
+#include "graphics/Renderer.hpp"
 #include "graphics/Texture.hpp"
 
 namespace Graphics
@@ -15,12 +15,12 @@ namespace Graphics
 
     protected:
         IDrawable();
-        Texture *texture;
+        std::shared_ptr<Texture> texture;
 
     public:
         virtual ~IDrawable();
         virtual void update() = 0;
-        virtual void render(GraphicsManager &renderer) = 0;
+        virtual void render(Renderer &renderer) = 0;
         // virtual void resize(int width, int height) = 0;
         virtual void setVisible(bool visible);
         virtual bool isVisible();

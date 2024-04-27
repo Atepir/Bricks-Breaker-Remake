@@ -10,13 +10,13 @@ namespace Core
     class EventManager
     {
     private:
-        static EventManager *pInstance;
+        static std::shared_ptr<EventManager> pInstance;
 
     public:
         EventManager() = default;
         ~EventManager() = default;
 
-        static EventManager *getInstance();
+        static std::shared_ptr<EventManager> getInstance();
 
         void handleEvents();
     };

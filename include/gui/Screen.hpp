@@ -2,7 +2,7 @@
 #define __SCREEN_HPP
 
 #include "graphics/Drawable.hpp"
-#include "graphics/GraphicsManager.hpp"
+#include "graphics/Renderer.hpp"
 #include "gui/Button.hpp"
 #include <vector>
 
@@ -18,13 +18,13 @@ namespace Gui
     class Screen : public IDrawable
     {
     private:
-        std::vector<UiElement *> children;
+        std::vector<std::shared_ptr<UiElement>> children;
 
     public:
         Screen();
         virtual ~Screen();
         virtual void init();
-        virtual void render(GraphicsManager &renderer);
+        virtual void render(Renderer &renderer);
         virtual void update(double delta);
         virtual void resize(int width, int height);
 
@@ -33,10 +33,10 @@ namespace Gui
         // virtual void buttonPressed(std::shared_ptr<SDL_MouseButtonEvent> event);
         // virtual void buttonReleased(std::shared_ptr<SDL_MouseButtonEvent> event);
 
-        virtual void handleMouseDown(SDL_MouseButtonEvent *event);
-        virtual void handleMouseUp(SDL_MouseButtonEvent *event);
+        virtual void handleMouseDown(Type_SDL_MouseButtonEvent event);
+        virtual void handleMouseUp(Type_SDL_MouseButtonEvent event);
 
-        UiElement *add(UiElement *element);
+        std::shared_ptr<UiElement> add(std::shared_ptr<UiElement> element);
     };
 
     class GameScreen : public Screen
@@ -50,7 +50,7 @@ namespace Gui
         virtual void init();
         virtual void keyUp(std::shared_ptr<SDL_KeyboardEvent> event);
         virtual void update(double delta);
-        virtual void render(GraphicsManager &renderer);
+        virtual void render(Renderer &renderer);
         virtual void keyDown(std::shared_ptr<SDL_KeyboardEvent> event);
 
         void update() override{};
@@ -59,12 +59,12 @@ namespace Gui
     class MainMenuScreen : public Screen
     {
     private:
-        Texture *background;
+        std::shared_ptr<Texture> background;
 
     public:
         MainMenuScreen();
         virtual ~MainMenuScreen();
-        virtual void render(GraphicsManager &renderer);
+        virtual void render(Renderer &renderer);
         virtual void init();
 
         void update() override{};
@@ -79,7 +79,7 @@ namespace Gui
     public:
         GameOverScreen(int score);
         virtual ~GameOverScreen();
-        virtual void render(GraphicsManager &renderer);
+        virtual void render(Renderer &renderer);
         virtual void init();
 
         void update() override{};

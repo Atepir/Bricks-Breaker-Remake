@@ -1,7 +1,7 @@
 #include "core/App.hpp"
 
 using namespace Core;
-App *App::pInstance = nullptr;
+std::shared_ptr<App> App::pInstance = nullptr;
 
 App::App()
 {
@@ -15,11 +15,11 @@ App::~App()
     quit();
 }
 
-App *App::getInstance()
+std::shared_ptr<App> App::getInstance()
 {
     if (pInstance == nullptr)
     {
-        pInstance = new App();
+        pInstance = std::make_shared<App>();
     }
     return pInstance;
 }
@@ -28,7 +28,7 @@ void App::init()
 {
     mRunning = true;
 
-    Graphics::GraphicsManager *graphics = Graphics::GraphicsManager::getInstance();
+    std::shared_ptr<Graphics::Renderer> graphics = Graphics::Renderer::getInstance();
     graphics->init();
 
     if (TTF_Init() == -1)
@@ -37,14 +37,14 @@ void App::init()
         SDL_Delay(5000);
     }
 
-    TTF_Font *smallFont = TTF_OpenFont("font.ttf", 64);
-    if (smallFont == nullptr)
+    Type_TTF_Font font = TTF_OpenFont("font.ttf", 64);
+    if (font == nullptr)
     {
         std::cerr << "Failed to load font.ttf" << std::endl;
         std::cerr << TTF_GetError() << std::endl;
     }
-    std::cout << "smallFont: " << smallFont << std::endl;
-    Font::setDefaultFonts(smallFont, smallFont);
+    std::cout << "font: " << font << std::endl;
+    Font::setDefaultFont(font);
 }
 
 void App::run()
@@ -55,23 +55,23 @@ void App::run()
 void App::quit()
 {
     mRunning = false;
-    Graphics::GraphicsManager::getInstance()->quit();
+    Graphics::Renderer::getInstance()->quit();
     TTF_Quit();
 }
 
-void App::setScreen(Gui::Screen *screen)
+void App::setScreen(std::shared_ptr<Gui::Screen> screen)
 {
     nextScreen = screen;
 }
 
-Gui::Screen *App::getCurrentScreen()
+std::shared_ptr<Gui::Screen> App::getCurrentScreen()
 {
     return currentScreen;
 }
 
 void App::mainloop()
 {
-    Graphics::GraphicsManager *graphics = Graphics::GraphicsManager::getInstance();
+    std::shared_ptr<Graphics::Renderer> graphics = Graphics::Renderer::getInstance();
 
     while (mRunning)
     {
@@ -81,7 +81,7 @@ void App::mainloop()
         {
             if (currentScreen != nullptr)
             {
-                delete currentScreen;
+                currentScreen = nullptr;
             }
             currentScreen = nextScreen;
             nextScreen = nullptr;

@@ -13,30 +13,33 @@ using namespace Geometry;
 
 namespace Graphics
 {
-    class GraphicsManager
+    using Type_SDL_Renderer = SDL_Renderer *;
+    using Type_SDL_Window = SDL_Window *;
+
+    class Renderer
     {
     protected:
-        SDL_Window *pWindow;
-        SDL_Renderer *pRenderer;
+        Type_SDL_Window pWindow;
+        Type_SDL_Renderer pRenderer;
 
-        static inline GraphicsManager *pInstance = nullptr;
+        static inline std::shared_ptr<Renderer> pInstance = nullptr;
 
     public:
-        GraphicsManager();
+        Renderer();
 
-        GraphicsManager(const GraphicsManager &) = delete;
-        void operator=(const GraphicsManager &) = delete;
+        Renderer(const Renderer &) = delete;
+        void operator=(const Renderer &) = delete;
 
-        static GraphicsManager *getInstance()
+        static std::shared_ptr<Renderer> getInstance()
         {
             if (pInstance == nullptr)
             {
-                pInstance = new GraphicsManager();
+                pInstance = std::make_shared<Renderer>();
             }
             return pInstance;
         }
 
-        ~GraphicsManager()
+        ~Renderer()
         {
             quit();
         }
@@ -76,20 +79,21 @@ namespace Graphics
             SDL_Quit();
         }
 
-        void draw(SDL_Texture *pTexture, Point pPosition, double pWidth, double pHeight, double pAngle)
+        void draw(Type_SDL_Texture pTexture, Point pPosition, double pWidth, double pHeight, double pAngle)
         {
+            std::cout << "Drawing texture " << pTexture << " at " << pPosition.x << ", " << pPosition.y << " with width " << pWidth << " and height " << pHeight << " and angle " << pAngle << std::endl;
             SDL_Rect destRect = {pPosition.x, pPosition.y, pWidth, pHeight};
-            SDL_RenderCopyEx(*Graphics::GraphicsManager::getInstance()->getRenderer(), pTexture, NULL, &destRect, pAngle, NULL, SDL_FLIP_NONE);
+            SDL_RenderCopyEx(Graphics::Renderer::getInstance()->getRenderer(), pTexture, NULL, &destRect, pAngle, NULL, SDL_FLIP_NONE);
         }
 
         void drawRect(int x, int y, int w, int h)
         {
             SDL_Rect rect = {x, y, w, h};
-            SDL_SetRenderDrawColor(*Graphics::GraphicsManager::getInstance()->getRenderer(), 255, 255, 255, 255);
-            SDL_RenderFillRect(*Graphics::GraphicsManager::getInstance()->getRenderer(), &rect);
+            SDL_SetRenderDrawColor(Graphics::Renderer::getInstance()->getRenderer(), 255, 255, 255, 255);
+            SDL_RenderFillRect(Graphics::Renderer::getInstance()->getRenderer(), &rect);
         }
 
-        void drawText(Font *font, int x, int y, int width, int height)
+        void drawText(Font font, int x, int y, int width, int height)
         {
             SDL_Rect dest;
 
@@ -97,9 +101,9 @@ namespace Graphics
             dest.y = y;
             dest.w = width;
             dest.h = height;
-            std::cout << "Drawing text at " << x << ", " << y << " with width " << width << " and height " << height << " and texture " << font->getTexture() << std::endl;
+            std::cout << "Drawing text at " << x << ", " << y << " with width " << width << " and height " << height << " and texture " << font.getTexture() << std::endl;
 
-            SDL_RenderCopy(*Graphics::GraphicsManager::getInstance()->getRenderer(), font->getTexture(), NULL, &dest);
+            SDL_RenderCopy(Graphics::Renderer::getInstance()->getRenderer(), font.getTexture(), NULL, &dest);
         }
 
         void render()
@@ -107,10 +111,10 @@ namespace Graphics
             SDL_RenderPresent(pRenderer);
         }
 
-        std::unique_ptr<SDL_Renderer *> getRenderer() const
+        Type_SDL_Renderer getRenderer() const
         {
             // std::cout << "Returning renderer " << pRenderer << std::endl;
-            return std::make_unique<SDL_Renderer *>(pRenderer);
+            return pRenderer;
         }
     };
 }

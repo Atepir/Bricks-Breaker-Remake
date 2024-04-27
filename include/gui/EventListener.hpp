@@ -5,16 +5,19 @@
 
 namespace Gui
 {
+    using Type_SDL_KeyboardEvent = SDL_KeyboardEvent *;
+    using Type_SDL_MouseButtonEvent = SDL_MouseButtonEvent*;
+
     class EventListener
     {
     public:
-        void keyUp(SDL_KeyboardEvent *event) {}
-        virtual void keyDown(SDL_KeyboardEvent *event) {}
-        virtual void handleMouseDown(SDL_MouseButtonEvent *event)
+        void keyUp(Type_SDL_KeyboardEvent event) {}
+        virtual void keyDown(Type_SDL_KeyboardEvent event) {}
+        virtual void handleMouseDown(Type_SDL_MouseButtonEvent event)
         {
             std::cout << "handleMouseDown" << std::endl;
         }
-        virtual void handleMouseUp(SDL_MouseButtonEvent *event)
+        virtual void handleMouseUp(Type_SDL_MouseButtonEvent event)
         {
             std::cout << "handleMouseUp" << std::endl;
         }
