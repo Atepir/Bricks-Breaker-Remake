@@ -17,7 +17,7 @@ namespace GameObjects
     class Paddle : public GameObject
     {
     private:
-        static inline Paddle *pInstance = nullptr;
+        static inline std::shared_ptr<Paddle> pInstance = nullptr;
 
     public:
         Paddle(Point position, Vector velocity, double width, double height, double angle, double angularVelocity) : GameObject(position, width, height, velocity, angle, angularVelocity)
@@ -41,18 +41,18 @@ namespace GameObjects
         Paddle(const Paddle &) = delete;
         Paddle &operator=(const Paddle &) = delete;
 
-        static Paddle *getInstance()
+        static std::shared_ptr<Paddle> getInstance()
         {
             if (pInstance == nullptr)
             {
-                pInstance = new Paddle<eMapType::Basic>(Point(120, 600), Vector(30, 30), 140, 40, 0, 0);
+                pInstance = std::make_shared<Paddle>(Point(120, 600), Vector(30, 30), 140, 40, 0, 0);
             }
             return pInstance;
         }
 
         void update() override;
 
-        void collide(GameObject *pOther) override
+        void collide(std::shared_ptr<GameObject> pOther) override
         {
         }
     };

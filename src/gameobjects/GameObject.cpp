@@ -24,6 +24,6 @@ void GameObject::update()
 {
 }
 
-void GameObject::collide(GameObject *other)
+void GameObject::collide(std::shared_ptr<GameObject> other)
 {
 }

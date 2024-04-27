@@ -10,7 +10,7 @@ Screen::~Screen()
 {
     for (auto &element : children)
     {
-        delete element;
+        element.reset();
     }
 }
 
@@ -18,7 +18,7 @@ void Screen::init()
 {
 }
 
-void Screen::render(Graphics::GraphicsManager &renderer)
+void Screen::render(Graphics::Renderer &renderer)
 {
     std::cout << "children size: " << children.size() << std::endl;
     std::cout << "Rendering screen" << std::endl;
@@ -36,7 +36,7 @@ void Screen::update(double delta)
     }
 }
 
-void Screen::handleMouseDown(SDL_MouseButtonEvent *event)
+void Screen::handleMouseDown(Type_SDL_MouseButtonEvent event)
 {
     for (auto &element : children)
     {
@@ -44,7 +44,7 @@ void Screen::handleMouseDown(SDL_MouseButtonEvent *event)
     }
 }
 
-void Screen::handleMouseUp(SDL_MouseButtonEvent *event)
+void Screen::handleMouseUp(Type_SDL_MouseButtonEvent event)
 {
     for (auto &element : children)
     {
@@ -60,7 +60,7 @@ void Screen::resize(int width, int height)
     }
 }
 
-UiElement *Screen::add(UiElement *element)
+std::shared_ptr<UiElement> Screen::add(std::shared_ptr<UiElement> element)
 {
     children.push_back(element);
     return element;

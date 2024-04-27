@@ -3,7 +3,7 @@
 
 #include <SDL.h>
 
-#include "graphics/GraphicsManager.hpp"
+#include "graphics/Renderer.hpp"
 #include "gameobjects/GameObject.hpp"
 #include "gameobjects/Ball.hpp"
 #include "gameobjects/Paddle.hpp"
@@ -18,7 +18,7 @@ namespace Core
     private:
         bool mRunning;
 
-        static Game *pInstance;
+        static std::shared_ptr<Game> pInstance;
 
     public:
         Game();
@@ -28,7 +28,7 @@ namespace Core
 
         ~Game();
 
-        static Game *getInstance();
+        static std::shared_ptr<Game> getInstance();
 
         void run();
 

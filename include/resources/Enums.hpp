@@ -1,5 +1,5 @@
-#ifndef __ENUM_H
-#define __ENUM_H
+#ifndef __ENUMS_HPP
+#define __ENUMS_HPP
 
 enum eMapType
 {

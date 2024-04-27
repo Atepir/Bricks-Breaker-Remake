@@ -2,7 +2,7 @@
 #define __LABEL_HPP
 
 #include "gui/UiElement.hpp"
-#include "graphics/GraphicsManager.hpp"
+#include "graphics/Renderer.hpp"
 #include "graphics/Font.hpp"
 
 namespace Gui
@@ -12,14 +12,14 @@ namespace Gui
     private:
         int id;
         std::string text;
-        Graphics::Font *font;
+        Graphics::Font font;
 
     public:
         Label(std::string text, Point position, int width, int height);
 
-        Label *setText(std::string text);
+        std::shared_ptr<Label> setText(std::string text);
 
-        virtual void render(Graphics::GraphicsManager &renderer);
+        virtual void render(Graphics::Renderer &renderer);
         void update() override{};
     };
 }

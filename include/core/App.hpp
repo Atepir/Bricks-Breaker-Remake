@@ -4,7 +4,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-#include "graphics/GraphicsManager.hpp"
+#include "graphics/Renderer.hpp"
 #include "gui/Screen.hpp"
 #include "resources/ResourceManager.hpp"
 
@@ -16,9 +16,9 @@ namespace Core
     {
     private:
         bool mRunning;
-        static App *pInstance;
+        static std::shared_ptr<App> pInstance;
 
-        Gui::Screen *currentScreen, *nextScreen;
+        std::shared_ptr<Gui::Screen> currentScreen, nextScreen;
 
         void mainloop();
         void init();
@@ -27,14 +27,14 @@ namespace Core
         App();
         ~App();
 
-        static App *getInstance();
+        static std::shared_ptr<App> getInstance();
 
         void run();
         void quit();
 
-        void setScreen(Gui::Screen *screen);
+        void setScreen(std::shared_ptr<Gui::Screen> screen);
 
-        Gui::Screen *getCurrentScreen();
+        std::shared_ptr<Gui::Screen> getCurrentScreen();
     };
 }
 

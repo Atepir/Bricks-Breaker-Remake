@@ -51,7 +51,7 @@ void Ball::update()
     }
 }
 
-void Ball::collide(GameObject *pOther)
+void Ball::collide(std::shared_ptr<GameObject> pOther)
 {
     if (pOther->getEntityType() == GameObjectType::GameObjectPaddle)
     {

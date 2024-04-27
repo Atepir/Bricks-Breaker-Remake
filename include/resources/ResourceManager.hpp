@@ -6,7 +6,6 @@
 #include <iostream>
 
 #include "resources/Enums.hpp"
-#include "resources/ResourceHelper.hpp"
 
 #include "graphics/TextureHelper.hpp"
 #include "graphics/Texture.hpp"
@@ -18,16 +17,16 @@ namespace Resources
     class ResourceManager
     {
     private:
-        unordered_map<eTextureKey, Graphics::Texture *> mTextures;
+        unordered_map<eTextureKey, std::shared_ptr<Graphics::Texture>> mTextures;
 
         void loadTextures();
 
-        static ResourceManager *pInstance;
+        static std::shared_ptr<ResourceManager> pInstance;
 
     public:
         ResourceManager();
 
-        static ResourceManager *getInstance();
+        static std::shared_ptr<ResourceManager> getInstance();
 
         ResourceManager(const ResourceManager &) = delete;
         ResourceManager &operator=(const ResourceManager &) = delete;
@@ -38,14 +37,14 @@ namespace Resources
          * @brief Adds a texture to the resource manager
          * @param pTexture
          */
-        void addTexture(const eTextureKey &pTextureKey, Graphics::Texture *pTexture);
+        void addTexture(const eTextureKey &pTextureKey, std::shared_ptr<Graphics::Texture> pTexture);
 
         /**
          * @brief Gets a texture from the resource manager
          * @param pTextureKey
          * @return Graphics::Texture
          */
-        Graphics::Texture *getTexture(const eTextureKey &pTextureKey);
+        std::shared_ptr<Graphics::Texture> getTexture(const eTextureKey &pTextureKey);
     };
 }
 

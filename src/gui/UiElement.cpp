@@ -1,5 +1,7 @@
 #include "gui/UiElement.hpp"
 
+using namespace Gui;
+
 UiElement::UiElement()
     : x(0), y(0), width(0), height(0), _offsetX(0), _offsetY(0),
       _centerX(false), _centerY(false), XPosSystem(Absolute),

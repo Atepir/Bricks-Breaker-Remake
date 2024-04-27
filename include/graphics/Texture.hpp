@@ -7,26 +7,27 @@
 
 namespace Graphics
 {
+	using Type_SDL_Texture = SDL_Texture *;
+
 	class Texture
 	{
 	private:
 		int mWidth, mHeight;
 		std::string mName;
-		SDL_Texture *mTexture;
+		Type_SDL_Texture mTexture;
 
 	public:
 		Texture();
-		Texture(SDL_Texture *pTexture, int pWidth, int pHeight, std::string pName);
+		Texture(Type_SDL_Texture pTexture, int pWidth, int pHeight, std::string pName);
 		~Texture();
 
-		void setTexture(SDL_Texture *pTexture);
-		SDL_Texture *getTexture();
+		void setTexture(Type_SDL_Texture pTexture);
+		Type_SDL_Texture getTexture();
 
 		int getWidth() const { return mWidth; }
 		int getHeight() const { return mHeight; }
 		std::string getName() const { return mName; }
 
-		// overload the ostream operator
 		friend std::ostream &operator<<(std::ostream &os, Texture texture)
 		{
 			os << "Texture: " << texture.getName() << " Width: " << texture.getWidth() << " Height: " << texture.getHeight() << " SDL Texture: " << texture.getTexture();

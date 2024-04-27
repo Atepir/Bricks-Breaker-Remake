@@ -4,48 +4,52 @@
 #include "graphics/Drawable.hpp"
 #include "gui/EventListener.hpp"
 
-enum PosSystem
+namespace Gui
 {
-    Absolute,
-    Relative
-};
+    using Type_SDL_MouseButtonEvent = SDL_MouseButtonEvent *;
 
-class UiElement : public Graphics::IDrawable, public Gui::EventListener
-{
-protected:
-    int x, y, width, height;
-    int _offsetX, _offsetY;
-    bool _centerX, _centerY;
-    bool dirty;
-    PosSystem XPosSystem, YPosSystem;
+    enum PosSystem
+    {
+        Absolute,
+        Relative
+    };
 
-public:
-    UiElement();
-    UiElement(int x, int y, int width, int height);
-    virtual ~UiElement();
+    class UiElement : public Graphics::IDrawable, public Gui::EventListener
+    {
+    protected:
+        int x, y, width, height;
+        int _offsetX, _offsetY;
+        bool _centerX, _centerY;
+        bool dirty;
+        PosSystem XPosSystem, YPosSystem;
 
-    void calculateCoordinate(int width, int height);
+    public:
+        UiElement();
+        UiElement(int x, int y, int width, int height);
+        virtual ~UiElement();
 
-    void resize(int width, int height);
-    void update(double delta);
+        void calculateCoordinate(int width, int height);
 
-    int getX() const;
-    int getY() const;
-    int getWidth() const;
-    int getHeight() const;
+        void resize(int width, int height);
+        void update(double delta);
 
-    void setWidth(int width);
-    void setHeight(int height);
+        int getX() const;
+        int getY() const;
+        int getWidth() const;
+        int getHeight() const;
 
-    std::shared_ptr<UiElement> center();
-    std::shared_ptr<UiElement> centerX();
-    std::shared_ptr<UiElement> centerY();
-    std::shared_ptr<UiElement> offset(int x, int y);
-    std::shared_ptr<UiElement> offsetX(int x);
-    std::shared_ptr<UiElement> offsetY(int y);
-    std::shared_ptr<UiElement> absolute(int x, int y);
-    std::shared_ptr<UiElement> absoluteX(int x);
-    std::shared_ptr<UiElement> absoluteY(int y);
-};
+        void setWidth(int width);
+        void setHeight(int height);
 
+        std::shared_ptr<UiElement> center();
+        std::shared_ptr<UiElement> centerX();
+        std::shared_ptr<UiElement> centerY();
+        std::shared_ptr<UiElement> offset(int x, int y);
+        std::shared_ptr<UiElement> offsetX(int x);
+        std::shared_ptr<UiElement> offsetY(int y);
+        std::shared_ptr<UiElement> absolute(int x, int y);
+        std::shared_ptr<UiElement> absoluteX(int x);
+        std::shared_ptr<UiElement> absoluteY(int y);
+    };
+}
 #endif

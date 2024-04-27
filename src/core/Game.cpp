@@ -5,7 +5,7 @@ using namespace Factories;
 using namespace Graphics;
 using namespace Core;
 
-Game *Game::pInstance = nullptr;
+std::shared_ptr<Game> Game::pInstance = nullptr;
 
 Game::Game()
 {
@@ -18,14 +18,14 @@ Game::~Game()
 
 void Game::run()
 {
-    Graphics::GraphicsManager *graphics = Graphics::GraphicsManager::getInstance();
+    std::shared_ptr<Graphics::Renderer> graphics = Graphics::Renderer::getInstance();
 
-    Paddle<MAP_TYPE> *paddle = Paddle<MAP_TYPE>::getInstance();
+    std::shared_ptr<Paddle<MAP_TYPE>> paddle = Paddle<MAP_TYPE>::getInstance();
 
     BallFactory ballFactory = BallFactory();
-    Ball *ball = ballFactory.createBall(BallType::NORMAL);
+    std::shared_ptr<Ball> ball = ballFactory.createBall(BallType::NORMAL);
 
-    Board<MAP_TYPE> *board = new Board<MAP_TYPE>();
+    std::shared_ptr<Board<MAP_TYPE>> board = std::make_shared<Board<MAP_TYPE>>();
 
     while (mRunning)
     {
@@ -49,7 +49,7 @@ void Game::run()
             quit();
 
         ball->collide(paddle);
-        std::vector<Brick *> bricks = Board<MAP_TYPE>::getInstance()->getBricks();
+        std::vector<std::shared_ptr<Brick>> bricks = Board<MAP_TYPE>::getInstance()->getBricks();
         for (auto &brick : bricks)
         {
             ball->collide(brick);
@@ -100,11 +100,11 @@ void Game::buttonPressed(SDL_Keycode pKey)
     }
 }
 
-Game *Game::getInstance()
+std::shared_ptr<Game> Game::getInstance()
 {
     if (pInstance == nullptr)
     {
-        pInstance = new Game();
+        pInstance = std::make_shared<Game>();
     }
     return pInstance;
 }

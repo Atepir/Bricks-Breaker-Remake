@@ -32,6 +32,6 @@ void Brick::update()
     }
 }
 
-void Brick::collide(GameObject *pOther)
+void Brick::collide(std::shared_ptr<GameObject> pOther)
 {
 }

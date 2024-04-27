@@ -12,7 +12,7 @@ namespace Factories
         BallFactory() = default;
         virtual ~BallFactory() = default;
 
-        static GameObjects::Ball *createBall(BallType pType);
+        static std::shared_ptr<GameObjects::Ball> createBall(BallType pType);
     };
 }
 

@@ -17,7 +17,7 @@ void Paddle<eMapType::Basic>::update()
         position.x += velocity.x;
     }
 
-    // std::cout << "Paddle position: " << position.x << ", " << position.y << std::endl;
+    std::cout << "Paddle position: " << position.x << ", " << position.y << std::endl;
 }
 
 void Paddle<eMapType::Circular>::update()

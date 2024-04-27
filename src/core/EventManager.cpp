@@ -2,13 +2,13 @@
 
 using namespace Core;
 
-EventManager *EventManager::pInstance = nullptr;
+std::shared_ptr<EventManager> EventManager::pInstance = nullptr;
 
-EventManager *EventManager::getInstance()
+std::shared_ptr<EventManager> EventManager::getInstance()
 {
     if (pInstance == nullptr)
     {
-        pInstance = new EventManager();
+        pInstance = std::make_shared<EventManager>();
     }
     return pInstance;
 }
