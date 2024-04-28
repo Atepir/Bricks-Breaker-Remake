@@ -17,7 +17,17 @@ void Paddle<eMapType::Basic>::update()
         position.x += velocity.x;
     }
 
-    std::cout << "Paddle position: " << position.x << ", " << position.y << std::endl;
+    // keep the paddle within the screen
+    if (position.x < 0 + BORDER_WIDTH)
+    {
+        position.x = BORDER_WIDTH;
+    }
+    if (position.x + width > 1024 - BORDER_WIDTH)
+    {
+        position.x = 1024 - width - BORDER_WIDTH;
+    }
+
+    // std::cout << "Paddle position: " << position.x << ", " << position.y << std::endl;
 }
 
 void Paddle<eMapType::Circular>::update()

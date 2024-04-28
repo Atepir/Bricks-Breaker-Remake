@@ -2,13 +2,17 @@
 #define __BOARD_HPP
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 
 #include "resources/Enums.hpp"
+#include "resources/LevelManager.hpp"
 #include "gameobjects/GameObject.hpp"
 #include "gameobjects/Brick.hpp"
 
-#define BOARD_PADDING 72
+#define BOARD_PADDING 40
+#define MARGIN_TOP 80
+#define INITIAL_BRICK_HEALTH 100
 
 namespace GameObjects
 {
@@ -42,13 +46,32 @@ namespace GameObjects
             return pInstance;
         }
 
+        void fillBasicBoard(std::string pPath);
+        void fillCircularBoard();
+        void reset();
+
+        bool isFinished()
+        {
+            return mBricks.size() <= 0;
+        }
+
         std::vector<std::shared_ptr<Brick>> getBricks() { return mBricks; }
 
         void update() override
         {
             for (auto brick : mBricks)
             {
+                if (brick == nullptr)
+                {
+                    continue;
+                }
                 brick->update();
+                if (brick->getDeleteFlag())
+                {
+                    std::cout << "delete flag: " << brick->getDeleteFlag() << std::endl;
+                    std::cout << "Brick deleted" << std::endl;
+                    mBricks.erase(std::remove(mBricks.begin(), mBricks.end(), brick), mBricks.end());
+                }
             }
         }
 

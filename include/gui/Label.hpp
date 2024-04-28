@@ -4,6 +4,7 @@
 #include "gui/UiElement.hpp"
 #include "graphics/Renderer.hpp"
 #include "graphics/Font.hpp"
+#include "resources/Enums.hpp"
 
 namespace Gui
 {
@@ -15,9 +16,9 @@ namespace Gui
         Graphics::Font font;
 
     public:
-        Label(std::string text, Point position, int width, int height);
+        Label(std::string text, Point position, int width, int height, eColor color = eColor::ColorWhite);
 
-        std::shared_ptr<Label> setText(std::string text);
+        void setText(std::string pText, eColor color = eColor::ColorWhite);
 
         virtual void render(Graphics::Renderer &renderer);
         void update() override{};

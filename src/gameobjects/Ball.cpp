@@ -2,7 +2,7 @@
 
 using namespace GameObjects;
 
-Ball::Ball(BallType type, Point point, double radius, double mass) : GameObject(point, 30, 30, Vector(20, 20), 0, 0)
+Ball::Ball(BallType type, Point point, double radius, double mass) : GameObject(point, 30, 30, Vector(0, 10), 0, 0)
 {
     this->mType = type;
     this->mRadius = radius;
@@ -20,69 +20,111 @@ void Ball::update()
     position.x += velocity.x;
     position.y += velocity.y;
 
-    if (position.x < 0 || position.x > 1024)
+    if (position.x < BORDER_WIDTH || position.x > 1024 - BORDER_WIDTH)
     {
         velocity.x = -velocity.x;
     }
 
-    if (position.y < 0 || position.y > 720)
+    if (position.y < BORDER_WIDTH + MARGIN_TOP || position.y > 720 - BORDER_WIDTH)
     {
         velocity.y = -velocity.y;
     }
 
-    if (position.y > 720)
+    if (position.y > 720 - BORDER_WIDTH)
     {
+        // has fallen off the screen
         position.y = 720;
+        // notify the observers that the ball has fallen
+        notifyObserversBallFallen();
+        // reset the ball position
+        position.x = 512;
+        position.y = 400;
+        velocity.x = 0;
+        velocity.y = 10;
     }
+}
 
-    if (position.y < 0)
+void Ball::addObserver(std::shared_ptr<IBallObserver> observer)
+{
+    mObservers.push_back(observer);
+}
+
+void Ball::notifyObserversBallFallen()
+{
+    for (auto observer : mObservers)
     {
-        position.y = 0;
+        observer->onBallFallen();
     }
+}
 
-    if (position.x > 1024)
+void Ball::notifyObserversBrickDestroyed(BrickType pBrickType)
+{
+    for (auto observer : mObservers)
     {
-        position.x = 1024;
+        observer->onBrickDestroyed(pBrickType);
     }
+}
 
-    if (position.x < 0)
+void Ball::damageBrick(std::shared_ptr<Brick> pBrick, int pDamage)
+{
+    pBrick->mHealth -= pDamage;
+    if (pBrick->mHealth <= 0)
     {
-        position.x = 0;
+        pBrick->mDeleteFlag = true;
+        notifyObserversBrickDestroyed(pBrick->mType);
     }
 }
 
 void Ball::collide(std::shared_ptr<GameObject> pOther)
 {
-    if (pOther->getEntityType() == GameObjectType::GameObjectPaddle)
-    {
-        // if the collision happen on the left part of the paddle, then the ball will go to the left
-        if (position.x + mRadius > pOther->getPosition().x && position.x < pOther->getPosition().x + pOther->getWidth())
-        {
-            if (position.y + mRadius > pOther->getPosition().y && position.y < pOther->getPosition().y + pOther->getHeight())
-            {
-                velocity.y = -velocity.y;
-                velocity.x = -2;
-            }
-        }
+    // Calculate the minimum and maximum coordinates of both objects
+    double thisLeft = position.x;
+    double thisRight = position.x + getWidth();
+    double thisTop = position.y;
+    double thisBottom = position.y + getHeight();
 
-        // if the collision happen on the right part of the paddle, then the ball will go to the right
+    double otherLeft = pOther->getPosition().x;
+    double otherRight = pOther->getPosition().x + pOther->getWidth();
+    double otherTop = pOther->getPosition().y;
+    double otherBottom = pOther->getPosition().y + pOther->getHeight();
 
-        if (position.x + mRadius > pOther->getPosition().x && position.x < pOther->getPosition().x + pOther->getWidth())
-        {
-            if (position.y + mRadius > pOther->getPosition().y && position.y < pOther->getPosition().y + pOther->getHeight())
-            {
-                velocity.x = 2;
-            }
-        }
-    }
-    else if (pOther->getEntityType() == GameObjectType::GameObjectBrick)
+    // Check for overlap between the bounding boxes of the two objects
+    if (thisRight >= otherLeft && thisLeft <= otherRight &&
+        thisBottom >= otherTop && thisTop <= otherBottom)
     {
-        if (position.y + mRadius > pOther->getPosition().y && position.y < pOther->getPosition().y + pOther->getHeight())
+        if (pOther->getEntityType() == GameObjectType::GameObjectPaddle)
         {
-            if (position.x + mRadius > pOther->getPosition().x && position.x < pOther->getPosition().x + pOther->getWidth())
+            double paddleCenter = pOther->getPosition().x + pOther->getWidth() / 2;
+            double ballCenter = position.x + getWidth() / 2;
+            double distanceFromCenter = ballCenter - paddleCenter;
+            double normalizedDistance = distanceFromCenter / (pOther->getWidth() / 2);
+            double bounceAngle = normalizedDistance * 45;
+            velocity.x = 20 * sin(bounceAngle * M_PI / 180);
+            velocity.y = -20 * cos(bounceAngle * M_PI / 180);
+        }
+        else if (pOther->getEntityType() == GameObjectType::GameObjectBrick)
+        {
+            std::shared_ptr<Brick> brick = std::static_pointer_cast<Brick>(pOther);
+            switch (brick->mType)
             {
-                velocity.y = -velocity.y;
+            case BrickType::BRICK_BLUE:
+                damageBrick(brick, 80);
+                break;
+            case BrickType::BRICK_GREEN:
+                damageBrick(brick, 60);
+                break;
+            case BrickType::BRICK_VIOLET:
+                damageBrick(brick, 40);
+                break;
+            case BrickType::BRICK_YELLOW:
+                damageBrick(brick, 20);
+                break;
+            case BrickType::BRICK_RED:
+                damageBrick(brick, 10);
+                break;
             }
+
+            velocity.y = -velocity.y;
         }
     }
 }

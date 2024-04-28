@@ -8,16 +8,20 @@
 #include "resources/Constants.hpp"
 #include "resources/ResourceManager.hpp"
 
-#define BRICK_WIDTH 140
-#define BRICK_HEIGHT 48
+#define BRICK_WIDTH 118
+#define BRICK_HEIGHT 50
 
 namespace GameObjects
 {
+    class Ball;
     class Brick : public GameObject
     {
+        friend class Ball;
+
     private:
         BrickType mType;
         int mHealth;
+        bool mDeleteFlag = false;
 
     public:
         Brick(Point position, double width, double height, BrickType type, int health);
@@ -25,6 +29,8 @@ namespace GameObjects
 
         void update() override;
         void collide(std::shared_ptr<GameObject> pOther) override;
+
+        bool getDeleteFlag() { return mDeleteFlag; }
     };
 }
 

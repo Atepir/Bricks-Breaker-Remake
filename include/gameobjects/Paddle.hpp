@@ -45,7 +45,7 @@ namespace GameObjects
         {
             if (pInstance == nullptr)
             {
-                pInstance = std::make_shared<Paddle>(Point(120, 600), Vector(30, 30), 140, 40, 0, 0);
+                pInstance = std::make_shared<Paddle>(Point(420, 620), Vector(30, 30), 140, 40, 0, 0);
             }
             return pInstance;
         }
