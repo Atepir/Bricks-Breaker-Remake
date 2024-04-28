@@ -108,7 +108,7 @@ void Ball::collide(std::shared_ptr<GameObject> pOther)
             switch (brick->mType)
             {
             case BrickType::BRICK_BLUE:
-                damageBrick(brick, 80);
+                damageBrick(brick, 100);
                 break;
             case BrickType::BRICK_GREEN:
                 damageBrick(brick, 60);
