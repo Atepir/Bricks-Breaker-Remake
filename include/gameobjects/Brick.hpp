@@ -8,7 +8,7 @@
 #include "resources/Constants.hpp"
 #include "resources/ResourceManager.hpp"
 
-#define BRICK_WIDTH 140
+#define BRICK_WIDTH 118
 #define BRICK_HEIGHT 50
 
 namespace GameObjects

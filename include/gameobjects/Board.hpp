@@ -8,7 +8,8 @@
 #include "gameobjects/GameObject.hpp"
 #include "gameobjects/Brick.hpp"
 
-#define BOARD_PADDING 72
+#define BOARD_PADDING 40
+#define MARGIN_TOP 80
 #define INITIAL_BRICK_HEALTH 100
 
 namespace GameObjects
@@ -42,6 +43,10 @@ namespace GameObjects
             }
             return pInstance;
         }
+
+        void fillBasicBoard();
+        void fillCircularBoard();
+        void reset();
 
         std::vector<std::shared_ptr<Brick>> getBricks() { return mBricks; }
 

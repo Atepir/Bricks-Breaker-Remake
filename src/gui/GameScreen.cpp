@@ -19,6 +19,7 @@ GameScreen::GameScreen()
     this->mBall = ballFactory.createBall(BallType::NORMAL);
 
     this->mBoard = Board<MAP_TYPE>::getInstance();
+    this->mBoard->reset();
 
     this->mPlayer = std::make_shared<Player>();
 
@@ -50,6 +51,8 @@ void GameScreen::init()
     }
 
     add(mScoreLabel);
+
+    mBackground = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Board_Border_Background);
 }
 
 void GameScreen::render(Graphics::Renderer &renderer)
@@ -80,6 +83,7 @@ void GameScreen::render(Graphics::Renderer &renderer)
     mPaddle->update();
     mBoard->update();
 
+    mRenderer->draw(mBackground->getTexture(), {0, 80}, 1024, 650, 0);
     for (auto &brick : bricks)
     {
         brick->render(*mRenderer);

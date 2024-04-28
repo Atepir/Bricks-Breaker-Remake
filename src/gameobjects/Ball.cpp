@@ -2,7 +2,7 @@
 
 using namespace GameObjects;
 
-Ball::Ball(BallType type, Point point, double radius, double mass) : GameObject(point, 30, 30, Vector(20, 20), 0, 0)
+Ball::Ball(BallType type, Point point, double radius, double mass) : GameObject(point, 30, 30, Vector(0, 10), 0, 0)
 {
     this->mType = type;
     this->mRadius = radius;
@@ -20,37 +20,27 @@ void Ball::update()
     position.x += velocity.x;
     position.y += velocity.y;
 
-    if (position.x < 0 || position.x > 1024)
+    if (position.x < BORDER_WIDTH || position.x > 1024 - BORDER_WIDTH)
     {
         velocity.x = -velocity.x;
     }
 
-    if (position.y < 0 || position.y > 720)
+    if (position.y < BORDER_WIDTH + MARGIN_TOP || position.y > 720 - BORDER_WIDTH)
     {
         velocity.y = -velocity.y;
     }
 
-    if (position.y > 720)
+    if (position.y > 720 - BORDER_WIDTH)
     {
         // has fallen off the screen
         position.y = 720;
         // notify the observers that the ball has fallen
         notifyObserversBallFallen();
-    }
-
-    if (position.y < 0)
-    {
-        position.y = 0;
-    }
-
-    if (position.x > 1024)
-    {
-        position.x = 1024;
-    }
-
-    if (position.x < 0)
-    {
-        position.x = 0;
+        // reset the ball position
+        position.x = 512;
+        position.y = 360;
+        velocity.x = 0;
+        velocity.y = 10;
     }
 }
 

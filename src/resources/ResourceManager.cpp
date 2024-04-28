@@ -65,6 +65,9 @@ void ResourceManager::loadTextures()
     addTexture(eTextureKey::Texture_Main_Menu_Background,
                Graphics::TextureHelper::loadTexture("main_menu_background.bmp", "main_menu_background"));
 
+    addTexture(eTextureKey::Texture_Board_Border_Background,
+               Graphics::TextureHelper::loadTexture("board_border_background.bmp", "board_border_background"));
+
     // std::cout << "Textures loaded" << std::endl;
     // std::cout << "Number of textures loaded: " << mTextures.size() << std::endl;
 

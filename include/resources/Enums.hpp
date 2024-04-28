@@ -50,7 +50,8 @@ enum class eTextureKey
 	Texture_Brick_Unbreakable,
 	Texture_Main_Menu_Background,
 	Texture_Heart,
-	Texture_Brick_Normal_Damaged
+	Texture_Brick_Normal_Damaged,
+	Texture_Board_Border_Background,
 };
 
 enum eColor

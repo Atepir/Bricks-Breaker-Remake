@@ -18,13 +18,13 @@ void Paddle<eMapType::Basic>::update()
     }
 
     // keep the paddle within the screen
-    if (position.x < 0)
+    if (position.x < 0 + BORDER_WIDTH)
     {
-        position.x = 0;
+        position.x = BORDER_WIDTH;
     }
-    if (position.x + width > 1024)
+    if (position.x + width > 1024 - BORDER_WIDTH)
     {
-        position.x = 1024 - width;
+        position.x = 1024 - width - BORDER_WIDTH;
     }
 
     // std::cout << "Paddle position: " << position.x << ", " << position.y << std::endl;
