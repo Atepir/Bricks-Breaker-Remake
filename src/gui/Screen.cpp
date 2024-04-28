@@ -65,3 +65,8 @@ std::shared_ptr<UiElement> Screen::add(std::shared_ptr<UiElement> element)
     children.push_back(element);
     return element;
 }
+
+void Screen::remove(std::shared_ptr<UiElement> element)
+{
+    children.erase(std::remove(children.begin(), children.end(), element), children.end());
+}

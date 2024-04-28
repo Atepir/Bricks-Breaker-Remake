@@ -49,6 +49,7 @@ enum class eTextureKey
 	Texture_Brick_Normal,
 	Texture_Brick_Unbreakable,
 	Texture_Main_Menu_Background,
+	Texture_Heart
 };
 
 enum eColor

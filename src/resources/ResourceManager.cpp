@@ -49,10 +49,14 @@ void ResourceManager::loadTextures()
 
     // balls
     addTexture(eTextureKey::Texture_Ball_Basic,
-               textureHelper->loadTexture("ball_normal", 1026, 700, 115, 115, 0, 0, 115, 115));
+               textureHelper->loadTexture("ball_normal", 1032, 700, 115, 115, 0, 0, 115, 115));
 
     // Graphics::Renderer::getInstance()->draw(getTexture(eTextureKey::Texture_Paddle_Basic)->getTexture(), {50, 50}, 100, 50, 0);
     // Graphics::Renderer::getInstance()->render();
+
+    // heart
+    addTexture(eTextureKey::Texture_Heart,
+               textureHelper->loadTexture("heart", 1032, 590, 115, 115, 0, 0, 115, 115));
 
     // Backgrounds
     addTexture(eTextureKey::Texture_Main_Menu_Background,

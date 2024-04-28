@@ -3,6 +3,8 @@
 
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <iostream>
+#include <thread>
 
 #include "graphics/Renderer.hpp"
 #include "gui/Screen.hpp"

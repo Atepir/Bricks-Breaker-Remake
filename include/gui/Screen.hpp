@@ -4,13 +4,28 @@
 #include "graphics/Drawable.hpp"
 #include "graphics/Renderer.hpp"
 #include "gui/Button.hpp"
+#include "gui/Image.hpp"
+#include "gui/Label.hpp"
 #include <vector>
 
+#include <SDL.h>
+
+#include "graphics/Renderer.hpp"
+#include "gameobjects/GameObject.hpp"
+#include "gameobjects/Ball.hpp"
+#include "gameobjects/Paddle.hpp"
+#include "gameobjects/Board.hpp"
+#include "factories/BallFactory.hpp"
+#include "resources/Enums.hpp"
+
+using namespace GameObjects;
+using namespace Factories;
 using namespace Graphics;
 
 namespace Core
 {
     class App;
+    class Player;
 };
 
 namespace Gui
@@ -37,12 +52,20 @@ namespace Gui
         virtual void handleMouseUp(Type_SDL_MouseButtonEvent event);
 
         std::shared_ptr<UiElement> add(std::shared_ptr<UiElement> element);
+        void remove(std::shared_ptr<UiElement> element);
     };
 
     class GameScreen : public Screen
     {
     private:
-        std::shared_ptr<Texture> background;
+        std::shared_ptr<Texture> mBackground;
+        std::shared_ptr<Board<MAP_TYPE>> mBoard;
+        std::shared_ptr<Paddle<MAP_TYPE>> mPaddle;
+        std::shared_ptr<Ball> mBall;
+        std::shared_ptr<Renderer> mRenderer;
+        std::shared_ptr<Core::Player> mPlayer;
+        std::vector<std::shared_ptr<Image>> mHearts;
+        std::shared_ptr<Label> mScoreLabel;
 
     public:
         GameScreen();
@@ -87,5 +110,6 @@ namespace Gui
 }
 
 #include "core/App.hpp"
+#include "core/Player.hpp"
 
 #endif

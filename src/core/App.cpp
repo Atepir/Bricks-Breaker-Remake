@@ -85,11 +85,15 @@ void App::mainloop()
             }
             currentScreen = nextScreen;
             nextScreen = nullptr;
-            currentScreen->init();
+
+            // launch a separate thread for initialization as the game can be played there
+            std::thread taskThread([this]()
+                                   { currentScreen->init(); });
+            taskThread.join();
         }
 
         currentScreen->render(*graphics);
         graphics->render();
-        SDL_Delay(1000);
+        SDL_Delay(1000 / 24);
     }
 }

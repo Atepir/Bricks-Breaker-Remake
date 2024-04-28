@@ -3,17 +3,17 @@
 using namespace Gui;
 using namespace Graphics;
 
-Label::Label(std::string text, Point position, int width, int height) : UiElement(position.x, position.y, width, height)
+Label::Label(std::string text, Point position, int width, int height, eColor color)
+    : UiElement(position.x, position.y, width, height)
 {
     std::cout << "Creating label" << std::endl;
-    font = Font(text, eColor::ColorWhite);
+    font = Font(text, color);
 }
 
-std::shared_ptr<Label> Label::setText(std::string text)
+void Label::setText(std::string pText, eColor color)
 {
-    this->text = text;
-    font.setText(text, eColor::ColorWhite);
-    return std::shared_ptr<Label>(this);
+    text = pText;
+    font.setText(pText, color);
 }
 
 void Label::render(Graphics::Renderer &renderer)
