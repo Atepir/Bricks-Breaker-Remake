@@ -2,9 +2,11 @@
 #define __BOARD_HPP
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 
 #include "resources/Enums.hpp"
+#include "resources/LevelManager.hpp"
 #include "gameobjects/GameObject.hpp"
 #include "gameobjects/Brick.hpp"
 
@@ -44,9 +46,14 @@ namespace GameObjects
             return pInstance;
         }
 
-        void fillBasicBoard();
+        void fillBasicBoard(std::string pPath);
         void fillCircularBoard();
         void reset();
+
+        bool isFinished()
+        {
+            return mBricks.size() < 38;
+        }
 
         std::vector<std::shared_ptr<Brick>> getBricks() { return mBricks; }
 

@@ -50,6 +50,30 @@ void ResourceManager::loadTextures()
     addTexture(eTextureKey::Texture_Brick_Normal_Damaged,
                textureHelper->loadTexture("brick_normal_damaged", 268, 22, 214, 72, 0, 0, 214, 72));
 
+    addTexture(eTextureKey::Texture_Brick_Green,
+               textureHelper->loadTexture("brick_green", 26, 119, 214, 72, 0, 0, 214, 72));
+
+    addTexture(eTextureKey::Texture_Brick_Green_Damaged,
+               textureHelper->loadTexture("brick_green_damaged", 268, 119, 214, 72, 0, 0, 214, 72));
+
+    addTexture(eTextureKey::Texture_Brick_Violet,
+               textureHelper->loadTexture("brick_violet", 26, 217, 214, 72, 0, 0, 214, 72));
+
+    addTexture(eTextureKey::Texture_Brick_Violet_Damaged,
+               textureHelper->loadTexture("brick_violet_damaged", 268, 217, 214, 72, 0, 0, 214, 72));
+
+    addTexture(eTextureKey::Texture_Brick_Yellow,
+               textureHelper->loadTexture("brick_yellow", 26, 603, 214, 72, 0, 0, 214, 72));
+
+    addTexture(eTextureKey::Texture_Brick_Yellow_Damaged,
+               textureHelper->loadTexture("brick_yellow_damaged", 268, 603, 214, 72, 0, 0, 214, 72));
+
+    addTexture(eTextureKey::Texture_Brick_Red,
+               textureHelper->loadTexture("brick_red", 26, 310, 214, 72, 0, 0, 214, 72));
+
+    addTexture(eTextureKey::Texture_Brick_Red_Damaged,
+               textureHelper->loadTexture("brick_red_damaged", 268, 310, 214, 72, 0, 0, 214, 72));
+
     // balls
     addTexture(eTextureKey::Texture_Ball_Basic,
                textureHelper->loadTexture("ball_normal", 1032, 700, 115, 115, 0, 0, 115, 115));

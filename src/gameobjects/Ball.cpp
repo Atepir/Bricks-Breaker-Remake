@@ -38,7 +38,7 @@ void Ball::update()
         notifyObserversBallFallen();
         // reset the ball position
         position.x = 512;
-        position.y = 360;
+        position.y = 400;
         velocity.x = 0;
         velocity.y = 10;
     }

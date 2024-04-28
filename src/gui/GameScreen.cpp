@@ -52,6 +52,9 @@ void GameScreen::init()
 
     add(mScoreLabel);
 
+    Label levelLabel = Label("Level " + std::to_string(Resources::LevelManager::getCurrentLevel() + 1), {460, 40}, 120, 30, eColor::ColorBlue);
+    add(std::make_shared<Label>(levelLabel));
+
     mBackground = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Board_Border_Background);
 }
 
@@ -91,8 +94,12 @@ void GameScreen::render(Graphics::Renderer &renderer)
 
     mBall->render(*mRenderer);
     mPaddle->render(*mRenderer);
-
     Screen::render(renderer);
+
+    if (mBoard->isFinished())
+    {
+        Core::App::getInstance()->setScreen(std::make_shared<LevelCompleteScreen>(mPlayer->getScore()));
+    }
 }
 
 GameScreen::~GameScreen()

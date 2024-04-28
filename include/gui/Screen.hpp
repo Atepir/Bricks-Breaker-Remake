@@ -107,6 +107,21 @@ namespace Gui
 
         void update() override{};
     };
+
+    class LevelCompleteScreen : public Screen
+    {
+    private:
+        std::shared_ptr<Texture> mBackground;
+        int mScore;
+
+    public:
+        LevelCompleteScreen(int score);
+        virtual ~LevelCompleteScreen();
+        virtual void render(Renderer &renderer);
+        virtual void init();
+
+        void update() override{};
+    };
 }
 
 #include "core/App.hpp"

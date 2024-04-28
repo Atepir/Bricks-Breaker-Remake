@@ -9,11 +9,20 @@ Brick::Brick(Point position, double width, double height, BrickType type, int he
 
     switch (mType)
     {
-    case BrickType::NORMAL:
+    case BrickType::BRICK_BLUE:
         texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Normal);
         break;
-    case BrickType::UNBREAKABLE:
-        texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Unbreakable);
+    case BrickType::BRICK_GREEN:
+        texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Green);
+        break;
+    case BrickType::BRICK_VIOLET:
+        texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Violet);
+        break;
+    case BrickType::BRICK_YELLOW:
+        texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Yellow);
+        break;
+    case BrickType::BRICK_RED:
+        texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Red);
         break;
     }
 
@@ -30,11 +39,20 @@ void Brick::update()
     {
         switch (mType)
         {
-        case BrickType::NORMAL:
+        case BrickType::BRICK_BLUE:
             texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Normal_Damaged);
             break;
-        case BrickType::UNBREAKABLE:
-            texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Unbreakable);
+        case BrickType::BRICK_GREEN:
+            texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Green_Damaged);
+            break;
+        case BrickType::BRICK_VIOLET:
+            texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Violet_Damaged);
+            break;
+        case BrickType::BRICK_YELLOW:
+            texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Yellow_Damaged);
+            break;
+        case BrickType::BRICK_RED:
+            texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Red_Damaged);
             break;
         }
     }

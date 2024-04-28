@@ -41,10 +41,10 @@ namespace Core
         {
             switch (pBrickType)
             {
-            case BrickType::NORMAL:
+            case BrickType::BRICK_BLUE:
                 addScore(10);
                 break;
-            case BrickType::UNBREAKABLE:
+            case BrickType::BRICK_GREEN:
                 addScore(20);
                 break;
             default:

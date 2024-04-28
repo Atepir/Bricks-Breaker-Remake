@@ -19,6 +19,7 @@ void MainMenuScreen::init()
     startButton.setOnClickCallback(
         []()
         {
+            Resources::LevelManager::setLevel(0);
             Core::App::getInstance()->setScreen(std::make_shared<GameScreen>());
         });
     add(std::make_shared<Button>(startButton));
