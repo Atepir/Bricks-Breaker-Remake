@@ -18,6 +18,6 @@ void Label::setText(std::string pText, eColor color)
 
 void Label::render(Graphics::Renderer &renderer)
 {
-    std::cout << "Rendering label" << std::endl;
+    // std::cout << "Rendering label" << std::endl;
     renderer.drawText(font, x, y, width, height);
 }

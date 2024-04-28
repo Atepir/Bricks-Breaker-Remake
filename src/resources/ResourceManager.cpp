@@ -47,6 +47,9 @@ void ResourceManager::loadTextures()
     addTexture(eTextureKey::Texture_Brick_Normal,
                textureHelper->loadTexture("brick_normal", 26, 22, 214, 72, 0, 0, 214, 72));
 
+    addTexture(eTextureKey::Texture_Brick_Normal_Damaged,
+               textureHelper->loadTexture("brick_normal_damaged", 268, 22, 214, 72, 0, 0, 214, 72));
+
     // balls
     addTexture(eTextureKey::Texture_Ball_Basic,
                textureHelper->loadTexture("ball_normal", 1032, 700, 115, 115, 0, 0, 115, 115));

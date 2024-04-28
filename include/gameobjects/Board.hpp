@@ -49,7 +49,17 @@ namespace GameObjects
         {
             for (auto brick : mBricks)
             {
+                if (brick == nullptr)
+                {
+                    continue;
+                }
                 brick->update();
+                if (brick->getDeleteFlag())
+                {
+                    std::cout << "delete flag: " << brick->getDeleteFlag() << std::endl;
+                    std::cout << "Brick deleted" << std::endl;
+                    mBricks.erase(std::remove(mBricks.begin(), mBricks.end(), brick), mBricks.end());
+                }
             }
         }
 

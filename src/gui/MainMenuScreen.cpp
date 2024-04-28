@@ -12,6 +12,8 @@ MainMenuScreen::MainMenuScreen()
 
 void MainMenuScreen::init()
 {
+    // sleep one second to avoid overlapping with the previous screen
+    // std::this_thread::sleep_for(std::chrono::seconds(1));
     add(std::make_shared<Label>(Label("BricksBreaker Remake!", {180, 100}, 700, 60)));
     Button startButton = Button("Play", {420, 500}, 200, 50, eColor::ColorBlue);
     startButton.setOnClickCallback(

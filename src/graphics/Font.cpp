@@ -32,15 +32,15 @@ Font::Font(std::string text, eColor pColor) : text(text), width(100), height(10)
 {
     font = std::move(defaultFont);
     std::cout << "Default font: " << defaultFont << std::endl;
-    Type_SDL_Surface surface = TTF_RenderText_Blended(font, text.c_str(), colors[pColor]);
+    Type_SDL_Surface surface = TTF_RenderUTF8_Blended(font, text.c_str(), colors[pColor]);
     if (surface == nullptr)
     {
         std::cout << "Surface is null" << std::endl;
     }
     Type_SDL_Renderer renderer = Graphics::Renderer::getInstance()->getRenderer();
     texture = SDL_CreateTextureFromSurface(renderer, surface);
-    std::cout << "texture: " << texture << std::endl;
-    std::cout << "Width: " << width << " Height: " << height << std::endl;
+    // std::cout << "texture: " << texture << std::endl;
+    // std::cout << "Width: " << width << " Height: " << height << std::endl;
     // SDL_FreeSurface(surface);
 }
 
@@ -62,7 +62,7 @@ void Font::setText(std::string text, eColor pColor)
     // {
     //     SDL_DestroyTexture(texture);
     // }
-    Type_SDL_Surface surface = TTF_RenderText_Blended(font, text.c_str(), colors[pColor]);
+    Type_SDL_Surface surface = TTF_RenderUTF8_Blended(font, text.c_str(), colors[pColor]);
     if (surface == nullptr)
     {
         std::cout << "Surface is null" << std::endl;
@@ -70,8 +70,8 @@ void Font::setText(std::string text, eColor pColor)
     Type_SDL_Renderer renderer = Graphics::Renderer::getInstance()->getRenderer();
     texture = SDL_CreateTextureFromSurface(
         renderer, surface);
-    std::cout << "texture: " << texture << std::endl;
-    std::cout << "Width: " << width << " Height: " << height << std::endl;
+    // std::cout << "texture: " << texture << std::endl;
+    // std::cout << "Width: " << width << " Height: " << height << std::endl;
     // SDL_FreeSurface(surface);
 }
 

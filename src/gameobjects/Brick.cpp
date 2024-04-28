@@ -26,9 +26,17 @@ Brick::~Brick()
 
 void Brick::update()
 {
-    if (mHealth <= 0)
+    if (mHealth <= 50)
     {
-        delete this;
+        switch (mType)
+        {
+        case BrickType::NORMAL:
+            texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Normal_Damaged);
+            break;
+        case BrickType::UNBREAKABLE:
+            texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Unbreakable);
+            break;
+        }
     }
 }
 

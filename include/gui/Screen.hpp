@@ -96,8 +96,8 @@ namespace Gui
     class GameOverScreen : public Screen
     {
     private:
-        std::shared_ptr<Texture> background;
-        int score;
+        std::shared_ptr<Texture> mBackground;
+        int mScore;
 
     public:
         GameOverScreen(int score);

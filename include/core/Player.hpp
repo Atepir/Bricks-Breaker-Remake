@@ -1,6 +1,8 @@
 #ifndef __PLAYER_HPP
 #define __PLAYER_HPP
 
+#include "gameobjects/Ball.hpp"
+
 #include <iostream>
 #include <string>
 
@@ -8,7 +10,7 @@
 
 namespace Core
 {
-    class Player
+    class Player : public GameObjects::IBallObserver
     {
     private:
         int mScore;
@@ -29,6 +31,26 @@ namespace Core
 
         void addScore(int pScore) { mScore += pScore; }
         void removeLife() { mLives--; }
+
+        void onBallFallen() override
+        {
+            removeLife();
+        }
+
+        void onBrickDestroyed(BrickType pBrickType) override
+        {
+            switch (pBrickType)
+            {
+            case BrickType::NORMAL:
+                addScore(10);
+                break;
+            case BrickType::UNBREAKABLE:
+                addScore(20);
+                break;
+            default:
+                break;
+            }
+        }
 
         friend std::ostream &operator<<(std::ostream &os, Player player)
         {

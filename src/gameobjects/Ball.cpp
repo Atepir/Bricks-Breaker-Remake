@@ -32,7 +32,10 @@ void Ball::update()
 
     if (position.y > 720)
     {
+        // has fallen off the screen
         position.y = 720;
+        // notify the observers that the ball has fallen
+        notifyObserversBallFallen();
     }
 
     if (position.y < 0)
@@ -48,6 +51,37 @@ void Ball::update()
     if (position.x < 0)
     {
         position.x = 0;
+    }
+}
+
+void Ball::addObserver(std::shared_ptr<IBallObserver> observer)
+{
+    mObservers.push_back(observer);
+}
+
+void Ball::notifyObserversBallFallen()
+{
+    for (auto observer : mObservers)
+    {
+        observer->onBallFallen();
+    }
+}
+
+void Ball::notifyObserversBrickDestroyed(BrickType pBrickType)
+{
+    for (auto observer : mObservers)
+    {
+        observer->onBrickDestroyed(pBrickType);
+    }
+}
+
+void Ball::damageBrick(std::shared_ptr<Brick> pBrick, int pDamage)
+{
+    pBrick->mHealth -= pDamage;
+    if (pBrick->mHealth <= 0)
+    {
+        pBrick->mDeleteFlag = true;
+        notifyObserversBrickDestroyed(pBrick->mType);
     }
 }
 
@@ -70,22 +104,18 @@ void Ball::collide(std::shared_ptr<GameObject> pOther)
     {
         if (pOther->getEntityType() == GameObjectType::GameObjectPaddle)
         {
-            // bounce the ball off the paddle
-            // when more at the center of the paddle, bounce straight up
-            // when more at the edges of the paddle, bounce at an angle
             double paddleCenter = pOther->getPosition().x + pOther->getWidth() / 2;
             double ballCenter = position.x + getWidth() / 2;
-            double distance = ballCenter - paddleCenter;
-            double normalizedDistance = distance / (pOther->getWidth() / 2);
-            double angle = normalizedDistance * 45;
-            velocity.x = 20 * cos(angle * M_PI / 180);
-            velocity.y = -20 * sin(angle * M_PI / 180);
+            double distanceFromCenter = ballCenter - paddleCenter;
+            double normalizedDistance = distanceFromCenter / (pOther->getWidth() / 2);
+            double bounceAngle = normalizedDistance * 45;
+            velocity.x = 20 * sin(bounceAngle * M_PI / 180);
+            velocity.y = -20 * cos(bounceAngle * M_PI / 180);
         }
         else if (pOther->getEntityType() == GameObjectType::GameObjectBrick)
         {
-            // bounce the ball off the brick
+            damageBrick(std::static_pointer_cast<Brick>(pOther), 30);
             velocity.y = -velocity.y;
-            // std::cout << "Ball collided with brick" << std::endl;
         }
     }
 }

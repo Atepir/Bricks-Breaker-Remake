@@ -18,9 +18,11 @@ GameScreen::GameScreen()
     BallFactory ballFactory = BallFactory();
     this->mBall = ballFactory.createBall(BallType::NORMAL);
 
-    this->mBoard = std::make_shared<Board<MAP_TYPE>>();
+    this->mBoard = Board<MAP_TYPE>::getInstance();
 
     this->mPlayer = std::make_shared<Player>();
+
+    this->mBall->addObserver(mPlayer);
 
     this->mHearts = std::vector<std::shared_ptr<Image>>();
 
@@ -54,7 +56,7 @@ void GameScreen::render(Graphics::Renderer &renderer)
 {
     mBall->collide(mPaddle);
     std::vector<std::shared_ptr<Brick>> bricks = Board<MAP_TYPE>::getInstance()->getBricks();
-    for (auto &brick : bricks)
+    for (auto brick : bricks)
     {
         mBall->collide(brick);
     }
@@ -68,6 +70,11 @@ void GameScreen::render(Graphics::Renderer &renderer)
     }
 
     mScoreLabel->setText("Score: " + std::to_string(mPlayer->getScore()), eColor::ColorBlue);
+
+    if (mPlayer->getLives() == 0)
+    {
+        Core::App::getInstance()->setScreen(std::make_shared<GameOverScreen>(mPlayer->getScore()));
+    }
 
     mBall->update();
     mPaddle->update();

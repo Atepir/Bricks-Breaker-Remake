@@ -13,11 +13,15 @@
 
 namespace GameObjects
 {
+    class Ball;
     class Brick : public GameObject
     {
+        friend class Ball;
+
     private:
         BrickType mType;
         int mHealth;
+        bool mDeleteFlag = false;
 
     public:
         Brick(Point position, double width, double height, BrickType type, int health);
@@ -25,6 +29,8 @@ namespace GameObjects
 
         void update() override;
         void collide(std::shared_ptr<GameObject> pOther) override;
+
+        bool getDeleteFlag() { return mDeleteFlag; }
     };
 }
 

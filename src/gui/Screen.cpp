@@ -20,8 +20,8 @@ void Screen::init()
 
 void Screen::render(Graphics::Renderer &renderer)
 {
-    std::cout << "children size: " << children.size() << std::endl;
-    std::cout << "Rendering screen" << std::endl;
+    // std::cout << "children size: " << children.size() << std::endl;
+    // std::cout << "Rendering screen" << std::endl;
     for (auto &element : children)
     {
         element->render(renderer);
