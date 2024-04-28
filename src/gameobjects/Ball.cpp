@@ -104,7 +104,26 @@ void Ball::collide(std::shared_ptr<GameObject> pOther)
         }
         else if (pOther->getEntityType() == GameObjectType::GameObjectBrick)
         {
-            damageBrick(std::static_pointer_cast<Brick>(pOther), 30);
+            std::shared_ptr<Brick> brick = std::static_pointer_cast<Brick>(pOther);
+            switch (brick->mType)
+            {
+            case BrickType::BRICK_BLUE:
+                damageBrick(brick, 80);
+                break;
+            case BrickType::BRICK_GREEN:
+                damageBrick(brick, 60);
+                break;
+            case BrickType::BRICK_VIOLET:
+                damageBrick(brick, 40);
+                break;
+            case BrickType::BRICK_YELLOW:
+                damageBrick(brick, 20);
+                break;
+            case BrickType::BRICK_RED:
+                damageBrick(brick, 10);
+                break;
+            }
+
             velocity.y = -velocity.y;
         }
     }

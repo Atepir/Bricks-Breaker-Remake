@@ -52,7 +52,7 @@ namespace GameObjects
 
         bool isFinished()
         {
-            return mBricks.size() < 38;
+            return mBricks.size() <= 0;
         }
 
         std::vector<std::shared_ptr<Brick>> getBricks() { return mBricks; }

@@ -47,6 +47,15 @@ namespace Core
             case BrickType::BRICK_GREEN:
                 addScore(20);
                 break;
+            case BrickType::BRICK_VIOLET:
+                addScore(50);
+                break;
+            case BrickType::BRICK_YELLOW:
+                addScore(100);
+                break;
+            case BrickType::BRICK_RED:
+                addScore(200);
+                break;
             default:
                 break;
             }
