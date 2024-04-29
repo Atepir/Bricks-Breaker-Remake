@@ -1,4 +1,5 @@
-﻿cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required(VERSION 3.8)
+
 
 if (POLICY CMP0141)
   cmake_policy(SET CMP0141 NEW)
@@ -34,7 +35,7 @@ if(SDL2_FOUND)
     set(SDL2_TTF_LIBRARIES SDL2_ttf::SDL2_ttf)
     include_directories(PRIVATE ${SDL2_INCLUDE_DIRS})
     include_directories(PRIVATE ${SDL2_TTF_INCLUDE_DIRS})
-    add_executable(${PROJECT_NAME} ${SRC_FILES} "src/gameobjects/Power.cpp")
+    add_executable(${PROJECT_NAME} ${SRC_FILES})
     target_compile_definitions(${PROJECT_NAME} PRIVATE "SDL_MAIN_HANDLED")
     target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES})
     target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_TTF_LIBRARIES})
