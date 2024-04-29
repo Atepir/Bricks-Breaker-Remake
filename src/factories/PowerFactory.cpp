@@ -1,0 +1,2 @@
+#include "factories/PowerFactory.hpp"
+

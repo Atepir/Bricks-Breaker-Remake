@@ -1,0 +1,5 @@
+#ifndef __POWER_FACTORY_HPP
+#define __POWER_FACTORY_HPP
+
+
+#endif // __POWER_FACTORY_HPP

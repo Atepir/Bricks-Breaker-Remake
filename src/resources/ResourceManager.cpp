@@ -85,6 +85,31 @@ void ResourceManager::loadTextures()
     addTexture(eTextureKey::Texture_Heart,
                textureHelper->loadTexture("heart", 1032, 590, 115, 115, 0, 0, 115, 115));
 
+    // power
+    // light blue
+    addTexture(eTextureKey::Texture_Powerup_Expand_Ball,
+        	    textureHelper->loadTexture("powerup_expand_ball", 617, 656, 78, 78, 0, 0, 78, 78));
+
+    // dark blue
+    addTexture(eTextureKey::Texture_Powerdown_Shrink_Ball,
+        		textureHelper->loadTexture("powerup_shrink_ball", 513, 555, 78, 78, 0, 0, 78, 78));
+
+    // light green
+    addTexture(eTextureKey::Texture_Powerup_Expand_Paddle,
+        	    textureHelper->loadTexture("powerup_expand_paddle", 617, 555, 78, 78, 0, 0, 78, 78));
+
+    // dark green
+    addTexture(eTextureKey::Texture_Powerdown_Shrink_Paddle,
+        		textureHelper->loadTexture("powerup_shrink_paddle", 722, 656, 78, 78, 0, 0, 78, 78));
+
+    // red
+    addTexture(eTextureKey::Texture_Powerup_Extra_Life,
+        		textureHelper->loadTexture("powerup_extra_life", 826, 555, 78, 78, 0, 0, 78, 78));
+
+    // orange
+    addTexture(eTextureKey::Texture_Powerup_Fireball,
+        				textureHelper->loadTexture("powerup_fire_ball", 930, 555, 78, 78, 0, 0, 78, 78));
+
     // Backgrounds
     addTexture(eTextureKey::Texture_Main_Menu_Background,
                Graphics::TextureHelper::loadTexture("main_menu_background.bmp", "main_menu_background"));
