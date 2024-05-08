@@ -15,11 +15,16 @@ void BallFactory::createBall(BallType pType)
     {
     case BallType::NORMAL:
         ball = std::make_shared<Ball>(BallType::NORMAL, Point(ballX, WINDOW_HEIGHT / 2), 30, 20);
+        ball->setId(mLastGeneratedBallId++);
         break;
     default:
         break;
     }
 
+    for (auto observer : mBallObservers)
+    {
+        ball->addObserver(observer);
+    }
     mBalls.push_back(ball);
 }
 
@@ -27,6 +32,11 @@ void BallFactory::update()
 {
     for (auto &ball : mBalls)
     {
+        if (ball == nullptr)
+        {
+            continue;
+        }
+
         ball->update();
     }
 }
@@ -35,43 +45,63 @@ void BallFactory::render(Graphics::Renderer &pRenderer)
 {
     for (auto &ball : mBalls)
     {
+        if (ball == nullptr)
+        {
+            continue;
+        }
+
         ball->render(pRenderer);
     }
 }
 
-void BallFactory::destroyBall(std::shared_ptr<Ball> pBall)
+void BallFactory::destroyBall(int pBallId)
 {
-    mBalls.erase(std::remove(mBalls.begin(), mBalls.end(), pBall), mBalls.end());
+    for (auto it = mBalls.begin(); it != mBalls.end(); ++it)
+    {
+        if ((*it)->getId() == pBallId)
+        {
+            mBalls.erase(it);
+            break;
+        }
+    }
 }
 
-void BallFactory::onBallFallen(std::shared_ptr<Ball> pBall)
+void BallFactory::onBallFallen(int pBallId)
 {
+    std::cout << "Ball fallen, remaining balls: " << mBalls.size() << std::endl;
+
     if (mBalls.size() == 1)
     {
-        mBalls.begin()->reset();
+        mBalls.clear();
+        createBall(BallType::NORMAL);
     }
-    else {
-        destroyBall(pBall);
+    else
+    {
+        destroyBall(pBallId);
     }
+    std::cout << "After update: " << mBalls.size() << std::endl;
 }
 
 void BallFactory::collide(std::shared_ptr<GameObjects::GameObject> pGameObject)
 {
     for (auto &ball : mBalls)
     {
+        if (ball == nullptr)
+        {
+            continue;
+        }
+
         ball->collide(pGameObject);
     }
 }
 
 void BallFactory::addObserver(std::shared_ptr<GameObjects::IBallObserver> pObserver)
 {
-    for (auto &ball : mBalls)
-    {
-        ball->addObserver(pObserver);
-    }
+    mBallObservers.push_back(pObserver);
 }
 
-void BallFactory::onPaddleCollide(PowerType pPowerType) {
+void BallFactory::onPaddleCollide(PowerType pPowerType)
+{
     switch (pPowerType)
     {
     case PowerType::POWERUP_EXPAND_BALL:
@@ -87,7 +117,8 @@ void BallFactory::onPaddleCollide(PowerType pPowerType) {
         }
         break;
     case PowerType::POWERUP_MULTI_BALL:
-        for (int i = 0; i < 2; i++){
+        for (int i = 0; i < 2; i++)
+        {
             createBall(BallType::NORMAL);
         }
         break;

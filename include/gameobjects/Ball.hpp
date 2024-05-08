@@ -23,8 +23,7 @@ namespace GameObjects
     class IBallObserver
     {
     public:
-        virtual void onBallFallen() = 0;
-        virtual void onBallFallen(std::shared_ptr<GameObjects::Ball> pBall) = 0;
+        virtual void onBallFallen(int pBallId) = 0;
 
         virtual void onBrickDestroyed(BrickType pBrickType) = 0;
         virtual void onBrickDestroyed(BrickType pBrickType, Point pBrickPosition) = 0;
@@ -36,6 +35,7 @@ namespace GameObjects
     class Ball : public GameObject
     {
     private:
+        int mId;
         BallType mType;
         double mRadius;
         double mMass;
@@ -54,6 +54,8 @@ namespace GameObjects
         BallType getType() const { return mType; }
         double getRadius() const { return mRadius; }
         double getMass() const { return mMass; }
+        int getId() const { return mId; }
+        void setId(int pId) { mId = pId; }
 
         void setPower(std::shared_ptr<Power> pPower) { mPower = pPower; }
         std::shared_ptr<Power> getPower() { return mPower; }
@@ -65,8 +67,6 @@ namespace GameObjects
 
         void expand();
         void shrink();
-
-        void reset();
     };
 }
 

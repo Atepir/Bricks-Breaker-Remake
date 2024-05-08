@@ -14,21 +14,25 @@ GameScreen::GameScreen()
 {
     this->mRenderer = Graphics::Renderer::getInstance();
 
-    this->mPaddle = Paddle<MAP_TYPE>::getInstance();
-
-    this->mBallFactory = BallFactory::getInstance();
-    mBallFactory->createBall(BallType::NORMAL);
-
-    this->mPowerFactory = 
-    PowerFactory::getInstance();
+    this->mPlayer = std::make_shared<Player>();
 
     this->mBoard = Board<MAP_TYPE>::getInstance();
     this->mBoard->reset();
 
-    this->mPlayer = std::make_shared<Player>();
+    this->mPaddle = Paddle<MAP_TYPE>::getInstance();
+
+    this->mPowerFactory =
+        PowerFactory::getInstance();
+    this->mPowerFactory->resetPowers();
+
+    this->mBallFactory = BallFactory::getInstance();
+    this->mBallFactory->resetBalls();
 
     this->mBallFactory->addObserver(mPlayer);
     this->mBallFactory->addObserver(mPowerFactory);
+    this->mBallFactory->addObserver(mBallFactory);
+
+    mBallFactory->createBall(BallType::NORMAL);
 
     this->mHearts = std::vector<std::shared_ptr<Image>>();
 

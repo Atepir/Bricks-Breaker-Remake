@@ -46,10 +46,13 @@ void Ball::addObserver(std::shared_ptr<IBallObserver> observer)
 
 void Ball::notifyObserversBallFallen()
 {
+    std::cout << "Obs list: " << mObservers.size() << std::endl;
     for (auto observer : mObservers)
     {
-        observer->onBallFallen();
-        observer->onBallFallen(make_shared<Ball>(*this));
+        std::cout << "OBS: " << observer << std::endl;
+        if (observer == nullptr)
+            continue;
+        observer->onBallFallen(mId);
     }
 }
 
@@ -126,37 +129,36 @@ void Ball::collide(std::shared_ptr<GameObject> pOther)
     }
 }
 
-void Ball::expand(){
-    if (this->width >= 60 && this->height >= 60){
+void Ball::expand()
+{
+    if (this->width >= 60 && this->height >= 60)
+    {
         return;
     }
     this->width *= 2;
     this->height *= 2;
 
-    std::thread([this](){
+    std::thread([this]()
+                {
         std::this_thread::sleep_for(std::chrono::seconds(POWER_TIMEOUT));
         this->width /= 2;
-        this->height /= 2;
-    }).detach();
+        this->height /= 2; })
+        .detach();
 }
 
-void Ball::shrink(){
-    if (this->width <= 15 && this->height <= 15){
+void Ball::shrink()
+{
+    if (this->width <= 15 && this->height <= 15)
+    {
         return;
     }
     this->width /= 2;
     this->height /= 2;
 
-    std::thread([this](){
+    std::thread([this]()
+                {
         std::this_thread::sleep_for(std::chrono::seconds(POWER_TIMEOUT));
         this->width *= 2;
-        this->height *= 2;
-    }).detach();
-}
-
-void Ball::reset(){
-    position.x = 512;
-    position.y = 400;
-    velocity.x = 0;
-    velocity.y = 10;
+        this->height *= 2; })
+        .detach();
 }

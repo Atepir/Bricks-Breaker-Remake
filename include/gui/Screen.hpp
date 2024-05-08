@@ -78,7 +78,7 @@ namespace Gui
         virtual void render(Renderer &renderer);
         virtual void keyDown(std::shared_ptr<SDL_KeyboardEvent> event);
 
-        void update() override{};
+        void update() override {};
     };
 
     class MainMenuScreen : public Screen
@@ -92,7 +92,7 @@ namespace Gui
         virtual void render(Renderer &renderer);
         virtual void init();
 
-        void update() override{};
+        void update() override {};
     };
 
     class GameOverScreen : public Screen
@@ -107,7 +107,7 @@ namespace Gui
         virtual void render(Renderer &renderer);
         virtual void init();
 
-        void update() override{};
+        void update() override {};
     };
 
     class LevelCompleteScreen : public Screen
@@ -122,7 +122,7 @@ namespace Gui
         virtual void render(Renderer &renderer);
         virtual void init();
 
-        void update() override{};
+        void update() override {};
     };
 }
 

@@ -32,12 +32,11 @@ namespace Core
         void addScore(int pScore) { mScore += pScore; }
         void removeLife() { mLives--; }
 
-        void onBallFallen() override
+        void onBallFallen(int pBallId) override
         {
             if (Factories::BallFactory::getInstance()->getBallCount() == 1)
                 removeLife();
         }
-        void onBallFallen(std::shared_ptr<GameObjects::Ball> pBall) override {}
 
         void onBrickDestroyed(BrickType pBrickType) override
         {
@@ -64,7 +63,6 @@ namespace Core
         }
 
         void onBrickDestroyed(BrickType pBrickType, Point pBrickPosition) override {}
-
 
         friend std::ostream &operator<<(std::ostream &os, Player player)
         {
