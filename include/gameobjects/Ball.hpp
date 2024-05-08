@@ -55,7 +55,7 @@ namespace GameObjects
         std::shared_ptr<Power> getPower() { return mPower; }
 
         void notifyObserversBallFallen();
-        void notifyObserversBrickDestroyed(BrickType pBrickType);
+        void notifyObserversBrickDestroyed(BrickType pBrickType, Point pBrickPosition);
 
         void damageBrick(std::shared_ptr<Brick> pBrick, int pDamage);
     };

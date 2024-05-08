@@ -19,7 +19,7 @@ GameScreen::GameScreen()
     BallFactory ballFactory = BallFactory();
     this->mBall = ballFactory.createBall(BallType::NORMAL);
 
-    std::shared_ptr<PowerFactory> powerFactory = std::make_shared<PowerFactory>();
+    this->mPowerFactory = std::make_shared<PowerFactory>();
 
     this->mBoard = Board<MAP_TYPE>::getInstance();
     this->mBoard->reset();
@@ -27,7 +27,7 @@ GameScreen::GameScreen()
     this->mPlayer = std::make_shared<Player>();
 
     this->mBall->addObserver(mPlayer);
-    this->mBall->addObserver(powerFactory);
+    this->mBall->addObserver(mPowerFactory);
 
     this->mHearts = std::vector<std::shared_ptr<Image>>();
 
@@ -65,6 +65,7 @@ void GameScreen::init()
 void GameScreen::render(Graphics::Renderer &renderer)
 {
     mBall->collide(mPaddle);
+    mPowerFactory->collide(mPaddle);
     std::vector<std::shared_ptr<Brick>> bricks = Board<MAP_TYPE>::getInstance()->getBricks();
     for (auto brick : bricks)
     {
@@ -89,6 +90,7 @@ void GameScreen::render(Graphics::Renderer &renderer)
     mBall->update();
     mPaddle->update();
     mBoard->update();
+    mPowerFactory->update();
 
     mRenderer->draw(mBackground->getTexture(), {0, 80}, 1024, 650, 0);
     for (auto &brick : bricks)
@@ -98,6 +100,7 @@ void GameScreen::render(Graphics::Renderer &renderer)
 
     mBall->render(*mRenderer);
     mPaddle->render(*mRenderer);
+    mPowerFactory->render(*mRenderer);
     Screen::render(renderer);
 
     if (mBoard->isFinished())

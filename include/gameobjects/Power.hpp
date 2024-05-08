@@ -30,6 +30,7 @@ namespace GameObjects
     {
     private:
 		PowerType mPowerType;
+        bool mDeleteFlag = false;
         std::vector<std::shared_ptr<IPowerObserver>> mPowerObservers;
 
     public:
@@ -46,6 +47,8 @@ namespace GameObjects
         void addObserver(std::shared_ptr<IPowerObserver> pPowerObserver);
 
         void notifyObserversPaddleCollided();
+
+        bool getDeleteFlag() { return mDeleteFlag; }
     };
 }
 #endif // __POWER_HPP

@@ -1,7 +1,9 @@
 #ifndef __POWER_FACTORY_HPP
 #define __POWER_FACTORY_HPP
 
+#include <cstdlib>  
 
+#include "gameobjects/gameobject.hpp"
 #include "gameobjects/Power.hpp"
 #include "gameobjects/Ball.hpp"
 #include "geometry/Dimensions.hpp"
@@ -10,11 +12,14 @@ namespace Factories
 {
     class PowerFactory : public GameObjects::IBallObserver
     {
+	private:
+		std::vector <std::shared_ptr<GameObjects::Power>> mPowers;
+
 	public:
 		PowerFactory() = default;
 		virtual ~PowerFactory() = default;
 
-		static std::shared_ptr<GameObjects::Power> createPower(PowerType pType, Point pPowerPosition);
+		void createPower(PowerType pType, Point pPowerPosition);
 
 		void onBallFallen() override
 		{
@@ -24,6 +29,10 @@ namespace Factories
 		{
 		}
 		void onBrickDestroyed(BrickType pBrickType, Point pBrickPosition) override;
+
+		void update();
+		void render(Graphics::Renderer &pRenderer);
+		void collide(std::shared_ptr<GameObjects::GameObject> pGameObject);
 	};
 }   
 

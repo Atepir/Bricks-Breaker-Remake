@@ -16,6 +16,7 @@
 #include "gameobjects/Paddle.hpp"
 #include "gameobjects/Board.hpp"
 #include "factories/BallFactory.hpp"
+#include "factories/PowerFactory.hpp"
 #include "resources/Enums.hpp"
 
 using namespace GameObjects;
@@ -66,6 +67,7 @@ namespace Gui
         std::shared_ptr<Core::Player> mPlayer;
         std::vector<std::shared_ptr<Image>> mHearts;
         std::shared_ptr<Label> mScoreLabel;
+        std::shared_ptr<PowerFactory> mPowerFactory;
 
     public:
         GameScreen();

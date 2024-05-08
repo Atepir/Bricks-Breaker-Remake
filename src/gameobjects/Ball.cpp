@@ -57,11 +57,12 @@ void Ball::notifyObserversBallFallen()
     }
 }
 
-void Ball::notifyObserversBrickDestroyed(BrickType pBrickType)
+void Ball::notifyObserversBrickDestroyed(BrickType pBrickType, Point pBrickPosition)
 {
     for (auto observer : mObservers)
     {
         observer->onBrickDestroyed(pBrickType);
+        observer->onBrickDestroyed(pBrickType, pBrickPosition);
     }
 }
 
@@ -71,7 +72,7 @@ void Ball::damageBrick(std::shared_ptr<Brick> pBrick, int pDamage)
     if (pBrick->mHealth <= 0)
     {
         pBrick->mDeleteFlag = true;
-        notifyObserversBrickDestroyed(pBrick->mType);
+        notifyObserversBrickDestroyed(pBrick->mType, pBrick->getPosition());
     }
 }
 

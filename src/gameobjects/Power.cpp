@@ -2,10 +2,32 @@
 
 using namespace GameObjects;
 
-Power::Power(PowerType type, Point point) : GameObject(point, 70, 70, Vector(0, 10), 0, 0)
+Power::Power(PowerType type, Point point) : GameObject(point, 26, 26, Vector(0, 10), 0, 0)
 {
     this->mPowerType = type;
     this->entityType = GameObjectType::GameObjectPower;
+
+    switch (type)
+    {
+        case PowerType::POWERUP_EXTRA_LIFE:
+            texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Powerup_Extra_Life);
+            break;
+        case PowerType::POWERUP_EXPAND_BALL:
+            texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Powerup_Expand_Ball);
+            break;
+        case PowerType::POWERUP_EXPAND_PADDLE:
+            texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Powerup_Expand_Paddle);
+            break;
+        case PowerType::POWERUP_MISSILE:
+            texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Powerup_Missile);
+            break;
+        case PowerType::POWERDOWN_SHRINK_BALL:
+            texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Powerdown_Shrink_Ball);
+            break;
+        case PowerType::POWERDOWN_SHRINK_PADDLE:
+            texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Powerdown_Shrink_Paddle);
+            break;
+    }
 }
 
 void Power::description() {
@@ -16,7 +38,7 @@ void Power::update() {
     position.y += velocity.y;
 
     if (position.y > 720 - BORDER_WIDTH) {
-        delete this;
+        mDeleteFlag = true;
     }
 }
 
@@ -40,7 +62,7 @@ void Power::collide(std::shared_ptr<GameObject> pOther) {
         {
             description();
             notifyObserversPaddleCollided();
-            delete this;
+            mDeleteFlag = true;
         }
     }  
 }
