@@ -36,11 +36,6 @@ void Ball::update()
         position.y = 720;
         // notify the observers that the ball has fallen
         notifyObserversBallFallen();
-        // reset the ball position
-        position.x = 512;
-        position.y = 400;
-        velocity.x = 0;
-        velocity.y = 10;
     }
 }
 
@@ -54,6 +49,7 @@ void Ball::notifyObserversBallFallen()
     for (auto observer : mObservers)
     {
         observer->onBallFallen();
+        observer->onBallFallen(make_shared<Ball>(*this));
     }
 }
 
@@ -128,4 +124,39 @@ void Ball::collide(std::shared_ptr<GameObject> pOther)
             velocity.y = -velocity.y;
         }
     }
+}
+
+void Ball::expand(){
+    if (this->width >= 60 && this->height >= 60){
+        return;
+    }
+    this->width *= 2;
+    this->height *= 2;
+
+    std::thread([this](){
+        std::this_thread::sleep_for(std::chrono::seconds(POWER_TIMEOUT));
+        this->width /= 2;
+        this->height /= 2;
+    }).detach();
+}
+
+void Ball::shrink(){
+    if (this->width <= 15 && this->height <= 15){
+        return;
+    }
+    this->width /= 2;
+    this->height /= 2;
+
+    std::thread([this](){
+        std::this_thread::sleep_for(std::chrono::seconds(POWER_TIMEOUT));
+        this->width *= 2;
+        this->height *= 2;
+    }).detach();
+}
+
+void Ball::reset(){
+    position.x = 512;
+    position.y = 400;
+    velocity.x = 0;
+    velocity.y = 10;
 }

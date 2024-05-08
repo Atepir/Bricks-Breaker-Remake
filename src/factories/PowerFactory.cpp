@@ -6,7 +6,9 @@ using namespace GameObjects;
 
 void PowerFactory::createPower(PowerType pType, Point pPowerPosition)
 {
-  mPowers.push_back(std::make_shared<Power>(pType, pPowerPosition));
+  std::shared_ptr<Power> power = std::make_shared<Power>(pType, pPowerPosition);
+  power->addObserver(BallFactory::getInstance());
+  mPowers.push_back(power);
 }
 
 void PowerFactory::onBrickDestroyed(BrickType pBrickType, Point pBrickPosition){
@@ -16,7 +18,7 @@ void PowerFactory::onBrickDestroyed(BrickType pBrickType, Point pBrickPosition){
   std::cout << "Chance: " << chance << "\n";
   
   if (chance < 10){
-    createPower(PowerType::POWERUP_MISSILE, pBrickPosition);
+    createPower(PowerType::POWERUP_MULTI_BALL, pBrickPosition);
   }
   else if (chance < 20) {
     createPower(PowerType::POWERUP_EXTRA_LIFE, pBrickPosition);

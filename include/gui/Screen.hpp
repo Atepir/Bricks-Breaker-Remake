@@ -62,12 +62,12 @@ namespace Gui
         std::shared_ptr<Texture> mBackground;
         std::shared_ptr<Board<MAP_TYPE>> mBoard;
         std::shared_ptr<Paddle<MAP_TYPE>> mPaddle;
-        std::shared_ptr<Ball> mBall;
         std::shared_ptr<Renderer> mRenderer;
         std::shared_ptr<Core::Player> mPlayer;
         std::vector<std::shared_ptr<Image>> mHearts;
         std::shared_ptr<Label> mScoreLabel;
         std::shared_ptr<PowerFactory> mPowerFactory;
+        std::shared_ptr<BallFactory> mBallFactory;
 
     public:
         GameScreen();

@@ -16,18 +16,19 @@ GameScreen::GameScreen()
 
     this->mPaddle = Paddle<MAP_TYPE>::getInstance();
 
-    BallFactory ballFactory = BallFactory();
-    this->mBall = ballFactory.createBall(BallType::NORMAL);
+    this->mBallFactory = BallFactory::getInstance();
+    mBallFactory->createBall(BallType::NORMAL);
 
-    this->mPowerFactory = std::make_shared<PowerFactory>();
+    this->mPowerFactory = 
+    PowerFactory::getInstance();
 
     this->mBoard = Board<MAP_TYPE>::getInstance();
     this->mBoard->reset();
 
     this->mPlayer = std::make_shared<Player>();
 
-    this->mBall->addObserver(mPlayer);
-    this->mBall->addObserver(mPowerFactory);
+    this->mBallFactory->addObserver(mPlayer);
+    this->mBallFactory->addObserver(mPowerFactory);
 
     this->mHearts = std::vector<std::shared_ptr<Image>>();
 
@@ -64,12 +65,12 @@ void GameScreen::init()
 
 void GameScreen::render(Graphics::Renderer &renderer)
 {
-    mBall->collide(mPaddle);
+    mBallFactory->collide(mPaddle);
     mPowerFactory->collide(mPaddle);
     std::vector<std::shared_ptr<Brick>> bricks = Board<MAP_TYPE>::getInstance()->getBricks();
     for (auto brick : bricks)
     {
-        mBall->collide(brick);
+        mBallFactory->collide(brick);
     }
 
     mRenderer->clear();
@@ -87,7 +88,7 @@ void GameScreen::render(Graphics::Renderer &renderer)
         Core::App::getInstance()->setScreen(std::make_shared<GameOverScreen>(mPlayer->getScore()));
     }
 
-    mBall->update();
+    mBallFactory->update();
     mPaddle->update();
     mBoard->update();
     mPowerFactory->update();
@@ -98,7 +99,7 @@ void GameScreen::render(Graphics::Renderer &renderer)
         brick->render(*mRenderer);
     }
 
-    mBall->render(*mRenderer);
+    mBallFactory->render(*mRenderer);
     mPaddle->render(*mRenderer);
     mPowerFactory->render(*mRenderer);
     Screen::render(renderer);

@@ -107,7 +107,7 @@ void ResourceManager::loadTextures()
         		textureHelper->loadTexture("powerup_extra_life", 826, 555, 78, 78, 0, 0, 78, 78));
 
     // orange
-    addTexture(eTextureKey::Texture_Powerup_Missile,
+    addTexture(eTextureKey::Texture_Powerup_Multi_Ball,
         				textureHelper->loadTexture("powerup_fire_ball", 930, 555, 78, 78, 0, 0, 78, 78));
 
     // Backgrounds

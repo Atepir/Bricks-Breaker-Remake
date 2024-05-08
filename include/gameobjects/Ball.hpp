@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <thread>
 
 #include "gameobjects/GameObject.hpp"
 #include "resources/Constants.hpp"
@@ -14,6 +15,7 @@ namespace GameObjects
 {
     class Brick;
     class Power;
+    class Ball;
 
     /**
      * @brief Interface for ball observers
@@ -22,6 +24,8 @@ namespace GameObjects
     {
     public:
         virtual void onBallFallen() = 0;
+        virtual void onBallFallen(std::shared_ptr<GameObjects::Ball> pBall) = 0;
+
         virtual void onBrickDestroyed(BrickType pBrickType) = 0;
         virtual void onBrickDestroyed(BrickType pBrickType, Point pBrickPosition) = 0;
     };
@@ -58,6 +62,11 @@ namespace GameObjects
         void notifyObserversBrickDestroyed(BrickType pBrickType, Point pBrickPosition);
 
         void damageBrick(std::shared_ptr<Brick> pBrick, int pDamage);
+
+        void expand();
+        void shrink();
+
+        void reset();
     };
 }
 

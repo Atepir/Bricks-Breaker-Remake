@@ -18,8 +18,8 @@ Power::Power(PowerType type, Point point) : GameObject(point, 26, 26, Vector(0, 
         case PowerType::POWERUP_EXPAND_PADDLE:
             texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Powerup_Expand_Paddle);
             break;
-        case PowerType::POWERUP_MISSILE:
-            texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Powerup_Missile);
+        case PowerType::POWERUP_MULTI_BALL:
+            texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Powerup_Multi_Ball);
             break;
         case PowerType::POWERDOWN_SHRINK_BALL:
             texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Powerdown_Shrink_Ball);
