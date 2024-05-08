@@ -13,6 +13,7 @@ class ResourceManager;
 namespace GameObjects
 {
     class Brick;
+    class Power;
 
     /**
      * @brief Interface for ball observers
@@ -22,6 +23,7 @@ namespace GameObjects
     public:
         virtual void onBallFallen() = 0;
         virtual void onBrickDestroyed(BrickType pBrickType) = 0;
+        virtual void onBrickDestroyed(BrickType pBrickType, Point pBrickPosition) = 0;
     };
 
     /**
@@ -34,6 +36,7 @@ namespace GameObjects
         double mRadius;
         double mMass;
         std::vector<std::shared_ptr<IBallObserver>> mObservers;
+        std::shared_ptr<Power> mPower;
 
     public:
         Ball(BallType type, Point point, double radius, double mass);
@@ -47,6 +50,9 @@ namespace GameObjects
         BallType getType() const { return mType; }
         double getRadius() const { return mRadius; }
         double getMass() const { return mMass; }
+
+        void setPower(std::shared_ptr<Power> pPower) { mPower = pPower; }
+        std::shared_ptr<Power> getPower() { return mPower; }
 
         void notifyObserversBallFallen();
         void notifyObserversBrickDestroyed(BrickType pBrickType);

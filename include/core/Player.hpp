@@ -61,6 +61,11 @@ namespace Core
             }
         }
 
+        void onBrickDestroyed(BrickType pBrickType, Point pBrickPosition) override
+        {
+
+        }
+
         friend std::ostream &operator<<(std::ostream &os, Player player)
         {
             os << "Player: " << player.getName() << " Score: " << player.getScore() << " Lives: " << player.getLives();

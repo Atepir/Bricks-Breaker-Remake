@@ -68,7 +68,7 @@ enum class eTextureKey
 	Texture_Powerup_Expand_Paddle,
 	Texture_Powerdown_Shrink_Paddle,
 	Texture_Powerup_Extra_Life,
-	Texture_Powerup_Fireball,
+	Texture_Powerup_Missile,
 };
 
 enum PowerType
@@ -78,7 +78,7 @@ enum PowerType
 	POWERUP_EXPAND_PADDLE,
 	POWERDOWN_SHRINK_PADDLE,
 	POWERUP_EXTRA_LIFE,
-	POWERUP_FIREBALL
+	POWERUP_MISSILE
 };
 
 enum eColor

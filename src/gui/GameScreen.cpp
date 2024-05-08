@@ -2,6 +2,7 @@
 #include "gui/Button.hpp"
 #include "gui/Image.hpp"
 #include "gui/Label.hpp"
+#include "factories/PowerFactory.hpp"
 
 using namespace Gui;
 using namespace GameObjects;
@@ -18,12 +19,15 @@ GameScreen::GameScreen()
     BallFactory ballFactory = BallFactory();
     this->mBall = ballFactory.createBall(BallType::NORMAL);
 
+    std::shared_ptr<PowerFactory> powerFactory = std::make_shared<PowerFactory>();
+
     this->mBoard = Board<MAP_TYPE>::getInstance();
     this->mBoard->reset();
 
     this->mPlayer = std::make_shared<Player>();
 
     this->mBall->addObserver(mPlayer);
+    this->mBall->addObserver(powerFactory);
 
     this->mHearts = std::vector<std::shared_ptr<Image>>();
 
