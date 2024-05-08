@@ -6,8 +6,10 @@
 #include "gameobjects/gameobject.hpp"
 #include "gameobjects/Power.hpp"
 #include "gameobjects/Ball.hpp"
+#include "gameobjects/Paddle.hpp"
 #include "geometry/Dimensions.hpp"
 #include "factories/BallFactory.hpp"
+#include <core/Player.hpp>
 
 namespace Factories
 {
@@ -16,6 +18,7 @@ namespace Factories
 	private:
 		std::vector<std::shared_ptr<GameObjects::Power>> mPowers;
 		static inline std::shared_ptr<PowerFactory> pInstance = nullptr;
+		std::shared_ptr<Core::Player> mPlayer;
 
 	public:
 		PowerFactory() = default;
@@ -37,6 +40,8 @@ namespace Factories
 		{
 			mPowers.clear();
 		}
+
+		void setPlayer(std::shared_ptr<Core::Player> pPlayer);
 
 		void createPower(PowerType pType, Point pPowerPosition);
 

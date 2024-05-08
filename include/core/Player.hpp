@@ -2,6 +2,7 @@
 #define __PLAYER_HPP
 
 #include "gameobjects/Ball.hpp"
+#include "gameobjects/Power.hpp"
 
 #include <iostream>
 #include <string>
@@ -10,7 +11,7 @@
 
 namespace Core
 {
-    class Player : public GameObjects::IBallObserver
+    class Player : public GameObjects::IBallObserver, public GameObjects::IPowerObserver
     {
     private:
         int mScore;
@@ -69,6 +70,12 @@ namespace Core
             os << "Player: " << player.getName() << " Score: " << player.getScore() << " Lives: " << player.getLives();
             return os;
         };
+
+        void onPaddleCollide(PowerType pPowerType) override
+        {
+            if (pPowerType == PowerType::POWERUP_EXTRA_LIFE)
+                mLives++;
+        }
     };
 }
 

@@ -24,6 +24,7 @@ GameScreen::GameScreen()
     this->mPowerFactory =
         PowerFactory::getInstance();
     this->mPowerFactory->resetPowers();
+    this->mPowerFactory->setPlayer(mPlayer);
 
     this->mBallFactory = BallFactory::getInstance();
     this->mBallFactory->resetBalls();
@@ -84,6 +85,16 @@ void GameScreen::render(Graphics::Renderer &renderer)
         remove(mHearts.back());
         mHearts.pop_back();
     }
+    else
+    {
+        for (int i = mHearts.size(); i < mPlayer->getLives(); i++)
+        {
+            std::shared_ptr<Texture> heart = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Heart);
+            std::shared_ptr<Image> image = std::make_shared<Image>(Image(heart, {(double)10 + i * 40, (double)0}, 30, 30));
+            mHearts.push_back(image);
+            add(image);
+        }
+    }
 
     mScoreLabel->setText("Score: " + std::to_string(mPlayer->getScore()), eColor::ColorBlue);
 
@@ -97,7 +108,7 @@ void GameScreen::render(Graphics::Renderer &renderer)
     mBoard->update();
     mPowerFactory->update();
 
-    mRenderer->draw(mBackground->getTexture(), {0, 80}, 1024, 650, 0);
+    mRenderer->draw(mBackground->getTexture(), {0, 80}, 1024, 700, 0);
     for (auto &brick : bricks)
     {
         brick->render(*mRenderer);

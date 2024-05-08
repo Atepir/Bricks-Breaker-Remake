@@ -7,7 +7,14 @@ void PowerFactory::createPower(PowerType pType, Point pPowerPosition)
 {
   std::shared_ptr<Power> power = std::make_shared<Power>(pType, pPowerPosition);
   power->addObserver(BallFactory::getInstance());
+  power->addObserver(Paddle<MAP_TYPE>::getInstance());
+  power->addObserver(mPlayer);
   mPowers.push_back(power);
+}
+
+void PowerFactory::setPlayer(std::shared_ptr<Core::Player> pPlayer)
+{
+  mPlayer = pPlayer;
 }
 
 void PowerFactory::onBrickDestroyed(BrickType pBrickType, Point pBrickPosition)

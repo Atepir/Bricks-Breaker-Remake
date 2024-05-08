@@ -47,6 +47,8 @@ enum class GameObjectType
 enum class eTextureKey
 {
 	Texture_Paddle_Basic,
+	Texture_Paddle_Basic_Large,
+	Texture_Paddle_Basic_Small,
 	Texture_Paddle_Circular,
 	Texture_Ball_Basic,
 	Texture_Ball_Circular,
