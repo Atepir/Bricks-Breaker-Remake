@@ -3,18 +3,20 @@
 
 #include <iostream>
 #include <cmath>
+#include <thread>
 
 #include "gameobjects/GameObject.hpp"
 #include "resources/Enums.hpp"
 #include "resources/Constants.hpp"
 #include "resources/ResourceManager.hpp"
+#include "gameobjects/Power.hpp"
 
 #define ROTATION_SPEED_MULTIPLIER 200
 
 namespace GameObjects
 {
     template <eMapType mapType>
-    class Paddle : public GameObject
+    class Paddle : public GameObject, public GameObjects::IPowerObserver
     {
     private:
         static inline std::shared_ptr<Paddle> pInstance = nullptr;
@@ -54,6 +56,36 @@ namespace GameObjects
 
         void collide(std::shared_ptr<GameObject> pOther) override
         {
+        }
+
+        void onPaddleCollide(PowerType pPowerType) override
+        {
+            switch (pPowerType)
+            {
+            case PowerType::POWERDOWN_SHRINK_PADDLE:
+                width = 70;
+                texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Paddle_Basic_Small);
+                std::thread([this]()
+                            { 
+                                std::this_thread::sleep_for(std::chrono::seconds(POWER_TIMEOUT)); 
+                                width = 140;
+                                texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Paddle_Basic); })
+                    .detach();
+                break;
+            case PowerType::POWERUP_EXPAND_PADDLE:
+                width = 210;
+                texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Paddle_Basic_Large);
+
+                std::thread([this]()
+                            { 
+                                std::this_thread::sleep_for(std::chrono::seconds(POWER_TIMEOUT)); 
+                                width = 140;
+                                texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Paddle_Basic); })
+                    .detach();
+                break;
+            default:
+                break;
+            }
         }
     };
 }

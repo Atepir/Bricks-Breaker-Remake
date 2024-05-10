@@ -6,5 +6,6 @@
 #define MAP_TYPE eMapType::Basic
 #define MARGIN_TOP 80
 #define BORDER_WIDTH 44
+#define POWER_TIMEOUT 5
 
 #endif // __CONSTANTS_HPP

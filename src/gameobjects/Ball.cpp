@@ -36,11 +36,6 @@ void Ball::update()
         position.y = 720;
         // notify the observers that the ball has fallen
         notifyObserversBallFallen();
-        // reset the ball position
-        position.x = 512;
-        position.y = 400;
-        velocity.x = 0;
-        velocity.y = 10;
     }
 }
 
@@ -51,17 +46,22 @@ void Ball::addObserver(std::shared_ptr<IBallObserver> observer)
 
 void Ball::notifyObserversBallFallen()
 {
+    std::cout << "Obs list: " << mObservers.size() << std::endl;
     for (auto observer : mObservers)
     {
-        observer->onBallFallen();
+        std::cout << "OBS: " << observer << std::endl;
+        if (observer == nullptr)
+            continue;
+        observer->onBallFallen(mId);
     }
 }
 
-void Ball::notifyObserversBrickDestroyed(BrickType pBrickType)
+void Ball::notifyObserversBrickDestroyed(BrickType pBrickType, Point pBrickPosition)
 {
     for (auto observer : mObservers)
     {
         observer->onBrickDestroyed(pBrickType);
+        observer->onBrickDestroyed(pBrickType, pBrickPosition);
     }
 }
 
@@ -71,7 +71,7 @@ void Ball::damageBrick(std::shared_ptr<Brick> pBrick, int pDamage)
     if (pBrick->mHealth <= 0)
     {
         pBrick->mDeleteFlag = true;
-        notifyObserversBrickDestroyed(pBrick->mType);
+        notifyObserversBrickDestroyed(pBrick->mType, pBrick->getPosition());
     }
 }
 
@@ -127,4 +127,38 @@ void Ball::collide(std::shared_ptr<GameObject> pOther)
             velocity.y = -velocity.y;
         }
     }
+}
+
+void Ball::expand()
+{
+    if (this->width >= 60 && this->height >= 60)
+    {
+        return;
+    }
+    this->width *= 2;
+    this->height *= 2;
+
+    std::thread([this]()
+                {
+        std::this_thread::sleep_for(std::chrono::seconds(POWER_TIMEOUT));
+        this->width /= 2;
+        this->height /= 2; })
+        .detach();
+}
+
+void Ball::shrink()
+{
+    if (this->width <= 15 && this->height <= 15)
+    {
+        return;
+    }
+    this->width /= 2;
+    this->height /= 2;
+
+    std::thread([this]()
+                {
+        std::this_thread::sleep_for(std::chrono::seconds(POWER_TIMEOUT));
+        this->width *= 2;
+        this->height *= 2; })
+        .detach();
 }

@@ -40,12 +40,15 @@ enum class GameObjectType
 {
 	GameObjectBall,
 	GameObjectPaddle,
-	GameObjectBrick
+	GameObjectBrick,
+	GameObjectPower,
 };
 
 enum class eTextureKey
 {
 	Texture_Paddle_Basic,
+	Texture_Paddle_Basic_Large,
+	Texture_Paddle_Basic_Small,
 	Texture_Paddle_Circular,
 	Texture_Ball_Basic,
 	Texture_Ball_Circular,
@@ -62,6 +65,22 @@ enum class eTextureKey
 	Texture_Brick_Yellow_Damaged,
 	Texture_Brick_Red_Damaged,
 	Texture_Board_Border_Background,
+	Texture_Powerup_Expand_Ball,
+	Texture_Powerdown_Shrink_Ball,
+	Texture_Powerup_Expand_Paddle,
+	Texture_Powerdown_Shrink_Paddle,
+	Texture_Powerup_Extra_Life,
+	Texture_Powerup_Multi_Ball,
+};
+
+enum PowerType
+{
+	POWERUP_EXPAND_BALL,
+	POWERDOWN_SHRINK_BALL,
+	POWERUP_EXPAND_PADDLE,
+	POWERDOWN_SHRINK_PADDLE,
+	POWERUP_EXTRA_LIFE,
+	POWERUP_MULTI_BALL
 };
 
 enum eColor

@@ -2,6 +2,7 @@
 #define __PLAYER_HPP
 
 #include "gameobjects/Ball.hpp"
+#include "gameobjects/Power.hpp"
 
 #include <iostream>
 #include <string>
@@ -10,7 +11,7 @@
 
 namespace Core
 {
-    class Player : public GameObjects::IBallObserver
+    class Player : public GameObjects::IBallObserver, public GameObjects::IPowerObserver
     {
     private:
         int mScore;
@@ -32,9 +33,10 @@ namespace Core
         void addScore(int pScore) { mScore += pScore; }
         void removeLife() { mLives--; }
 
-        void onBallFallen() override
+        void onBallFallen(int pBallId) override
         {
-            removeLife();
+            if (Factories::BallFactory::getInstance()->getBallCount() == 1)
+                removeLife();
         }
 
         void onBrickDestroyed(BrickType pBrickType) override
@@ -61,11 +63,19 @@ namespace Core
             }
         }
 
+        void onBrickDestroyed(BrickType pBrickType, Point pBrickPosition) override {}
+
         friend std::ostream &operator<<(std::ostream &os, Player player)
         {
             os << "Player: " << player.getName() << " Score: " << player.getScore() << " Lives: " << player.getLives();
             return os;
         };
+
+        void onPaddleCollide(PowerType pPowerType) override
+        {
+            if (pPowerType == PowerType::POWERUP_EXTRA_LIFE)
+                mLives++;
+        }
     };
 }
 

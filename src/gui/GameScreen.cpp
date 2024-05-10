@@ -2,6 +2,7 @@
 #include "gui/Button.hpp"
 #include "gui/Image.hpp"
 #include "gui/Label.hpp"
+#include "factories/PowerFactory.hpp"
 
 using namespace Gui;
 using namespace GameObjects;
@@ -13,17 +14,26 @@ GameScreen::GameScreen()
 {
     this->mRenderer = Graphics::Renderer::getInstance();
 
-    this->mPaddle = Paddle<MAP_TYPE>::getInstance();
-
-    BallFactory ballFactory = BallFactory();
-    this->mBall = ballFactory.createBall(BallType::NORMAL);
+    this->mPlayer = std::make_shared<Player>();
 
     this->mBoard = Board<MAP_TYPE>::getInstance();
     this->mBoard->reset();
 
-    this->mPlayer = std::make_shared<Player>();
+    this->mPaddle = Paddle<MAP_TYPE>::getInstance();
 
-    this->mBall->addObserver(mPlayer);
+    this->mPowerFactory =
+        PowerFactory::getInstance();
+    this->mPowerFactory->resetPowers();
+    this->mPowerFactory->setPlayer(mPlayer);
+
+    this->mBallFactory = BallFactory::getInstance();
+    this->mBallFactory->resetBalls();
+
+    this->mBallFactory->addObserver(mPlayer);
+    this->mBallFactory->addObserver(mPowerFactory);
+    this->mBallFactory->addObserver(mBallFactory);
+
+    mBallFactory->createBall(BallType::NORMAL);
 
     this->mHearts = std::vector<std::shared_ptr<Image>>();
 
@@ -60,11 +70,12 @@ void GameScreen::init()
 
 void GameScreen::render(Graphics::Renderer &renderer)
 {
-    mBall->collide(mPaddle);
+    mBallFactory->collide(mPaddle);
+    mPowerFactory->collide(mPaddle);
     std::vector<std::shared_ptr<Brick>> bricks = Board<MAP_TYPE>::getInstance()->getBricks();
     for (auto brick : bricks)
     {
-        mBall->collide(brick);
+        mBallFactory->collide(brick);
     }
 
     mRenderer->clear();
@@ -74,6 +85,16 @@ void GameScreen::render(Graphics::Renderer &renderer)
         remove(mHearts.back());
         mHearts.pop_back();
     }
+    else
+    {
+        for (int i = mHearts.size(); i < mPlayer->getLives(); i++)
+        {
+            std::shared_ptr<Texture> heart = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Heart);
+            std::shared_ptr<Image> image = std::make_shared<Image>(Image(heart, {(double)10 + i * 40, (double)0}, 30, 30));
+            mHearts.push_back(image);
+            add(image);
+        }
+    }
 
     mScoreLabel->setText("Score: " + std::to_string(mPlayer->getScore()), eColor::ColorBlue);
 
@@ -82,18 +103,20 @@ void GameScreen::render(Graphics::Renderer &renderer)
         Core::App::getInstance()->setScreen(std::make_shared<GameOverScreen>(mPlayer->getScore()));
     }
 
-    mBall->update();
+    mBallFactory->update();
     mPaddle->update();
     mBoard->update();
+    mPowerFactory->update();
 
-    mRenderer->draw(mBackground->getTexture(), {0, 80}, 1024, 650, 0);
+    mRenderer->draw(mBackground->getTexture(), {0, 80}, 1024, 700, 0);
     for (auto &brick : bricks)
     {
         brick->render(*mRenderer);
     }
 
-    mBall->render(*mRenderer);
+    mBallFactory->render(*mRenderer);
     mPaddle->render(*mRenderer);
+    mPowerFactory->render(*mRenderer);
     Screen::render(renderer);
 
     if (mBoard->isFinished())

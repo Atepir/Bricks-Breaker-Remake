@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <thread>
 
 #include "gameobjects/GameObject.hpp"
 #include "resources/Constants.hpp"
@@ -13,6 +14,8 @@ class ResourceManager;
 namespace GameObjects
 {
     class Brick;
+    class Power;
+    class Ball;
 
     /**
      * @brief Interface for ball observers
@@ -20,8 +23,10 @@ namespace GameObjects
     class IBallObserver
     {
     public:
-        virtual void onBallFallen() = 0;
+        virtual void onBallFallen(int pBallId) = 0;
+
         virtual void onBrickDestroyed(BrickType pBrickType) = 0;
+        virtual void onBrickDestroyed(BrickType pBrickType, Point pBrickPosition) = 0;
     };
 
     /**
@@ -30,10 +35,12 @@ namespace GameObjects
     class Ball : public GameObject
     {
     private:
+        int mId;
         BallType mType;
         double mRadius;
         double mMass;
         std::vector<std::shared_ptr<IBallObserver>> mObservers;
+        std::shared_ptr<Power> mPower;
 
     public:
         Ball(BallType type, Point point, double radius, double mass);
@@ -47,11 +54,19 @@ namespace GameObjects
         BallType getType() const { return mType; }
         double getRadius() const { return mRadius; }
         double getMass() const { return mMass; }
+        int getId() const { return mId; }
+        void setId(int pId) { mId = pId; }
+
+        void setPower(std::shared_ptr<Power> pPower) { mPower = pPower; }
+        std::shared_ptr<Power> getPower() { return mPower; }
 
         void notifyObserversBallFallen();
-        void notifyObserversBrickDestroyed(BrickType pBrickType);
+        void notifyObserversBrickDestroyed(BrickType pBrickType, Point pBrickPosition);
 
         void damageBrick(std::shared_ptr<Brick> pBrick, int pDamage);
+
+        void expand();
+        void shrink();
     };
 }
 
