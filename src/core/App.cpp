@@ -73,8 +73,11 @@ void App::mainloop()
 {
     std::shared_ptr<Graphics::Renderer> graphics = Graphics::Renderer::getInstance();
 
+    FPS fps = FPS(1000 / 24);
+
     while (mRunning)
     {
+        fps.update();
         Core::EventManager::getInstance()->handleEvents();
 
         if (nextScreen != nullptr)
@@ -94,6 +97,7 @@ void App::mainloop()
 
         currentScreen->render(*graphics);
         graphics->render();
-        SDL_Delay(1000 / 24);
+
+        fps.delay();
     }
 }

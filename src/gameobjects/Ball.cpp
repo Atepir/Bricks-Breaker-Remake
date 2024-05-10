@@ -4,6 +4,7 @@ using namespace GameObjects;
 
 void Ball<eMapType::Basic>::update()
 {
+    std::cout << "Ball update" << " x: " << position.x << " y: " << position.y << std::endl;
     position.x += velocity.x;
     position.y += velocity.y;
 
@@ -28,16 +29,6 @@ void Ball<eMapType::Basic>::update()
 
 void Ball<eMapType::Circular>::update()
 {
-    // ball is repulsed by the center of the circle
-    double distanceFromCenter = sqrt(pow(position.x - 512, 2) + pow(position.y - 360, 2));
-    double angle = atan2(position.y - 360, position.x - 512);
-    double repulsion = 0.1 * (distanceFromCenter - 300);
-    velocity.x += repulsion * cos(angle);
-    velocity.y += repulsion * sin(angle);
-
-    position.x += velocity.x;
-    position.y += velocity.y;
-
     if (position.x < BORDER_WIDTH || position.x > 1024 - BORDER_WIDTH)
     {
         velocity.x = -velocity.x;
@@ -55,6 +46,22 @@ void Ball<eMapType::Circular>::update()
         // notify the observers that the ball has fallen
         notifyObserversBallFallen();
     }
+
+    // ball is repulsed by the center of the circle - also use angular velocity
+    double centerX = 1024 / 2;
+    double centerY = 720 / 2;
+    double distanceX = position.x - centerX;
+    double distanceY = position.y - centerY;
+    double distance = sqrt(distanceX * distanceX + distanceY * distanceY);
+    double normalizedDistanceX = distanceX / distance;
+    double normalizedDistanceY = distanceY / distance;
+    double repulsion = 0.1;
+    velocity.x += repulsion * normalizedDistanceX;
+    velocity.y += repulsion * normalizedDistanceY;
+
+    position.x += velocity.x;
+    position.y += velocity.y;
+    angle += angularVelocity;
 }
 
 void Ball<eMapType::Basic>::collide(std::shared_ptr<GameObject> pOther)
@@ -138,13 +145,14 @@ void Ball<eMapType::Circular>::collide(std::shared_ptr<GameObject> pOther)
     {
         if (pOther->getEntityType() == GameObjectType::GameObjectPaddle)
         {
+            // bounce with repulsion as it is circular - independent of the paddle's position
             double paddleCenter = pOther->getPosition().x + pOther->getWidth() / 2;
             double ballCenter = position.x + getWidth() / 2;
             double distanceFromCenter = ballCenter - paddleCenter;
             double normalizedDistance = distanceFromCenter / (pOther->getWidth() / 2);
             double bounceAngle = normalizedDistance * 45;
-            velocity.x = 20 * sin(bounceAngle * M_PI / 180);
-            velocity.y = -20 * cos(bounceAngle * M_PI / 180);
+            velocity.x = 8 * sin(bounceAngle * M_PI / 180);
+            velocity.y = -8 * cos(bounceAngle * M_PI / 180);
         }
         else if (pOther->getEntityType() == GameObjectType::GameObjectBrick)
         {
@@ -171,38 +179,4 @@ void Ball<eMapType::Circular>::collide(std::shared_ptr<GameObject> pOther)
             velocity.y = -velocity.y;
         }
     }
-}
-
-void Ball<eMapType::Basic>::expand()
-{
-    if (this->width >= 60 && this->height >= 60)
-    {
-        return;
-    }
-    this->width *= 2;
-    this->height *= 2;
-
-    std::thread([this]()
-                {
-        std::this_thread::sleep_for(std::chrono::seconds(POWER_TIMEOUT));
-        this->width /= 2;
-        this->height /= 2; })
-        .detach();
-}
-
-void Ball<eMapType::Basic>::shrink()
-{
-    if (this->width <= 15 && this->height <= 15)
-    {
-        return;
-    }
-    this->width /= 2;
-    this->height /= 2;
-
-    std::thread([this]()
-                {
-        std::this_thread::sleep_for(std::chrono::seconds(POWER_TIMEOUT));
-        this->width *= 2;
-        this->height *= 2; })
-        .detach();
 }

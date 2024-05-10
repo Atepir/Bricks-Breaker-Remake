@@ -9,6 +9,7 @@
 #include "graphics/Renderer.hpp"
 #include "gui/Screen.hpp"
 #include "resources/ResourceManager.hpp"
+#include "graphics/FPS.hpp"
 
 namespace Core
 {

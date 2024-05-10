@@ -7,17 +7,17 @@
 #include <thread>
 
 #include "gameobjects/GameObject.hpp"
+#include "gameobjects/Brick.hpp"
 #include "resources/Constants.hpp"
 
-class ResourceManager;
+namespace Resources
+{
+    class ResourceManager;
+}
 
 namespace GameObjects
 {
-    class Brick;
     class Power;
-    template <eMapType mapType>
-    class Ball;
-
     /**
      * @brief Interface for ball observers
      */
@@ -45,13 +45,14 @@ namespace GameObjects
         std::shared_ptr<Power> mPower;
 
     public:
-        Ball(BallType type, Point point, double radius, double mass)
+        Ball(BallType type, Point point, double radius, double mass) : GameObject(point, 30, 30, Vector(2, 2), 0, 0)
         {
             this->mType = type;
             this->mRadius = radius;
             this->mMass = mass;
             this->texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Ball_Basic);
             this->entityType = GameObjectType::GameObjectBall;
+            std::cout << "Ball created" << std::endl;
         }
         ~Ball() {}
 
@@ -98,13 +99,42 @@ namespace GameObjects
             }
         }
 
-        void expand();
+        void expand()
+        {
+            if (this->width >= 60 && this->height >= 60)
+            {
+                return;
+            }
+            this->width *= 2;
+            this->height *= 2;
 
-        void shrink();
+            std::thread([this]()
+                        {
+        std::this_thread::sleep_for(std::chrono::seconds(POWER_TIMEOUT));
+        this->width /= 2;
+        this->height /= 2; })
+                .detach();
+        }
+
+        void shrink()
+        {
+            if (this->width <= 15 && this->height <= 15)
+            {
+                return;
+            }
+            this->width /= 2;
+            this->height /= 2;
+
+            std::thread([this]()
+                        {
+        std::this_thread::sleep_for(std::chrono::seconds(POWER_TIMEOUT));
+        this->width *= 2;
+        this->height *= 2; })
+                .detach();
+        }
     };
 }
 
 #include "resources/ResourceManager.hpp"
-#include "gameobjects/Brick.hpp"
 
 #endif // __BALL_HPP

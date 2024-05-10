@@ -13,11 +13,12 @@
 
 namespace GameObjects
 {
-    template <eMapType mapType>
+    template<eMapType mapType>
     class Ball;
+
     class Brick : public GameObject
     {
-        template <eMapType mapType>
+        template<eMapType mapType> 
         friend class Ball;
 
     private:
@@ -35,5 +36,7 @@ namespace GameObjects
         bool getDeleteFlag() { return mDeleteFlag; }
     };
 }
+
+#include "gameobjects/Ball.hpp"
 
 #endif // __BRICK_HPP
