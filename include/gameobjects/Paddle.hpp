@@ -28,10 +28,12 @@ namespace GameObjects
             {
             case eMapType::Basic:
                 texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Paddle_Basic);
-                std::cout << "Paddle texture: " << texture->getTexture() << std::endl;
+                // std::cout << "Paddle texture: " << texture->getTexture() << std::endl;
                 break;
             case eMapType::Circular:
                 texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Paddle_Circular);
+                this->width = 70;
+                this->height = 20;
                 break;
             }
 
@@ -47,7 +49,7 @@ namespace GameObjects
         {
             if (pInstance == nullptr)
             {
-                pInstance = std::make_shared<Paddle>(Point(420, 620), Vector(30, 30), 140, 40, 0, 0);
+                pInstance = std::make_shared<Paddle>(Point(420, 620), Vector(30, 30), 140, 40, 0, 5);
             }
             return pInstance;
         }

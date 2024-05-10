@@ -14,6 +14,7 @@ class ResourceManager;
 
 namespace GameObjects
 {
+    template <eMapType mapType>
     class Ball;
 
     class IPowerObserver 
@@ -36,8 +37,6 @@ namespace GameObjects
     public:
         Power(PowerType type, Point point);
         ~Power() {}
-
-        void description();
 
         void update();
         void collide(std::shared_ptr<GameObject> pOther);

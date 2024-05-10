@@ -8,7 +8,7 @@ using namespace Gui;
 
 GameOverScreen::GameOverScreen(int score)
 {
-    std::cout << "Game over screen created" << std::endl;
+    // std::cout << "Game over screen created" << std::endl;
     mScore = score;
 }
 

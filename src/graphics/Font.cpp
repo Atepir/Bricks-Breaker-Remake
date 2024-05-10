@@ -31,7 +31,7 @@ std::map<int, SDL_Color> colors = {
 Font::Font(std::string text, eColor pColor) : text(text), width(100), height(10)
 {
     font = std::move(defaultFont);
-    std::cout << "Default font: " << defaultFont << std::endl;
+    // std::cout << "Default font: " << defaultFont << std::endl;
     Type_SDL_Surface surface = TTF_RenderUTF8_Blended(font, text.c_str(), colors[pColor]);
     if (surface == nullptr)
     {

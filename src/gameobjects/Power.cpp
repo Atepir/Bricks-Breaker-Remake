@@ -30,10 +30,6 @@ Power::Power(PowerType type, Point point) : GameObject(point, 26, 26, Vector(0, 
     }
 }
 
-void Power::description() {
-	std::cout << "The ball grew!" << std::endl;
-}
-
 void Power::update() {
     position.y += velocity.y;
 
@@ -60,7 +56,6 @@ void Power::collide(std::shared_ptr<GameObject> pOther) {
     {
         if (pOther->getEntityType() == GameObjectType::GameObjectPaddle)
         {
-            description();
             notifyObserversPaddleCollided();
             mDeleteFlag = true;
         }

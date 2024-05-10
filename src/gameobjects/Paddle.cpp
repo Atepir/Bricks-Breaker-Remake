@@ -32,6 +32,8 @@ void Paddle<eMapType::Basic>::update()
 
 void Paddle<eMapType::Circular>::update()
 {
+    std::cout << "CIRCULAR Paddle update" << std::endl;
+
     const Uint8 *state = SDL_GetKeyboardState(NULL);
     double angle = 0;
 

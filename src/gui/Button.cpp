@@ -19,10 +19,9 @@ void Button::render(Graphics::Renderer &renderer)
 
 void Button::handleMouseUp(Type_SDL_MouseButtonEvent event)
 {
-    std::cout << "hmu btn" << std::endl;
     if (event->button == SDL_BUTTON_LEFT)
     {
-        std::cout << "left click" << std::endl;
+        // std::cout << "left click" << std::endl;
         if (
             event->x < x - BUTTON_TEXT_PADDING || event->x > x + width + BUTTON_TEXT_PADDING || event->y < y - BUTTON_TEXT_PADDING || event->y > y + height + BUTTON_TEXT_PADDING)
         {

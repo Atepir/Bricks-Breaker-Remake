@@ -15,6 +15,7 @@ namespace GameObjects
 {
     class Brick;
     class Power;
+    template <eMapType mapType>
     class Ball;
 
     /**
@@ -32,6 +33,7 @@ namespace GameObjects
     /**
      * @brief Represents a ball object
      */
+    template <eMapType mapType>
     class Ball : public GameObject
     {
     private:
@@ -43,13 +45,15 @@ namespace GameObjects
         std::shared_ptr<Power> mPower;
 
     public:
-        Ball(BallType type, Point point, double radius, double mass);
-        ~Ball();
-
-        void update() override;
-        void collide(std::shared_ptr<GameObject> pOther) override;
-
-        void addObserver(std::shared_ptr<IBallObserver> observer);
+        Ball(BallType type, Point point, double radius, double mass)
+        {
+            this->mType = type;
+            this->mRadius = radius;
+            this->mMass = mass;
+            this->texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Ball_Basic);
+            this->entityType = GameObjectType::GameObjectBall;
+        }
+        ~Ball() {}
 
         BallType getType() const { return mType; }
         double getRadius() const { return mRadius; }
@@ -57,15 +61,45 @@ namespace GameObjects
         int getId() const { return mId; }
         void setId(int pId) { mId = pId; }
 
-        void setPower(std::shared_ptr<Power> pPower) { mPower = pPower; }
-        std::shared_ptr<Power> getPower() { return mPower; }
+        void update() override;
+        void collide(std::shared_ptr<GameObject> pOther) override;
 
-        void notifyObserversBallFallen();
-        void notifyObserversBrickDestroyed(BrickType pBrickType, Point pBrickPosition);
+        void addObserver(std::shared_ptr<IBallObserver> observer)
+        {
+            mObservers.push_back(observer);
+        }
 
-        void damageBrick(std::shared_ptr<Brick> pBrick, int pDamage);
+        void notifyObserversBallFallen()
+        {
+            for (auto observer : mObservers)
+            {
+                if (observer == nullptr)
+                    continue;
+                observer->onBallFallen(mId);
+            }
+        }
+
+        void notifyObserversBrickDestroyed(BrickType pBrickType, Point pBrickPosition)
+        {
+            for (auto observer : mObservers)
+            {
+                observer->onBrickDestroyed(pBrickType);
+                observer->onBrickDestroyed(pBrickType, pBrickPosition);
+            }
+        }
+
+        void damageBrick(std::shared_ptr<Brick> pBrick, int pDamage)
+        {
+            pBrick->mHealth -= pDamage;
+            if (pBrick->mHealth <= 0)
+            {
+                pBrick->mDeleteFlag = true;
+                notifyObserversBrickDestroyed(pBrick->mType, pBrick->getPosition());
+            }
+        }
 
         void expand();
+
         void shrink();
     };
 }

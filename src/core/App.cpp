@@ -43,7 +43,7 @@ void App::init()
         std::cerr << "Failed to load font.ttf" << std::endl;
         std::cerr << TTF_GetError() << std::endl;
     }
-    std::cout << "font: " << font << std::endl;
+    // std::cout << "font: " << font << std::endl;
     Font::setDefaultFont(font);
 }
 

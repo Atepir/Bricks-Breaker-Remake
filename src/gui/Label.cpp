@@ -6,7 +6,7 @@ using namespace Graphics;
 Label::Label(std::string text, Point position, int width, int height, eColor color)
     : UiElement(position.x, position.y, width, height)
 {
-    std::cout << "Creating label" << std::endl;
+    // std::cout << "Creating label" << std::endl;
     font = Font(text, color);
 }
 

@@ -12,7 +12,7 @@ namespace Factories
     {
     private:
         static inline std::shared_ptr<BallFactory> pInstance = nullptr;
-        std::vector<std::shared_ptr<GameObjects::Ball>> mBalls;
+        std::vector<std::shared_ptr<GameObjects::Ball<MAP_TYPE>>> mBalls;
         std::vector<std::shared_ptr<GameObjects::IBallObserver>> mBallObservers;
         int mLastGeneratedBallId = 0;
 

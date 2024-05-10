@@ -15,11 +15,11 @@ namespace Gui
         virtual void keyDown(Type_SDL_KeyboardEvent event) {}
         virtual void handleMouseDown(Type_SDL_MouseButtonEvent event)
         {
-            std::cout << "handleMouseDown" << std::endl;
+            // std::cout << "handleMouseDown" << std::endl;
         }
         virtual void handleMouseUp(Type_SDL_MouseButtonEvent event)
         {
-            std::cout << "handleMouseUp" << std::endl;
+            // std::cout << "handleMouseUp" << std::endl;
         }
     };
 }

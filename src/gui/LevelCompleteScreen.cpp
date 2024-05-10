@@ -8,7 +8,7 @@ using namespace Gui;
 
 LevelCompleteScreen::LevelCompleteScreen(int score)
 {
-    std::cout << "Level complete screen created" << std::endl;
+    // std::cout << "Level complete screen created" << std::endl;
     mScore = score;
 }
 

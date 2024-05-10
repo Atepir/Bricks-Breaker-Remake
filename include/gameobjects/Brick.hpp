@@ -13,9 +13,11 @@
 
 namespace GameObjects
 {
+    template <eMapType mapType>
     class Ball;
     class Brick : public GameObject
     {
+        template <eMapType mapType>
         friend class Ball;
 
     private:
