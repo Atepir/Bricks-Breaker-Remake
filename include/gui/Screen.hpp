@@ -31,10 +31,13 @@ namespace Core
 
 namespace Gui
 {
+    using Type_SDL_MouseButtonEvent = SDL_MouseButtonEvent *;
+
     class Screen : public IDrawable
     {
     private:
         std::vector<std::shared_ptr<UiElement>> children;
+        std::vector<std::shared_ptr<IMouseMoveListener>> mMouseMoveListeners;
 
     public:
         Screen();
@@ -52,7 +55,10 @@ namespace Gui
         virtual void handleMouseDown(Type_SDL_MouseButtonEvent event);
         virtual void handleMouseUp(Type_SDL_MouseButtonEvent event);
 
+        virtual void handleMouseMoveX(bool right);
+
         std::shared_ptr<UiElement> add(std::shared_ptr<UiElement> element);
+        void addMouseMoveListener(std::shared_ptr<IMouseMoveListener> listener);
         void remove(std::shared_ptr<UiElement> element);
     };
 

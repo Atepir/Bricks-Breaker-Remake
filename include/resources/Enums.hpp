@@ -65,6 +65,7 @@ enum class eTextureKey
 	Texture_Brick_Yellow_Damaged,
 	Texture_Brick_Red_Damaged,
 	Texture_Board_Border_Background,
+	Texture_Circular_Board_Background,
 	Texture_Powerup_Expand_Ball,
 	Texture_Powerdown_Shrink_Ball,
 	Texture_Powerup_Expand_Paddle,

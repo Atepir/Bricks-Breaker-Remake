@@ -42,7 +42,11 @@ GameScreen::GameScreen()
 
 void GameScreen::init()
 {
+    addMouseMoveListener(mPaddle);
+
     Button backButton = Button("Quit", {920, 0}, 80, 30, eColor::ColorRed);
+    if (MAP_TYPE == eMapType::Basic)
+        backButton = Button("Quit", {920, 50}, 80, 30, eColor::ColorRed);
     backButton.setOnClickCallback(
         []()
         {
@@ -65,7 +69,15 @@ void GameScreen::init()
     Label levelLabel = Label("Level " + std::to_string(Resources::LevelManager::getCurrentLevel() + 1), {460, 40}, 120, 30, eColor::ColorBlue);
     add(std::make_shared<Label>(levelLabel));
 
-    mBackground = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Board_Border_Background);
+    switch (MAP_TYPE)
+    {
+    case eMapType::Basic:
+        mBackground = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Board_Border_Background);
+        break;
+    case eMapType::Circular:
+        mBackground = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Circular_Board_Background);
+        break;
+    }
 }
 
 void GameScreen::render(Graphics::Renderer &renderer)
@@ -96,7 +108,7 @@ void GameScreen::render(Graphics::Renderer &renderer)
         }
     }
 
-    mScoreLabel->setText("Score: " + std::to_string(mPlayer->getScore()), eColor::ColorBlue);
+    mScoreLabel->setText("Score: " + std::to_string(mPlayer->getScore()), MAP_TYPE == eMapType::Basic ? eColor::ColorBlue : eColor::ColorWhite);
 
     if (mPlayer->getLives() == 0)
     {
@@ -108,7 +120,16 @@ void GameScreen::render(Graphics::Renderer &renderer)
     mBoard->update();
     mPowerFactory->update();
 
-    mRenderer->draw(mBackground->getTexture(), {0, 80}, 1024, 700, 0);
+    switch (MAP_TYPE)
+    {
+    case eMapType::Basic:
+        mRenderer->draw(mBackground->getTexture(), {0, 80}, 1024, 700, 0);
+        break;
+    case eMapType::Circular:
+        mRenderer->draw(mBackground->getTexture(), {0, 0}, 1024, 720, 0);
+        break;
+    }
+
     for (auto &brick : bricks)
     {
         brick->render(*mRenderer);

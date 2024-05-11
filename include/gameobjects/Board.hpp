@@ -47,7 +47,7 @@ namespace GameObjects
         }
 
         void fillBasicBoard(std::string pPath);
-        void fillCircularBoard();
+        void fillCircularBoard(std::string pPath);
         void reset();
 
         bool isFinished()

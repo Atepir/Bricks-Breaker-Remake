@@ -11,6 +11,11 @@ void BallFactory::createBall(BallType pType)
     ballX = ballX < padding ? padding : ballX;
     ballX = ballX > WINDOW_WIDTH - padding ? WINDOW_WIDTH - padding : ballX;
 
+    if (MAP_TYPE == eMapType::Circular)
+    {
+        ballX = WINDOW_WIDTH / 2;
+    }
+
     switch (pType)
     {
     case BallType::NORMAL:

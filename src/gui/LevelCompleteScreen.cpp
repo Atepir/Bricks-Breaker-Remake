@@ -23,7 +23,16 @@ void LevelCompleteScreen::init()
     startButton.setOnClickCallback(
         []()
         {
-            Resources::LevelManager::setLevel(Resources::LevelManager::getCurrentLevel() + 1);
+            switch (MAP_TYPE)
+            {
+            case eMapType::Basic:
+                Resources::LevelManager::setLevel(Resources::LevelManager::getCurrentLevel() + 1);
+                break;
+            case eMapType::Circular:
+                Resources::LevelManager::setCircularLevel(Resources::LevelManager::getCurrentCircularLevel() + 1);
+                break;
+            }
+
             Core::App::getInstance()
                 ->setScreen(std::make_shared<GameScreen>());
         });

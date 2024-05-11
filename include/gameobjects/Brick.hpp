@@ -13,12 +13,12 @@
 
 namespace GameObjects
 {
-    template<eMapType mapType>
+    template <eMapType mapType>
     class Ball;
 
     class Brick : public GameObject
     {
-        template<eMapType mapType> 
+        template <eMapType mapType>
         friend class Ball;
 
     private:
@@ -27,7 +27,7 @@ namespace GameObjects
         bool mDeleteFlag = false;
 
     public:
-        Brick(Point position, double width, double height, BrickType type, int health);
+        Brick(Point position, double width, double height, BrickType type, int health, int angle);
         ~Brick();
 
         void update() override;

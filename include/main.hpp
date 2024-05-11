@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "core/App.hpp"
-#include "core/EventManager.hpp"
+#include "graphics/EventManager.hpp"
 #include "gui/Screen.hpp"
 #include "graphics/Font.hpp"
 

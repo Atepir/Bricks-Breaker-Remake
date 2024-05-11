@@ -41,6 +41,6 @@ namespace Core
     };
 }
 
-#include "core/EventManager.hpp"
+#include "graphics/EventManager.hpp"
 
 #endif

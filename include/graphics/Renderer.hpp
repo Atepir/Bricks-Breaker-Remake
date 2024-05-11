@@ -52,7 +52,7 @@ namespace Graphics
                 exit(1);
             }
 
-            pWindow = SDL_CreateWindow("BricksBreaker Remake!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1024, 720, SDL_WINDOW_SHOWN);
+            pWindow = SDL_CreateWindow("BricksBreaker Remake!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1024, 720, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
             if (pWindow == nullptr)
             {
                 std::cerr << "Failed to create window " << SDL_GetError() << std::endl;

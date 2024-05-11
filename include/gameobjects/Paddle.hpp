@@ -10,13 +10,14 @@
 #include "resources/Constants.hpp"
 #include "resources/ResourceManager.hpp"
 #include "gameobjects/Power.hpp"
+#include "gui/EventListener.hpp"
 
 #define ROTATION_SPEED_MULTIPLIER 200
 
 namespace GameObjects
 {
     template <eMapType mapType>
-    class Paddle : public GameObject, public GameObjects::IPowerObserver
+    class Paddle : public GameObject, public GameObjects::IPowerObserver, public Gui::IMouseMoveListener
     {
     private:
         static inline std::shared_ptr<Paddle> pInstance = nullptr;
@@ -89,6 +90,8 @@ namespace GameObjects
                 break;
             }
         }
+
+        void handleMouseMove(bool right);
     };
 }
 #endif // __PADDLE_HPP

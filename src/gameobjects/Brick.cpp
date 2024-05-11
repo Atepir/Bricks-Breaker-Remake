@@ -2,7 +2,7 @@
 
 using namespace GameObjects;
 
-Brick::Brick(Point position, double width, double height, BrickType type, int health) : GameObject(position, width, height, {0, 0}, 0, 0)
+Brick::Brick(Point position, double width, double height, BrickType type, int health, int angle) : GameObject(position, width, height, {0, 0}, angle, 0)
 {
     this->mType = type;
     this->mHealth = health;

@@ -11,6 +11,8 @@ namespace Core
     {
     private:
         static std::shared_ptr<EventManager> pInstance;
+        int mPrevMouseX = 0;
+        bool mIsMovingRight = false;
 
     public:
         EventManager() = default;
@@ -19,6 +21,9 @@ namespace Core
         static std::shared_ptr<EventManager> getInstance();
 
         void handleEvents();
+
+        EventManager(const EventManager &) = delete;
+        EventManager &operator=(const EventManager &) = delete;
     };
 }
 
