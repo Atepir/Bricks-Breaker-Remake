@@ -44,7 +44,7 @@ void GameOverScreen::init()
 
 void GameOverScreen::render(Graphics::Renderer &renderer)
 {
-    renderer.draw(mBackground->getTexture(), {0, 0}, 1024, 800, 0);
+    renderer.draw(mBackground->getTexture(), {(double)0, (double)0}, renderer.getScreenWidth(), renderer.getScreenHeight(), 0);
     Screen::render(renderer);
 }
 

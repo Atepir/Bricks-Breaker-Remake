@@ -40,7 +40,7 @@ void MainMenuScreen::init()
 
 void MainMenuScreen::render(Graphics::Renderer &renderer)
 {
-    renderer.draw(background->getTexture(), {0, 0}, 1024, 800, 0);
+    renderer.draw(background->getTexture(), {0, 0}, renderer.getScreenWidth(), renderer.getScreenHeight(), 0);
     Screen::render(renderer);
 }
 

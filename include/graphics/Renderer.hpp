@@ -24,8 +24,14 @@ namespace Graphics
 
         static inline std::shared_ptr<Renderer> pInstance = nullptr;
 
+    private:
+        int mScreenWidth;
+        int mScreenHeight;
+
     public:
-        Renderer() : pWindow(nullptr), pRenderer(nullptr) {}
+        Renderer() : pWindow(nullptr), pRenderer(nullptr), mScreenWidth(1024), mScreenHeight(720)
+        {
+        }
 
         Renderer(const Renderer &) = delete;
         void operator=(const Renderer &) = delete;
@@ -52,7 +58,7 @@ namespace Graphics
                 exit(1);
             }
 
-            pWindow = SDL_CreateWindow("BricksBreaker Remake!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1024, 720, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+            pWindow = SDL_CreateWindow("BricksBreaker Remake!", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, mScreenWidth, mScreenHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
             if (pWindow == nullptr)
             {
                 std::cerr << "Failed to create window " << SDL_GetError() << std::endl;
@@ -116,12 +122,37 @@ namespace Graphics
         void render()
         {
             SDL_RenderPresent(pRenderer);
+            SDL_GetWindowSize(pWindow, &mScreenWidth, &mScreenHeight);
         }
 
         Type_SDL_Renderer getRenderer() const
         {
             // std::cout << "Returning renderer " << pRenderer << std::endl;
             return pRenderer;
+        }
+
+        int getScreenWidth() const
+        {
+            return mScreenWidth;
+        }
+
+        int getScreenHeight() const
+        {
+            return mScreenHeight;
+        }
+
+        int getDeltaWidth() const
+        {
+            if (mScreenWidth > 1024)
+                return mScreenWidth - 1024;
+            return 0;
+        }
+
+        int getDeltaHeight() const
+        {
+            if (mScreenHeight > 720)
+                return mScreenHeight - 720;
+            return 0;
         }
     };
 }

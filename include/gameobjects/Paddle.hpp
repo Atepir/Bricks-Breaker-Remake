@@ -63,6 +63,10 @@ namespace GameObjects
 
         void onPaddleCollide(PowerType pPowerType) override
         {
+            if (mapType == eMapType::Circular)
+            {
+                return;
+            }
             switch (pPowerType)
             {
             case PowerType::POWERDOWN_SHRINK_PADDLE:

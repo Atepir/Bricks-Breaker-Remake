@@ -45,7 +45,7 @@ void GameScreen::init()
     addMouseMoveListener(mPaddle);
 
     Button backButton = Button("Quit", {920, 0}, 80, 30, eColor::ColorRed);
-    if (MAP_TYPE == eMapType::Basic)
+    if (MAP_TYPE == eMapType::Circular)
         backButton = Button("Quit", {920, 50}, 80, 30, eColor::ColorRed);
     backButton.setOnClickCallback(
         []()
@@ -123,10 +123,10 @@ void GameScreen::render(Graphics::Renderer &renderer)
     switch (MAP_TYPE)
     {
     case eMapType::Basic:
-        mRenderer->draw(mBackground->getTexture(), {0, 80}, 1024, 700, 0);
+        mRenderer->draw(mBackground->getTexture(), {(double)0, (double)80}, renderer.getScreenWidth(), renderer.getScreenHeight(), 0);
         break;
     case eMapType::Circular:
-        mRenderer->draw(mBackground->getTexture(), {0, 0}, 1024, 720, 0);
+        mRenderer->draw(mBackground->getTexture(), {(double)0 + renderer.getDeltaWidth() / 2, (double)0 + renderer.getDeltaHeight() / 2}, 1024, 720, 0);
         break;
     }
 

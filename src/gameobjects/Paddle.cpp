@@ -2,8 +2,6 @@
 
 using namespace GameObjects;
 
-Point gravityCenterPoint = Point(476, 350);
-
 void Paddle<eMapType::Basic>::update()
 {
     const Uint8 *state = SDL_GetKeyboardState(NULL);
@@ -22,9 +20,9 @@ void Paddle<eMapType::Basic>::update()
     {
         position.x = BORDER_WIDTH;
     }
-    if (position.x + width > 1024 - BORDER_WIDTH)
+    if (position.x + width > Graphics::Renderer::getInstance()->getScreenWidth() - BORDER_WIDTH)
     {
-        position.x = 1024 - width - BORDER_WIDTH;
+        position.x = Graphics::Renderer::getInstance()->getScreenWidth() - width - BORDER_WIDTH;
     }
 
     // std::cout << "Paddle position: " << position.x << ", " << position.y << std::endl;
@@ -32,6 +30,7 @@ void Paddle<eMapType::Basic>::update()
 
 void Paddle<eMapType::Circular>::update()
 {
+    Point gravityCenterPoint = Point(Graphics::Renderer::getInstance()->getScreenWidth() / 2 - 36, Graphics::Renderer::getInstance()->getScreenHeight() / 2 - 10);
     std::cout << "CIRCULAR Paddle update" << std::endl;
 
     const Uint8 *state = SDL_GetKeyboardState(NULL);
@@ -72,11 +71,11 @@ void Paddle<eMapType::Basic>::handleMouseMove(bool right)
 {
     if (right)
     {
-        position.x += velocity.x / 10;
+        position.x += velocity.x;
     }
     else
     {
-        position.x -= velocity.x / 10;
+        position.x -= velocity.x;
     }
 
     // keep the paddle within the screen
@@ -84,23 +83,24 @@ void Paddle<eMapType::Basic>::handleMouseMove(bool right)
     {
         position.x = BORDER_WIDTH;
     }
-    if (position.x + width > 1024 - BORDER_WIDTH)
+    if (position.x + width > Graphics::Renderer::getInstance()->getScreenWidth() - BORDER_WIDTH)
     {
-        position.x = 1024 - width - BORDER_WIDTH;
+        position.x = Graphics::Renderer::getInstance()->getScreenWidth() - width - BORDER_WIDTH;
     }
 }
 
 void Paddle<eMapType::Circular>::handleMouseMove(bool right)
 {
     double angle = 0;
+    Point gravityCenterPoint = Point(Graphics::Renderer::getInstance()->getScreenWidth() / 2 - 36, Graphics::Renderer::getInstance()->getScreenHeight() / 2 - 10);
 
     if (right)
     {
-        angle = -angularVelocity * M_PI / 100;
+        angle = -angularVelocity * M_PI / 140;
     }
     else
     {
-        angle = angularVelocity * M_PI / 100;
+        angle = angularVelocity * M_PI / 140;
     }
 
     double xM = position.x - gravityCenterPoint.x;

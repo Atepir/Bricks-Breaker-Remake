@@ -5,23 +5,26 @@ using namespace GameObjects;
 void Ball<eMapType::Basic>::update()
 {
     std::cout << "Ball update" << " x: " << position.x << " y: " << position.y << std::endl;
+
+    std::shared_ptr<Graphics::Renderer> renderer = Graphics::Renderer::getInstance();
+
     position.x += velocity.x;
     position.y += velocity.y;
 
-    if (position.x < BORDER_WIDTH || position.x > 1024 - BORDER_WIDTH)
+    if (position.x < BORDER_WIDTH || position.x > renderer->getScreenWidth() - BORDER_WIDTH)
     {
         velocity.x = -velocity.x;
     }
 
-    if (position.y < BORDER_WIDTH + MARGIN_TOP || position.y > 720 - BORDER_WIDTH)
+    if (position.y < BORDER_WIDTH + MARGIN_TOP || position.y > renderer->getScreenHeight() - BORDER_WIDTH)
     {
         velocity.y = -velocity.y;
     }
 
-    if (position.y > 720 - BORDER_WIDTH)
+    if (position.y > renderer->getScreenHeight() - BORDER_WIDTH)
     {
         // has fallen off the screen
-        position.y = 720;
+        position.y = renderer->getScreenHeight();
         // notify the observers that the ball has fallen
         notifyObserversBallFallen();
     }
@@ -29,27 +32,20 @@ void Ball<eMapType::Basic>::update()
 
 void Ball<eMapType::Circular>::update()
 {
-    if (position.x < BORDER_WIDTH || position.x > 1024 - BORDER_WIDTH)
-    {
-        velocity.x = -velocity.x;
-    }
+    std::shared_ptr<Graphics::Renderer> renderer = Graphics::Renderer::getInstance();
 
-    if (position.y < BORDER_WIDTH + MARGIN_TOP || position.y > 720 - BORDER_WIDTH)
-    {
-        velocity.y = -velocity.y;
-    }
-
-    if (position.y > 720 - BORDER_WIDTH)
+    // if distance from the center is greater than the radius of the circle
+    double distanceFromCenter = sqrt(pow(position.x - renderer->getScreenWidth() / 2, 2) + pow(position.y - renderer->getScreenHeight() / 2, 2));
+    if (distanceFromCenter > 400 - BORDER_WIDTH)
     {
         // has fallen off the screen
-        position.y = 720;
         // notify the observers that the ball has fallen
         notifyObserversBallFallen();
     }
 
     // ball is repulsed by the center of the circle - also use angular velocity
-    double centerX = 1024 / 2;
-    double centerY = 720 / 2;
+    double centerX = renderer->getScreenWidth() / 2;
+    double centerY = renderer->getScreenHeight() / 2;
     double distanceX = position.x - centerX;
     double distanceY = position.y - centerY;
     double distance = sqrt(distanceX * distanceX + distanceY * distanceY);

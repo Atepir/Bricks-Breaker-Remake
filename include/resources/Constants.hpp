@@ -5,7 +5,7 @@
 
 #define MAP_TYPE eMapType::Circular
 #define MARGIN_TOP 80
-#define BORDER_WIDTH 44
+#define BORDER_WIDTH 32
 #define POWER_TIMEOUT 5
 
 #endif // __CONSTANTS_HPP

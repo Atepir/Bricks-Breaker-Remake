@@ -13,7 +13,7 @@ void BallFactory::createBall(BallType pType)
 
     if (MAP_TYPE == eMapType::Circular)
     {
-        ballX = WINDOW_WIDTH / 2;
+        ballX = Graphics::Renderer::getInstance()->getScreenWidth() / 2;
     }
 
     switch (pType)

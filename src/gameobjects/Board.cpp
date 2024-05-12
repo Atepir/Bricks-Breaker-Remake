@@ -37,6 +37,7 @@ std::vector<std::vector<BrickType>> readBricksFromFile(std::string pPath)
 
 void Board<eMapType::Basic>::fillBasicBoard(std::string pPath)
 {
+    std::shared_ptr<Graphics::Renderer> renderer = Graphics::Renderer::getInstance();
     if (mBricks.size() > 0)
     {
         mBricks.clear();
@@ -47,7 +48,9 @@ void Board<eMapType::Basic>::fillBasicBoard(std::string pPath)
     {
         for (int j = 0; j < 5; j++)
         {
-            mBricks.push_back(std::make_shared<Brick>(Point(BOARD_PADDING + i * BRICK_WIDTH, MARGIN_TOP + BOARD_PADDING + j * BRICK_HEIGHT), BRICK_WIDTH, BRICK_HEIGHT, bricks[j][i], INITIAL_BRICK_HEALTH, 0));
+            int x = BOARD_PADDING + i * BRICK_WIDTH + renderer->getDeltaWidth() / 2;
+            int y = MARGIN_TOP + BOARD_PADDING + j * BRICK_HEIGHT + renderer->getDeltaHeight() / 2;
+            mBricks.push_back(std::make_shared<Brick>(Point(x, y), BRICK_WIDTH, BRICK_HEIGHT, bricks[j][i], INITIAL_BRICK_HEALTH, 0));
         }
     }
 }
@@ -59,6 +62,8 @@ GameObjects::Board<eMapType::Basic>::Board<eMapType::Basic>()
 
 void Board<eMapType::Circular>::fillCircularBoard(std::string pPath)
 {
+    std::shared_ptr<Graphics::Renderer> renderer = Graphics::Renderer::getInstance();
+
     if (mBricks.size() > 0)
     {
         mBricks.clear();
@@ -74,8 +79,8 @@ void Board<eMapType::Circular>::fillCircularBoard(std::string pPath)
         for (int j = 0; j < 4; j++)
         {
             double width = 38 + 10 * j;
-            double x = 490 + (emptyMiddleSize + angleDelta * j) * cos(i * M_PI / 180) - j * 5;
-            double y = 350 + (emptyMiddleSize + angleDelta * j) * sin(i * M_PI / 180);
+            double x = 490 + (emptyMiddleSize + angleDelta * j) * cos(i * M_PI / 180) - j * 5 + renderer->getDeltaWidth() / 2;
+            double y = 350 + (emptyMiddleSize + angleDelta * j) * sin(i * M_PI / 180) + renderer->getDeltaHeight() / 2;
 
             mBricks.push_back(std::make_shared<Brick>(Point(x, y), width, angleDelta, bricks[j][i / 24], INITIAL_BRICK_HEALTH, i + 90));
         }

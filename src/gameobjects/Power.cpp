@@ -6,8 +6,16 @@ Power::Power(PowerType type, Point point) : GameObject(point, 26, 26, Vector(10,
 {
     this->mPowerType = type;
     this->entityType = GameObjectType::GameObjectPower;
-    this->velocity.x = rand() % 10 - 5;
-    this->velocity.y = rand() % 10 - 5;
+
+    if (MAP_TYPE == eMapType::Circular)
+    {
+        this->velocity.x = rand() % 10 - 5;
+        this->velocity.y = rand() % 10 - 5;
+    }
+    else
+    {
+        this->velocity.y = 5;
+    }
 
     switch (type)
     {
@@ -34,10 +42,18 @@ Power::Power(PowerType type, Point point) : GameObject(point, 26, 26, Vector(10,
 
 void Power::update()
 {
+    std::shared_ptr<Graphics::Renderer> renderer = Graphics::Renderer::getInstance();
     switch (MAP_TYPE)
     {
     case eMapType::Basic:
+    {
         position.y += velocity.y;
+        double distanceFromCenter = sqrt(pow(position.x - renderer->getScreenWidth() / 2, 2) + pow(position.y - renderer->getScreenHeight() / 2, 2));
+        if (distanceFromCenter > 400 - BORDER_WIDTH)
+        {
+            mDeleteFlag = true;
+        }
+    }
         break;
     case eMapType::Circular:
         double centerX = 1024 / 2;
@@ -52,12 +68,11 @@ void Power::update()
         velocity.y += repulsion * normalizedDistanceY;
         position.x += velocity.x;
         position.y += velocity.y;
+        if (position.x > renderer->getScreenWidth())
+        {
+            mDeleteFlag = true;
+        }
         break;
-    }
-
-    if (position.y > 720 - BORDER_WIDTH)
-    {
-        mDeleteFlag = true;
     }
 }
 
