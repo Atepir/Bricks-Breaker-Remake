@@ -59,6 +59,14 @@ namespace GameObjects
             return pInstance;
         }
 
+        void resetPaddle()
+        {
+            position = Point(420, 620);
+            velocity = Vector(30, 30);
+            angle = 0;
+            angularVelocity = 5;
+        }
+
         void update() override;
 
         void collide(std::shared_ptr<GameObject> pOther) override

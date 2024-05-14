@@ -19,7 +19,7 @@ void BallFactory::createBall(BallType pType)
     switch (pType)
     {
     case BallType::NORMAL:
-        ball = std::make_shared<Ball<MAP_TYPE>>(BallType::NORMAL, Point(ballX, WINDOW_HEIGHT / 2), 30, 20);
+        ball = std::make_shared<Ball<MAP_TYPE>>(BallType::NORMAL, Point(ballX, WINDOW_HEIGHT / 2 + 50), 30, 0);
         ball->setId(mLastGeneratedBallId++);
         break;
     default:

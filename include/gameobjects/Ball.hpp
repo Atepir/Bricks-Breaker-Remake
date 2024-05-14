@@ -45,14 +45,13 @@ namespace GameObjects
         std::shared_ptr<Power> mPower;
 
     public:
-        Ball(BallType type, Point point, double radius, double mass) : GameObject(point, 30, 30, Vector(2, 2), 0, 0)
+        Ball(BallType type, Point point, double radius, double mass) : GameObject(point, 30, 30, Vector(0, 2.5), 0, 0)
         {
             this->mType = type;
             this->mRadius = radius;
             this->mMass = mass;
             this->texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Ball_Basic);
             this->entityType = GameObjectType::GameObjectBall;
-            std::cout << "Ball created" << std::endl;
         }
         ~Ball() {}
 

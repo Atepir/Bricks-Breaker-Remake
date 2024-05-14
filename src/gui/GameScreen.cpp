@@ -20,6 +20,7 @@ GameScreen::GameScreen()
     this->mBoard->reset();
 
     this->mPaddle = Paddle<MAP_TYPE>::getInstance();
+    this->mPaddle->resetPaddle();
 
     this->mPowerFactory =
         PowerFactory::getInstance();
@@ -75,7 +76,8 @@ void GameScreen::init()
         mBackground = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Board_Border_Background);
         break;
     case eMapType::Circular:
-        mBackground = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Circular_Board_Background);
+        // mBackground = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Circular_Board_Background);
+        mBackground = nullptr;
         break;
     }
 }
@@ -108,17 +110,12 @@ void GameScreen::render(Graphics::Renderer &renderer)
         }
     }
 
-    mScoreLabel->setText("Score: " + std::to_string(mPlayer->getScore()), MAP_TYPE == eMapType::Basic ? eColor::ColorBlue : eColor::ColorWhite);
+    mScoreLabel->setText("Score: " + std::to_string(mPlayer->getScore()), eColor::ColorBlue);
 
     if (mPlayer->getLives() == 0)
     {
         Core::App::getInstance()->setScreen(std::make_shared<GameOverScreen>(mPlayer->getScore()));
     }
-
-    mBallFactory->update();
-    mPaddle->update();
-    mBoard->update();
-    mPowerFactory->update();
 
     switch (MAP_TYPE)
     {
@@ -126,9 +123,14 @@ void GameScreen::render(Graphics::Renderer &renderer)
         mRenderer->draw(mBackground->getTexture(), {(double)0, (double)80}, renderer.getScreenWidth(), renderer.getScreenHeight(), 0);
         break;
     case eMapType::Circular:
-        mRenderer->draw(mBackground->getTexture(), {(double)0 + renderer.getDeltaWidth() / 2, (double)0 + renderer.getDeltaHeight() / 2}, 1024, 720, 0);
+        // mRenderer->draw(mBackground->getTexture(), {(double)0 + renderer.getDeltaWidth() / 2, (double)0 + renderer.getDeltaHeight() / 2}, 1024, 720, 0);
         break;
     }
+
+    mBallFactory->update();
+    mPaddle->update();
+    mBoard->update();
+    mPowerFactory->update();
 
     for (auto &brick : bricks)
     {

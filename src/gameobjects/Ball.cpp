@@ -9,7 +9,7 @@ void Ball<eMapType::Basic>::update()
     position.x += velocity.x;
     position.y += velocity.y;
 
-    if (position.x < BORDER_WIDTH || position.x > renderer->getScreenWidth() - BORDER_WIDTH)
+    if (position.x < BORDER_WIDTH || position.x > renderer->getScreenWidth() - BORDER_WIDTH - getWidth())
     {
         velocity.x = -velocity.x;
     }
@@ -77,28 +77,20 @@ void Ball<eMapType::Basic>::collide(std::shared_ptr<GameObject> pOther)
     {
         if (pOther->getEntityType() == GameObjectType::GameObjectPaddle)
         {
-            // bounce with repulsion as it is circular
             double paddleCenter = pOther->getPosition().x + pOther->getWidth() / 2;
             double ballCenter = position.x + getWidth() / 2;
             double distanceFromCenter = ballCenter - paddleCenter;
             double normalizedDistance = distanceFromCenter / (pOther->getWidth() / 2);
             double bounceAngle = normalizedDistance * 45;
-            velocity.x = 20 * sin(bounceAngle * M_PI / 180);
-            velocity.y = -20 * cos(bounceAngle * M_PI / 180);
+            velocity.x = 10 * sin(bounceAngle * M_PI / 180);
+            velocity.y = -10 * cos(bounceAngle * M_PI / 180);
         }
         else if (pOther->getEntityType() == GameObjectType::GameObjectBrick)
         {
             std::shared_ptr<Brick> brick = std::static_pointer_cast<Brick>(pOther);
             damageBrick(brick);
 
-            // bounce with repulsion as it is circular
-            double brickCenter = pOther->getPosition().x + pOther->getWidth() / 2;
-            double ballCenter = position.x + getWidth() / 2;
-            double distanceFromCenter = ballCenter - brickCenter;
-            double normalizedDistance = distanceFromCenter / (pOther->getWidth() / 2);
-            double bounceAngle = normalizedDistance * 45;
-            velocity.x = 20 * sin(bounceAngle * M_PI / 180);
-            velocity.y = -20 * cos(bounceAngle * M_PI / 180);
+            velocity.y = -velocity.y;
         }
     }
 }
@@ -122,7 +114,7 @@ void Ball<eMapType::Circular>::collide(std::shared_ptr<GameObject> pOther)
     {
         if (pOther->getEntityType() == GameObjectType::GameObjectPaddle)
         {
-            // bounce with repulsion as it is circular - independent of the paddle's position
+            // ball collision with paddle on circular map
             double paddleCenter = pOther->getPosition().x + pOther->getWidth() / 2;
             double ballCenter = position.x + getWidth() / 2;
             double distanceFromCenter = ballCenter - paddleCenter;
