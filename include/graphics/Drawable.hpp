@@ -8,22 +8,18 @@
 
 namespace Graphics
 {
+    /**
+     * @brief Interface for drawable objects
+     */
     class IDrawable
     {
-    private:
-        bool visible;
-
     protected:
-        IDrawable();
+        IDrawable() = default;
         std::shared_ptr<Texture> texture;
 
     public:
-        virtual ~IDrawable();
-        virtual void update() = 0;
+        virtual ~IDrawable() = default;
         virtual void render(Renderer &renderer) = 0;
-        // virtual void resize(int width, int height) = 0;
-        virtual void setVisible(bool visible);
-        virtual bool isVisible();
     };
 }
 

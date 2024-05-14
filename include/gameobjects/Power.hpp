@@ -17,10 +17,13 @@ namespace GameObjects
     template <eMapType mapType>
     class Ball;
 
-    class IPowerObserver 
+    /**
+     * @brief Interface for power observers
+     */
+    class IPowerObserver
     {
-        public:
-            virtual void onPaddleCollide(PowerType pPowerType) = 0;
+    public:
+        virtual void onPaddleCollide(PowerType pPowerType) = 0;
     };
 
     /**
@@ -30,7 +33,7 @@ namespace GameObjects
     class Power : public GameObject
     {
     private:
-		PowerType mPowerType;
+        PowerType mPowerType;
         bool mDeleteFlag = false;
         std::vector<std::shared_ptr<IPowerObserver>> mPowerObservers;
 
@@ -40,7 +43,7 @@ namespace GameObjects
 
         void update();
         void collide(std::shared_ptr<GameObject> pOther);
-        
+
         PowerType getType() const { return mPowerType; }
 
         void addObserver(std::shared_ptr<IPowerObserver> pPowerObserver);
@@ -50,5 +53,7 @@ namespace GameObjects
         bool getDeleteFlag() { return mDeleteFlag; }
     };
 }
-#endif // __POWER_HPP
+
 #include "resources/ResourceManager.hpp"
+
+#endif // __POWER_HPP

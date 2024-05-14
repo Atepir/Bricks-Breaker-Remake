@@ -73,8 +73,6 @@ void BallFactory::destroyBall(int pBallId)
 
 void BallFactory::onBallFallen(int pBallId)
 {
-    // std::cout << "Ball fallen, remaining balls: " << mBalls.size() << std::endl;
-
     if (mBalls.size() == 1)
     {
         mBalls.clear();
@@ -84,7 +82,6 @@ void BallFactory::onBallFallen(int pBallId)
     {
         destroyBall(pBallId);
     }
-    // std::cout << "After update: " << mBalls.size() << std::endl;
 }
 
 void BallFactory::collide(std::shared_ptr<GameObjects::GameObject> pGameObject)

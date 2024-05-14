@@ -4,8 +4,6 @@ using namespace GameObjects;
 
 void Ball<eMapType::Basic>::update()
 {
-    std::cout << "Ball update" << " x: " << position.x << " y: " << position.y << std::endl;
-
     std::shared_ptr<Graphics::Renderer> renderer = Graphics::Renderer::getInstance();
 
     position.x += velocity.x;
@@ -43,7 +41,7 @@ void Ball<eMapType::Circular>::update()
         notifyObserversBallFallen();
     }
 
-    // ball is repulsed by the center of the circle - also use angular velocity
+    // ball is repulsed by the center of the circle
     double centerX = renderer->getScreenWidth() / 2;
     double centerY = renderer->getScreenHeight() / 2;
     double distanceX = position.x - centerX;
@@ -91,24 +89,7 @@ void Ball<eMapType::Basic>::collide(std::shared_ptr<GameObject> pOther)
         else if (pOther->getEntityType() == GameObjectType::GameObjectBrick)
         {
             std::shared_ptr<Brick> brick = std::static_pointer_cast<Brick>(pOther);
-            switch (brick->mType)
-            {
-            case BrickType::BRICK_BLUE:
-                damageBrick(brick, 100);
-                break;
-            case BrickType::BRICK_GREEN:
-                damageBrick(brick, 60);
-                break;
-            case BrickType::BRICK_VIOLET:
-                damageBrick(brick, 40);
-                break;
-            case BrickType::BRICK_YELLOW:
-                damageBrick(brick, 20);
-                break;
-            case BrickType::BRICK_RED:
-                damageBrick(brick, 10);
-                break;
-            }
+            damageBrick(brick);
 
             // bounce with repulsion as it is circular
             double brickCenter = pOther->getPosition().x + pOther->getWidth() / 2;
@@ -153,24 +134,7 @@ void Ball<eMapType::Circular>::collide(std::shared_ptr<GameObject> pOther)
         else if (pOther->getEntityType() == GameObjectType::GameObjectBrick)
         {
             std::shared_ptr<Brick> brick = std::static_pointer_cast<Brick>(pOther);
-            switch (brick->mType)
-            {
-            case BrickType::BRICK_BLUE:
-                damageBrick(brick, 100);
-                break;
-            case BrickType::BRICK_GREEN:
-                damageBrick(brick, 60);
-                break;
-            case BrickType::BRICK_VIOLET:
-                damageBrick(brick, 40);
-                break;
-            case BrickType::BRICK_YELLOW:
-                damageBrick(brick, 20);
-                break;
-            case BrickType::BRICK_RED:
-                damageBrick(brick, 10);
-                break;
-            }
+            damageBrick(brick);
 
             velocity.y = -velocity.y;
         }

@@ -5,8 +5,8 @@ std::shared_ptr<App> App::pInstance = nullptr;
 
 App::App()
 {
-    currentScreen = nullptr;
-    nextScreen = nullptr;
+    mCurrentScreen = nullptr;
+    mNextScreen = nullptr;
     init();
 }
 
@@ -30,21 +30,6 @@ void App::init()
 
     std::shared_ptr<Graphics::Renderer> graphics = Graphics::Renderer::getInstance();
     graphics->init();
-
-    if (TTF_Init() == -1)
-    {
-        printf("Error - TTF_Init()\n");
-        SDL_Delay(5000);
-    }
-
-    Type_TTF_Font font = TTF_OpenFont("font.ttf", 64);
-    if (font == nullptr)
-    {
-        std::cerr << "Failed to load font.ttf" << std::endl;
-        std::cerr << TTF_GetError() << std::endl;
-    }
-    // std::cout << "font: " << font << std::endl;
-    Font::setDefaultFont(font);
 }
 
 void App::run()
@@ -56,17 +41,16 @@ void App::quit()
 {
     mRunning = false;
     Graphics::Renderer::getInstance()->quit();
-    TTF_Quit();
 }
 
 void App::setScreen(std::shared_ptr<Gui::Screen> screen)
 {
-    nextScreen = screen;
+    mNextScreen = screen;
 }
 
 std::shared_ptr<Gui::Screen> App::getCurrentScreen()
 {
-    return currentScreen;
+    return mCurrentScreen;
 }
 
 void App::mainloop()
@@ -80,22 +64,22 @@ void App::mainloop()
         fps.update();
         Core::EventManager::getInstance()->handleEvents();
 
-        if (nextScreen != nullptr)
+        if (mNextScreen != nullptr)
         {
-            if (currentScreen != nullptr)
+            if (mCurrentScreen != nullptr)
             {
-                currentScreen = nullptr;
+                mCurrentScreen = nullptr;
             }
-            currentScreen = nextScreen;
-            nextScreen = nullptr;
+            mCurrentScreen = mNextScreen;
+            mNextScreen = nullptr;
 
             // launch a separate thread for initialization as the game can be played there
             std::thread taskThread([this]()
-                                   { currentScreen->init(); });
+                                   { mCurrentScreen->init(); });
             taskThread.join();
         }
 
-        currentScreen->render(*graphics);
+        mCurrentScreen->render(*graphics);
         graphics->render();
 
         fps.delay();

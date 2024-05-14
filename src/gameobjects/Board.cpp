@@ -29,7 +29,6 @@ std::vector<std::vector<BrickType>> readBricksFromFile(std::string pPath)
     catch (const std::exception &e)
     {
         std::cerr << e.what() << '\n';
-        // TODO: handle exception
     }
 
     return bricks;

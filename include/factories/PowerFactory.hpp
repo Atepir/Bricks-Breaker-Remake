@@ -7,12 +7,14 @@
 #include "gameobjects/Power.hpp"
 #include "gameobjects/Ball.hpp"
 #include "gameobjects/Paddle.hpp"
-#include "geometry/Dimensions.hpp"
 #include "factories/BallFactory.hpp"
 #include <core/Player.hpp>
 
 namespace Factories
 {
+	/**
+	 * @brief Factory class for creating power objects
+	 */
 	class PowerFactory : public GameObjects::IBallObserver
 	{
 	private:

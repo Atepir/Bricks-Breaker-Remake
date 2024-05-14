@@ -48,13 +48,12 @@ void Power::update()
     case eMapType::Basic:
     {
         position.y += velocity.y;
-        double distanceFromCenter = sqrt(pow(position.x - renderer->getScreenWidth() / 2, 2) + pow(position.y - renderer->getScreenHeight() / 2, 2));
-        if (distanceFromCenter > 400 - BORDER_WIDTH)
+        if (position.x > renderer->getScreenWidth())
         {
             mDeleteFlag = true;
         }
     }
-        break;
+    break;
     case eMapType::Circular:
         double centerX = 1024 / 2;
         double centerY = 720 / 2;
@@ -68,7 +67,9 @@ void Power::update()
         velocity.y += repulsion * normalizedDistanceY;
         position.x += velocity.x;
         position.y += velocity.y;
-        if (position.x > renderer->getScreenWidth())
+
+        double distanceFromCenter = sqrt(pow(position.x - renderer->getScreenWidth() / 2, 2) + pow(position.y - renderer->getScreenHeight() / 2, 2));
+        if (distanceFromCenter > 400 - BORDER_WIDTH)
         {
             mDeleteFlag = true;
         }
@@ -78,7 +79,6 @@ void Power::update()
 
 void Power::collide(std::shared_ptr<GameObject> pOther)
 {
-
     double thisLeft = position.x;
     double thisRight = position.x + getWidth();
     double thisTop = position.y;

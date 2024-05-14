@@ -9,6 +9,9 @@ namespace Graphics
 {
 	using Type_SDL_Texture = SDL_Texture *;
 
+	/**
+	 * @brief Represents a texture
+	 */
 	class Texture
 	{
 	private:
@@ -17,12 +20,13 @@ namespace Graphics
 		Type_SDL_Texture mTexture;
 
 	public:
-		Texture();
-		Texture(Type_SDL_Texture pTexture, int pWidth, int pHeight, std::string pName);
-		~Texture();
+		Texture() : mTexture(nullptr) {}
+		Texture(Type_SDL_Texture pTexture, int pWidth, int pHeight, std::string pName)
+			: mTexture(pTexture), mWidth(pWidth), mHeight(pHeight), mName(pName) {}
+		~Texture() { SDL_DestroyTexture(getTexture()); }
 
-		void setTexture(Type_SDL_Texture pTexture);
-		Type_SDL_Texture getTexture();
+		inline void setTexture(Type_SDL_Texture pTexture) { mTexture = pTexture; }
+		inline Type_SDL_Texture getTexture() { return mTexture; }
 
 		int getWidth() const { return mWidth; }
 		int getHeight() const { return mHeight; }

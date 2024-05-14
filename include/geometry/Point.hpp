@@ -4,10 +4,11 @@
 #include <iostream>
 #include <cmath>
 
-#include "geometry/Vector.hpp"
-
 namespace Geometry
 {
+    /**
+     * @brief Represents a point in 2D space
+     */
     struct Point
     {
         double x, y;
@@ -28,10 +29,6 @@ namespace Geometry
         Point operator/(double c) const
         {
             return Point(x / c, y / c);
-        }
-        Point operator+(const Vector &v) const
-        {
-            return Point(x + v.x, y + v.y);
         }
 
         double operator*(const Point &p) const
@@ -73,10 +70,6 @@ namespace Geometry
         friend std::ostream &operator<<(std::ostream &os, const Point &p)
         {
             return os << "(" << p.x << ", " << p.y << ")";
-        }
-        friend std::istream &operator>>(std::istream &is, Point &p)
-        {
-            return is >> p.x >> p.y;
         }
     };
 }

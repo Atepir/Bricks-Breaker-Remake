@@ -14,7 +14,8 @@ using namespace Graphics;
 namespace GameObjects
 {
     /**
-     * @brief Abstract class that represents a game object
+     * @brief Abstract class that represents a game object.
+     * @details This class is the base class for all game objects in the game. It provides the basic properties and methods that all game objects should have.
      */
     class GameObject : public IDrawable
     {
@@ -30,7 +31,7 @@ namespace GameObjects
         double height;
 
     public:
-        GameObject();
+        GameObject() = default;
 
         /**
          * @brief Constructs a new GameObject object
@@ -40,9 +41,10 @@ namespace GameObjects
          * @param angle The angle of the object
          * @param angularVelocity The angular velocity of the object
          */
-        GameObject(Point position, double width, double height, Vector velocity, double angle, double angularVelocity);
+        GameObject(Point position, double width, double height, Vector velocity, double angle, double angularVelocity)
+            : position(position), width(width), height(height), velocity(velocity), angle(angle), angularVelocity(angularVelocity) {}
 
-        ~GameObject();
+        ~GameObject() {}
 
         double getWidth() { return width; }
         double getHeight() { return height; }
@@ -53,9 +55,6 @@ namespace GameObjects
 
         void render(Graphics::Renderer &pRenderer) override
         {
-            // std::cout << "Rendering GameObject: "
-            //           << " at position: " << position.x << ", " << position.y << " with texture: " << texture << std::endl;
-            // std::cout << "Width: " << width << " Height: " << height << " Angle: " << angle << std::endl;
             pRenderer.draw(texture->getTexture(), position, width, height, angle);
         }
 
@@ -64,7 +63,7 @@ namespace GameObjects
          * @brief Method that updates the object
          * @details Derived classes should implement this method to update the object's state such as position, velocity, etc.
          */
-        virtual void update();
+        virtual void update() {};
 
         /**
          * @brief Method that handles the collision of the object with another object
@@ -72,7 +71,7 @@ namespace GameObjects
          *
          * @param pOther The other object that this object collided with
          */
-        virtual void collide(std::shared_ptr<GameObject> pOther) = 0;
+        virtual void collide(std::shared_ptr<GameObject> pOther) {};
 #pragma endregion
     };
 }

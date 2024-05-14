@@ -128,12 +128,4 @@ void ResourceManager::loadTextures()
 
     addTexture(eTextureKey::Texture_Circular_Board_Background,
                Graphics::TextureHelper::loadTexture("circular_map_background.bmp", "circular_board_background"));
-
-    // std::cout << "Textures loaded" << std::endl;
-    // std::cout << "Number of textures loaded: " << mTextures.size() << std::endl;
-
-    // for (auto &texture : mTextures)
-    // {
-    //     std::cout << texture.second << std::endl;
-    // }
 }

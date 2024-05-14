@@ -1,27 +1,30 @@
 #ifndef __SCREEN_HPP
 #define __SCREEN_HPP
 
+#include <vector>
+#include <SDL.h>
+
 #include "graphics/Drawable.hpp"
 #include "graphics/Renderer.hpp"
+#include "graphics/Renderer.hpp"
+
 #include "gui/Button.hpp"
 #include "gui/Image.hpp"
 #include "gui/Label.hpp"
-#include <vector>
 
-#include <SDL.h>
-
-#include "graphics/Renderer.hpp"
 #include "gameobjects/GameObject.hpp"
 #include "gameobjects/Ball.hpp"
 #include "gameobjects/Paddle.hpp"
 #include "gameobjects/Board.hpp"
+
 #include "factories/BallFactory.hpp"
 #include "factories/PowerFactory.hpp"
+
 #include "resources/Enums.hpp"
 
+using namespace Graphics;
 using namespace GameObjects;
 using namespace Factories;
-using namespace Graphics;
 
 namespace Core
 {
@@ -33,35 +36,36 @@ namespace Gui
 {
     using Type_SDL_MouseButtonEvent = SDL_MouseButtonEvent *;
 
+    /**
+     * @brief Base class for all screens
+     * @details A screen is a collection of UI elements that are rendered on the screen
+     */
     class Screen : public IDrawable
     {
     private:
-        std::vector<std::shared_ptr<UiElement>> children;
-        std::vector<std::shared_ptr<IMouseMoveListener>> mMouseMoveListeners;
+        std::vector<std::shared_ptr<UiElement>> mChildren;
+        std::vector<std::shared_ptr<IMoveListener>> mMoveListeners;
 
     public:
-        Screen();
+        Screen() = default;
         virtual ~Screen();
-        virtual void init();
+        virtual void init() = 0;
         virtual void render(Renderer &renderer);
-        virtual void update(double delta);
-        virtual void resize(int width, int height);
 
-        // virtual void keyUp(std::shared_ptr<SDL_KeyboardEvent> event);
-        // virtual void keyDown(std::shared_ptr<SDL_KeyboardEvent> event);
-        // virtual void buttonPressed(std::shared_ptr<SDL_MouseButtonEvent> event);
-        // virtual void buttonReleased(std::shared_ptr<SDL_MouseButtonEvent> event);
+        virtual void handleKeyDown(bool pRight);
+        virtual void handleMouseDown(std::shared_ptr<SDL_MouseButtonEvent> pEvent);
+        virtual void handleMouseUp(Type_SDL_MouseButtonEvent pEvent);
+        virtual void handleMouseMoveX(bool pRight);
 
-        virtual void handleMouseDown(Type_SDL_MouseButtonEvent event);
-        virtual void handleMouseUp(Type_SDL_MouseButtonEvent event);
-
-        virtual void handleMouseMoveX(bool right);
-
-        std::shared_ptr<UiElement> add(std::shared_ptr<UiElement> element);
-        void addMouseMoveListener(std::shared_ptr<IMouseMoveListener> listener);
-        void remove(std::shared_ptr<UiElement> element);
+        std::shared_ptr<UiElement> add(std::shared_ptr<UiElement> pElement);
+        void addMoveListener(std::shared_ptr<IMoveListener> pListener);
+        void remove(std::shared_ptr<UiElement> pElement);
     };
 
+    /**
+     * @brief The actual game screen
+     * @details This screen is where the game is played
+     */
     class GameScreen : public Screen
     {
     private:
@@ -77,30 +81,31 @@ namespace Gui
 
     public:
         GameScreen();
-        virtual ~GameScreen();
+        virtual ~GameScreen() = default;
         virtual void init();
-        virtual void keyUp(std::shared_ptr<SDL_KeyboardEvent> event);
-        virtual void update(double delta);
         virtual void render(Renderer &renderer);
-        virtual void keyDown(std::shared_ptr<SDL_KeyboardEvent> event);
-
-        void update() override {};
     };
 
+    /**
+     * @brief The main menu screen
+     * @details This screen is displayed when the game is started
+     */
     class MainMenuScreen : public Screen
     {
     private:
-        std::shared_ptr<Texture> background;
+        std::shared_ptr<Texture> mBackground;
 
     public:
-        MainMenuScreen();
-        virtual ~MainMenuScreen();
+        MainMenuScreen() = default;
+        virtual ~MainMenuScreen() = default;
         virtual void render(Renderer &renderer);
         virtual void init();
-
-        void update() override {};
     };
 
+    /**
+     * @brief The game over screen
+     * @details This screen is displayed when the player loses all lives
+     */
     class GameOverScreen : public Screen
     {
     private:
@@ -108,14 +113,16 @@ namespace Gui
         int mScore;
 
     public:
-        GameOverScreen(int score);
-        virtual ~GameOverScreen();
+        GameOverScreen(int score) : mScore(score) {}
+        virtual ~GameOverScreen() = default;
         virtual void render(Renderer &renderer);
         virtual void init();
-
-        void update() override {};
     };
 
+    /**
+     * @brief The level complete screen
+     * @details This screen is displayed when the player completes a level
+     */
     class LevelCompleteScreen : public Screen
     {
     private:
@@ -123,12 +130,10 @@ namespace Gui
         int mScore;
 
     public:
-        LevelCompleteScreen(int score);
-        virtual ~LevelCompleteScreen();
+        LevelCompleteScreen(int score) : mScore(score) {}
+        virtual ~LevelCompleteScreen() = default;
         virtual void render(Renderer &renderer);
         virtual void init();
-
-        void update() override {};
     };
 }
 

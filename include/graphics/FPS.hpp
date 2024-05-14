@@ -4,44 +4,45 @@
 #include <SDL.h>
 #include <iostream>
 
-class FPS
+namespace Graphics
 {
-private:
-    float intervalMs;
-    int frames;
-    int lastTime;
-    int current;
-
-public:
-    FPS(float intervalMs) : frames(0), current(0), intervalMs(intervalMs)
+    /**
+     * @brief Holds the frames per second
+     */
+    class FPS
     {
-        lastTime = SDL_GetTicks();
-    }
+    private:
+        float intervalMs;
+        int frames;
+        int lastTime;
+        int current;
 
-    void update()
-    {
-        frames++;
-        if (lastTime < SDL_GetTicks() - intervalMs)
+    public:
+        FPS(float intervalMs) : frames(0), current(0), intervalMs(intervalMs)
         {
             lastTime = SDL_GetTicks();
-            current = frames;
-            frames = 0;
         }
-    }
 
-    int getFPS()
-    {
-        return current;
-    }
-
-    void delay()
-    {
-        int frameTicks = SDL_GetTicks() - lastTime;
-        if (frameTicks < intervalMs)
+        void update()
         {
-            SDL_Delay(intervalMs - frameTicks);
+            frames++;
+            if (lastTime < SDL_GetTicks() - intervalMs)
+            {
+                lastTime = SDL_GetTicks();
+                current = frames;
+                frames = 0;
+            }
         }
-    }
-};
+
+        void delay()
+        {
+            int frameTicks = SDL_GetTicks() - lastTime;
+            if (frameTicks < intervalMs)
+            {
+                SDL_Delay(intervalMs - frameTicks);
+            }
+        }
+    };
+}
 
 #endif

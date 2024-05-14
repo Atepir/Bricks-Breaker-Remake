@@ -11,6 +11,10 @@
 
 namespace Core
 {
+    /**
+     * @brief Represents a player in the game
+     * @details A player has a score, lives and a name and can observe the ball and power objects
+     */
     class Player : public GameObjects::IBallObserver, public GameObjects::IPowerObserver
     {
     private:

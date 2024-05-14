@@ -3,11 +3,13 @@
 
 #include "gameobjects/Ball.hpp"
 #include "gameobjects/GameObject.hpp"
-#include "geometry/Dimensions.hpp"
 #include "gameobjects/Power.hpp"
 
 namespace Factories
 {
+    /**
+     * @brief Factory class for creating balls
+     */
     class BallFactory : public GameObjects::IPowerObserver, public GameObjects::IBallObserver
     {
     private:

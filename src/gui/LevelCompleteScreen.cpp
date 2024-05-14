@@ -6,12 +6,6 @@
 
 using namespace Gui;
 
-LevelCompleteScreen::LevelCompleteScreen(int score)
-{
-    // std::cout << "Level complete screen created" << std::endl;
-    mScore = score;
-}
-
 void LevelCompleteScreen::init()
 {
     add(std::make_shared<Label>(Label("Level Complete!", {300, 100}, 500, 60)));
@@ -57,9 +51,4 @@ void LevelCompleteScreen::render(Graphics::Renderer &renderer)
 {
     renderer.draw(mBackground->getTexture(), {(double)0, (double)0}, renderer.getScreenWidth(), renderer.getScreenHeight(), 0);
     Screen::render(renderer);
-}
-
-LevelCompleteScreen::~LevelCompleteScreen()
-{
-    // background.reset();
 }

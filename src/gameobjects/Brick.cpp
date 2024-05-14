@@ -29,10 +29,6 @@ Brick::Brick(Point position, double width, double height, BrickType type, int he
     this->entityType = GameObjectType::GameObjectBrick;
 }
 
-Brick::~Brick()
-{
-}
-
 void Brick::update()
 {
     if (mHealth <= 50)
@@ -56,8 +52,4 @@ void Brick::update()
             break;
         }
     }
-}
-
-void Brick::collide(std::shared_ptr<GameObject> pOther)
-{
 }

@@ -6,12 +6,6 @@
 
 using namespace Gui;
 
-GameOverScreen::GameOverScreen(int score)
-{
-    // std::cout << "Game over screen created" << std::endl;
-    mScore = score;
-}
-
 void GameOverScreen::init()
 {
     add(std::make_shared<Label>(Label("Game Over!", {300, 100}, 500, 60)));
@@ -37,18 +31,10 @@ void GameOverScreen::init()
     add(std::make_shared<Button>(exitButton));
 
     mBackground = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Main_Menu_Background);
-
-    std::cout
-        << "Main menu screen initialized" << std::endl;
 }
 
 void GameOverScreen::render(Graphics::Renderer &renderer)
 {
     renderer.draw(mBackground->getTexture(), {(double)0, (double)0}, renderer.getScreenWidth(), renderer.getScreenHeight(), 0);
     Screen::render(renderer);
-}
-
-GameOverScreen::~GameOverScreen()
-{
-    // background.reset();
 }

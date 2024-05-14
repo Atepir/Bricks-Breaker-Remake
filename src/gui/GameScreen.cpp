@@ -42,7 +42,7 @@ GameScreen::GameScreen()
 
 void GameScreen::init()
 {
-    addMouseMoveListener(mPaddle);
+    addMoveListener(mPaddle);
 
     Button backButton = Button("Quit", {920, 0}, 80, 30, eColor::ColorRed);
     if (MAP_TYPE == eMapType::Circular)
@@ -144,21 +144,4 @@ void GameScreen::render(Graphics::Renderer &renderer)
     {
         Core::App::getInstance()->setScreen(std::make_shared<LevelCompleteScreen>(mPlayer->getScore()));
     }
-}
-
-GameScreen::~GameScreen()
-{
-}
-
-void GameScreen::keyUp(std::shared_ptr<SDL_KeyboardEvent> event)
-{
-}
-
-void GameScreen::keyDown(std::shared_ptr<SDL_KeyboardEvent> event)
-{
-}
-
-void GameScreen::update(double delta)
-{
-    Screen::update(delta);
 }

@@ -6,7 +6,9 @@
 
 namespace Resources
 {
-
+    /**
+     * @brief Manages the levels of the game
+     */
     class LevelManager
     {
     private:

@@ -2,11 +2,13 @@
 #define __RENDERER_HPP
 
 #include <SDL.h>
+#include <SDL_ttf.h>
 
 #include <iostream>
 
 #include "geometry/Point.hpp"
 #include "resources/Enums.hpp"
+#include "resources/Constants.hpp"
 #include "graphics/Font.hpp"
 
 using namespace Geometry;
@@ -16,6 +18,10 @@ namespace Graphics
     using Type_SDL_Renderer = SDL_Renderer *;
     using Type_SDL_Window = SDL_Window *;
 
+    /**
+     * @brief Manages the rendering of the game.
+     * @details This class is a singleton and is responsible for initializing the SDL library, creating the window and renderer, and rendering the game.
+     */
     class Renderer
     {
     protected:
@@ -29,9 +35,7 @@ namespace Graphics
         int mScreenHeight;
 
     public:
-        Renderer() : pWindow(nullptr), pRenderer(nullptr), mScreenWidth(1024), mScreenHeight(720)
-        {
-        }
+        Renderer() : pWindow(nullptr), pRenderer(nullptr), mScreenWidth(WINDOW_WIDTH), mScreenHeight(WINDOW_HEIGHT) {}
 
         Renderer(const Renderer &) = delete;
         void operator=(const Renderer &) = delete;
@@ -74,6 +78,20 @@ namespace Graphics
 
             SDL_SetRenderDrawBlendMode(pRenderer, SDL_BLENDMODE_BLEND);
             SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 0);
+
+            if (TTF_Init() == -1)
+            {
+                std::cerr << "Failed to initialize SDL_ttf " << TTF_GetError() << std::endl;
+                exit(1);
+            }
+
+            Type_TTF_Font font = TTF_OpenFont("font.ttf", 64);
+            if (font == nullptr)
+            {
+                std::cerr << "Failed to load font.ttf" << std::endl;
+                std::cerr << TTF_GetError() << std::endl;
+            }
+            Font::setDefaultFont(font);
         }
 
         void clear()
@@ -86,15 +104,13 @@ namespace Graphics
         {
             SDL_DestroyRenderer(pRenderer);
             SDL_DestroyWindow(pWindow);
+            TTF_Quit();
             SDL_Quit();
         }
 
         void draw(Type_SDL_Texture pTexture, Point pPosition, double pWidth, double pHeight, double pAngle)
         {
-            // std::cout << "Drawing texture " << pTexture << " at " << pPosition.x << ", " << pPosition.y << " with width " << pWidth << " and height " << pHeight << " and angle " << pAngle << std::endl;
-            // std::cout << "IN DRAW - Renderer: " << pRenderer << std::endl;
             SDL_Rect destRect = {pPosition.x, pPosition.y, pWidth, pHeight};
-            // make sure to render with transparent background
             SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 0);
             SDL_RenderCopyEx(Graphics::Renderer::getInstance()->getRenderer(), pTexture, NULL, &destRect, pAngle, NULL, SDL_FLIP_NONE);
         }
@@ -114,9 +130,10 @@ namespace Graphics
             dest.y = y;
             dest.w = width;
             dest.h = height;
-            // std::cout << "Drawing text at " << x << ", " << y << " with width " << width << " and height " << height << " and texture " << font.getTexture() << std::endl;
 
-            SDL_RenderCopy(Graphics::Renderer::getInstance()->getRenderer(), font.getTexture(), NULL, &dest);
+            Type_SDL_Texture texture = SDL_CreateTextureFromSurface(pRenderer, font.getSurface());
+
+            SDL_RenderCopy(Graphics::Renderer::getInstance()->getRenderer(), texture, NULL, &dest);
         }
 
         void render()
@@ -127,7 +144,6 @@ namespace Graphics
 
         Type_SDL_Renderer getRenderer() const
         {
-            // std::cout << "Returning renderer " << pRenderer << std::endl;
             return pRenderer;
         }
 
@@ -143,15 +159,15 @@ namespace Graphics
 
         int getDeltaWidth() const
         {
-            if (mScreenWidth > 1024)
-                return mScreenWidth - 1024;
+            if (mScreenWidth > WINDOW_WIDTH)
+                return mScreenWidth - WINDOW_WIDTH;
             return 0;
         }
 
         int getDeltaHeight() const
         {
-            if (mScreenHeight > 720)
-                return mScreenHeight - 720;
+            if (mScreenHeight > WINDOW_HEIGHT)
+                return mScreenHeight - WINDOW_HEIGHT;
             return 0;
         }
     };

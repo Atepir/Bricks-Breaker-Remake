@@ -19,10 +19,7 @@ void PowerFactory::setPlayer(std::shared_ptr<Core::Player> pPlayer)
 
 void PowerFactory::onBrickDestroyed(BrickType pBrickType, Point pBrickPosition)
 {
-  std::cout << "PowerFactory::onBrickDestroyed" << std::endl;
   int chance = rand() % 300;
-
-  std::cout << "Chance: " << chance << "\n";
 
   if (chance < 10)
   {

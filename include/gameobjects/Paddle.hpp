@@ -5,19 +5,24 @@
 #include <cmath>
 #include <thread>
 
-#include "gameobjects/GameObject.hpp"
 #include "resources/Enums.hpp"
 #include "resources/Constants.hpp"
 #include "resources/ResourceManager.hpp"
+
+#include "gameobjects/GameObject.hpp"
 #include "gameobjects/Power.hpp"
+
 #include "gui/EventListener.hpp"
 
 #define ROTATION_SPEED_MULTIPLIER 200
 
 namespace GameObjects
 {
+    /**
+     * @brief Represents a paddle object
+     */
     template <eMapType mapType>
-    class Paddle : public GameObject, public GameObjects::IPowerObserver, public Gui::IMouseMoveListener
+    class Paddle : public GameObject, public GameObjects::IPowerObserver, public Gui::IMoveListener
     {
     private:
         static inline std::shared_ptr<Paddle> pInstance = nullptr;
@@ -29,7 +34,6 @@ namespace GameObjects
             {
             case eMapType::Basic:
                 texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Paddle_Basic);
-                // std::cout << "Paddle texture: " << texture->getTexture() << std::endl;
                 break;
             case eMapType::Circular:
                 texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Paddle_Circular);
@@ -96,6 +100,8 @@ namespace GameObjects
         }
 
         void handleMouseMove(bool right);
+        void keyDownLeft();
+        void keyDownRight();
     };
 }
 #endif // __PADDLE_HPP

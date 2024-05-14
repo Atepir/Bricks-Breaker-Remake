@@ -16,6 +16,9 @@
 
 namespace GameObjects
 {
+    /**
+     * @brief Represents a board that is a collection of bricks
+     */
     template <eMapType mapType>
     class Board : public GameObject
     {

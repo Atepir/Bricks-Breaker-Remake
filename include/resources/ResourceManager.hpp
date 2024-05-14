@@ -14,6 +14,9 @@ using namespace std;
 
 namespace Resources
 {
+    /**
+     * @brief Manages the resources of the game
+     */
     class ResourceManager
     {
     private:

@@ -89,9 +89,30 @@ namespace GameObjects
             }
         }
 
-        void damageBrick(std::shared_ptr<Brick> pBrick, int pDamage)
+        inline void damageBrick(std::shared_ptr<Brick> pBrick)
         {
-            pBrick->mHealth -= pDamage;
+            int damage = 0;
+            switch (pBrick->mType)
+            {
+            case BrickType::BRICK_BLUE:
+                damage = 100;
+                break;
+            case BrickType::BRICK_GREEN:
+                damage = 60;
+                break;
+            case BrickType::BRICK_VIOLET:
+                damage = 40;
+                break;
+            case BrickType::BRICK_YELLOW:
+                damage = 20;
+                break;
+            case BrickType::BRICK_RED:
+                damage = 10;
+                break;
+            }
+
+            pBrick->mHealth -= damage;
+
             if (pBrick->mHealth <= 0)
             {
                 pBrick->mDeleteFlag = true;
