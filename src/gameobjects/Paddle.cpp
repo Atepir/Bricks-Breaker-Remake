@@ -17,6 +17,7 @@ void Paddle<eMapType::Basic>::update()
 
 void Paddle<eMapType::Circular>::update()
 {
+    std::cout << "Paddle angle: " << angle << std::endl;
 }
 
 void Paddle<eMapType::Basic>::keyDownLeft()

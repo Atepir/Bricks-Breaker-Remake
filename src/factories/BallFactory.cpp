@@ -6,20 +6,26 @@ using namespace GameObjects;
 void BallFactory::createBall(BallType pType)
 {
     std::shared_ptr<Ball<MAP_TYPE>> ball = nullptr;
+    int windowWidth = Graphics::Renderer::getInstance()->getScreenWidth();
+    int windowHeight = Graphics::Renderer::getInstance()->getScreenHeight();
+
     int padding = 120;
-    int ballX = rand() % WINDOW_WIDTH;
+    int ballX = rand() % windowHeight;
     ballX = ballX < padding ? padding : ballX;
-    ballX = ballX > WINDOW_WIDTH - padding ? WINDOW_WIDTH - padding : ballX;
+    ballX = ballX > windowWidth - padding ? windowWidth - padding : ballX;
+
+    int ballY = windowHeight / 2 + 50;
 
     if (MAP_TYPE == eMapType::Circular)
     {
-        ballX = Graphics::Renderer::getInstance()->getScreenWidth() / 2;
+        ballX = windowWidth / 2;
+        ballY = windowHeight / 2 + 20;
     }
 
     switch (pType)
     {
     case BallType::NORMAL:
-        ball = std::make_shared<Ball<MAP_TYPE>>(BallType::NORMAL, Point(ballX, WINDOW_HEIGHT / 2 + 50), 30);
+        ball = std::make_shared<Ball<MAP_TYPE>>(BallType::NORMAL, Point(ballX, ballY), 30);
         ball->setId(mLastGeneratedBallId++);
         break;
     default:
