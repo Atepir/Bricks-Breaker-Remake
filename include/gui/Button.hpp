@@ -37,20 +37,18 @@ namespace Gui
 
         virtual ~Button() = default;
 
-        inline void handleMouseUp(Type_SDL_MouseButtonEvent event) override
+        inline void handleMouseUp(Point pClickPoint) override
         {
-            if (event->button == SDL_BUTTON_LEFT)
-            {
-                if (
-                    event->x < x - BUTTON_TEXT_PADDING || event->x > x + width + BUTTON_TEXT_PADDING || event->y < y - BUTTON_TEXT_PADDING || event->y > y + height + BUTTON_TEXT_PADDING)
-                {
-                    return;
-                }
+            if (
+                pClickPoint.x >= x - BUTTON_TEXT_PADDING &&
+                pClickPoint.x <= x + width + BUTTON_TEXT_PADDING &&
+                pClickPoint.y >= y - BUTTON_TEXT_PADDING &&
+                pClickPoint.y <= y + height + BUTTON_TEXT_PADDING)
+
                 if (onClickCallback)
                 {
                     onClickCallback();
                 }
-            }
         }
 
         inline void setOnClickCallback(std::function<void()> callback) { onClickCallback = callback; }

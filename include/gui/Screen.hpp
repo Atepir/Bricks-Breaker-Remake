@@ -2,7 +2,6 @@
 #define __SCREEN_HPP
 
 #include <vector>
-#include <SDL.h>
 
 #include "graphics/Drawable.hpp"
 #include "graphics/Renderer.hpp"
@@ -34,8 +33,6 @@ namespace Core
 
 namespace Gui
 {
-    using Type_SDL_MouseButtonEvent = SDL_MouseButtonEvent *;
-
     /**
      * @brief Base class for all screens
      * @details A screen is a collection of UI elements that are rendered on the screen
@@ -53,8 +50,8 @@ namespace Gui
         virtual void render(Renderer &renderer);
 
         virtual void handleKeyDown(bool pRight);
-        virtual void handleMouseDown(std::shared_ptr<SDL_MouseButtonEvent> pEvent);
-        virtual void handleMouseUp(Type_SDL_MouseButtonEvent pEvent);
+        virtual void handleMouseDown(Point pClickPoint);
+        virtual void handleMouseUp(Point pClickPoint);
         virtual void handleMouseMoveX(bool pRight);
 
         std::shared_ptr<UiElement> add(std::shared_ptr<UiElement> pElement);

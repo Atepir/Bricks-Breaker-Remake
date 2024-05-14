@@ -8,8 +8,11 @@ using namespace Gui;
 
 void MainMenuScreen::init()
 {
-    add(std::make_shared<Label>(Label("BricksBreaker Remake!", {180, 100}, 700, 60)));
-    Button startButton = Button("Play", {420, 500}, 200, 50, eColor::ColorBlue);
+    double screenWidth = Graphics::Renderer::getInstance()->getScreenWidth();
+    double screenHeight = Graphics::Renderer::getInstance()->getScreenHeight();
+
+    add(std::make_shared<Label>(Label("BricksBreaker Remake!", {screenWidth / 2 - 360, 100}, 700, 60)));
+    Button startButton = Button("Play", {screenWidth / 2 - 120, 500}, 200, 50, eColor::ColorBlue);
     startButton.setOnClickCallback(
         []()
         {
@@ -18,7 +21,7 @@ void MainMenuScreen::init()
         });
     add(std::make_shared<Button>(startButton));
 
-    Button exitButton = Button("Exit", {420, 600}, 200, 50, eColor::ColorRed);
+    Button exitButton = Button("Exit", {screenWidth / 2 - 100, 600}, 160, 50, eColor::ColorRed);
     exitButton.setOnClickCallback(
         []()
         {

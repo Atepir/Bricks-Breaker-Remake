@@ -115,13 +115,32 @@ void Ball<eMapType::Circular>::collide(std::shared_ptr<GameObject> pOther)
         if (pOther->getEntityType() == GameObjectType::GameObjectPaddle)
         {
             // ball collision with paddle on circular map
-            double paddleCenter = pOther->getPosition().x + pOther->getWidth() / 2;
-            double ballCenter = position.x + getWidth() / 2;
-            double distanceFromCenter = ballCenter - paddleCenter;
-            double normalizedDistance = distanceFromCenter / (pOther->getWidth() / 2);
-            double bounceAngle = normalizedDistance * 45;
-            velocity.x = 8 * sin(bounceAngle * M_PI / 180);
-            velocity.y = -8 * cos(bounceAngle * M_PI / 180);
+            // we have to take into account the angle of the paddle
+            double paddleCenterX = pOther->getPosition().x + pOther->getWidth() / 2;
+            double paddleCenterY = pOther->getPosition().y + pOther->getHeight() / 2;
+            double ballCenterX = position.x + getWidth() / 2;
+            double ballCenterY = position.y + getHeight() / 2;
+            double distanceX = ballCenterX - paddleCenterX;
+            double distanceY = ballCenterY - paddleCenterY;
+            double distance = sqrt(distanceX * distanceX + distanceY * distanceY);
+            double normalizedDistanceX = distanceX / distance;
+            double normalizedDistanceY = distanceY / distance;
+            double bounceAngle = 0;
+            if (distanceX > 0)
+            {
+                bounceAngle = -atan(distanceY / distanceX);
+            }
+            else
+            {
+                bounceAngle = M_PI - atan(distanceY / -distanceX);
+            }
+            // if it is on paddle right side, we have to add 180 degrees to the bounce angle
+            if (distanceX > 0)
+            {
+                bounceAngle += M_PI;
+            }
+            velocity.x = 10 * cos(bounceAngle);
+            velocity.y = 10 * sin(bounceAngle);
         }
         else if (pOther->getEntityType() == GameObjectType::GameObjectBrick)
         {

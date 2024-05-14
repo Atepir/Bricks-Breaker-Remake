@@ -31,6 +31,10 @@ void PowerFactory::onBrickDestroyed(BrickType pBrickType, Point pBrickPosition)
   }
   else if (chance < 30)
   {
+    if (MAP_TYPE == eMapType::Circular)
+    {
+      return;
+    }
     createPower(PowerType::POWERDOWN_SHRINK_PADDLE, pBrickPosition);
   }
   else if (chance < 50)
@@ -39,6 +43,10 @@ void PowerFactory::onBrickDestroyed(BrickType pBrickType, Point pBrickPosition)
   }
   else if (chance < 70)
   {
+    if (MAP_TYPE == eMapType::Circular)
+    {
+      return;
+    }
     createPower(PowerType::POWERUP_EXPAND_PADDLE, pBrickPosition);
   }
   else if (chance < 100)

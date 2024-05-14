@@ -38,16 +38,14 @@ GameScreen::GameScreen()
 
     this->mHearts = std::vector<std::shared_ptr<Image>>();
 
-    this->mScoreLabel = std::make_shared<Label>(Label("Score: 0", {430, 0}, 200, 30, eColor::ColorBlue));
+    this->mScoreLabel = std::make_shared<Label>(Label("Score: 0", {(double)mRenderer->getScreenWidth() / 2 - 110, 0}, 200, 30, eColor::ColorBlue));
 }
 
 void GameScreen::init()
 {
     addMoveListener(mPaddle);
 
-    Button backButton = Button("Quit", {920, 0}, 80, 30, eColor::ColorRed);
-    if (MAP_TYPE == eMapType::Circular)
-        backButton = Button("Quit", {920, 50}, 80, 30, eColor::ColorRed);
+    Button backButton = Button("Quit", {(double)mRenderer->getScreenWidth() - 100, 0}, 80, 30, eColor::ColorRed);
     backButton.setOnClickCallback(
         []()
         {
@@ -67,7 +65,7 @@ void GameScreen::init()
 
     add(mScoreLabel);
 
-    Label levelLabel = Label("Level " + std::to_string(Resources::LevelManager::getCurrentLevel() + 1), {460, 40}, 120, 30, eColor::ColorBlue);
+    Label levelLabel = Label("Level " + std::to_string(Resources::LevelManager::getCurrentLevel() + 1), {(double)mRenderer->getScreenWidth() / 2 - 80, 40}, 120, 30, eColor::ColorBlue);
     add(std::make_shared<Label>(levelLabel));
 
     switch (MAP_TYPE)

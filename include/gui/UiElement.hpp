@@ -6,8 +6,6 @@
 
 namespace Gui
 {
-    using Type_SDL_MouseButtonEvent = SDL_MouseButtonEvent *;
-
     /**
      * @brief Base class for all UI elements
      * @details A UI element is a drawable object that can handle events

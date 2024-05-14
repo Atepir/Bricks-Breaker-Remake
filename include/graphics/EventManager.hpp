@@ -62,11 +62,17 @@ namespace Core
                 case SDL_MOUSEBUTTONDOWN:
                     if (app != nullptr)
                         if (app->getCurrentScreen() != nullptr)
-                            app->getCurrentScreen()->handleMouseDown(std::make_shared<SDL_MouseButtonEvent>(event.button));
+                        {
+                            Point mousePosition = {(double)event.button.x, (double)event.button.y};
+                            app->getCurrentScreen()->handleMouseDown(mousePosition);
+                        }
                 case SDL_MOUSEBUTTONUP:
                     if (app != nullptr)
                         if (app->getCurrentScreen() != nullptr)
-                            app->getCurrentScreen()->handleMouseUp(&event.button);
+                        {
+                            Point mousePosition = { (double)event.button.x, (double)event.button.y};
+                            app->getCurrentScreen()->handleMouseUp(mousePosition);
+                        }
                 case SDL_MOUSEMOTION:
                 {
                     // if mouse is not pressed, skip

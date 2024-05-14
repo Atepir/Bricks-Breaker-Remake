@@ -1,21 +1,16 @@
 #ifndef __EVENTLISTENER_H
 #define __EVENTLISTENER_H
 
-#include <SDL.h>
-
 namespace Gui
 {
-    using Type_SDL_KeyboardEvent = SDL_KeyboardEvent *;
-    using Type_SDL_MouseButtonEvent = SDL_MouseButtonEvent *;
-
     /**
      * @brief Interface for handling mouse click events
      */
     class IClickListener
     {
     public:
-        virtual void handleMouseDown(std::shared_ptr<SDL_MouseButtonEvent> event) {}
-        virtual void handleMouseUp(Type_SDL_MouseButtonEvent event) {}
+        virtual void handleMouseDown(Point pClickPoint) {}
+        virtual void handleMouseUp(Point pClickPoint) {}
     };
 
     /**

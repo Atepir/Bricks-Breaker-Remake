@@ -18,11 +18,11 @@ void Screen::render(Graphics::Renderer &renderer)
     }
 }
 
-void Screen::handleMouseDown(std::shared_ptr<SDL_MouseButtonEvent> pEvent)
+void Screen::handleMouseDown(Point pClickPoint)
 {
     for (auto &element : mChildren)
     {
-        element->handleMouseDown(pEvent);
+        element->handleMouseDown(pClickPoint);
     }
 }
 
@@ -36,11 +36,11 @@ void Screen::handleKeyDown(bool pRight)
             element->keyDownLeft();
 }
 
-void Screen::handleMouseUp(Type_SDL_MouseButtonEvent pEvent)
+void Screen::handleMouseUp(Point pClickPoint)
 {
     for (auto &element : mChildren)
     {
-        element->handleMouseUp(pEvent);
+        element->handleMouseUp(pClickPoint);
     }
 }
 

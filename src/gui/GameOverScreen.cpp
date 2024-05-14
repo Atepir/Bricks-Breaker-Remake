@@ -8,12 +8,15 @@ using namespace Gui;
 
 void GameOverScreen::init()
 {
-    add(std::make_shared<Label>(Label("Game Over!", {300, 100}, 500, 60)));
+    double screenWidth = Graphics::Renderer::getInstance()->getScreenWidth();
+    double screenHeight = Graphics::Renderer::getInstance()->getScreenHeight();
+
+    add(std::make_shared<Label>(Label("Game Over!", {screenWidth / 2 - 220, 100}, 500, 60)));
 
     std::string scoreText = "Your score: " + std::to_string(mScore);
-    add(std::make_shared<Label>(Label(scoreText, {380, 300}, 300, 50)));
+    add(std::make_shared<Label>(Label(scoreText, {screenWidth / 2 - 140, 300}, 300, 50)));
 
-    Button startButton = Button("Play again", {420, 500}, 250, 50, eColor::ColorBlue);
+    Button startButton = Button("Play again", {screenWidth / 2 - 100, 500}, 250, 50, eColor::ColorBlue);
     startButton.setOnClickCallback(
         []()
         {
@@ -21,7 +24,7 @@ void GameOverScreen::init()
         });
     add(std::make_shared<Button>(startButton));
 
-    Button exitButton = Button("Main menu", {400, 600}, 300, 50, eColor::ColorRed);
+    Button exitButton = Button("Main menu", {screenWidth / 2 - 120, 600}, 300, 50, eColor::ColorRed);
     exitButton.setOnClickCallback(
         []()
         {
