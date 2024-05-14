@@ -48,6 +48,7 @@ namespace GameObjects
 
         double getWidth() { return width; }
         double getHeight() { return height; }
+        double getAngle() { return angle; }
 
         Point getPosition() { return position; }
 

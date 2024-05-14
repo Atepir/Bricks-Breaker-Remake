@@ -8,7 +8,7 @@ endif()
 
 project (BricksBreaker
 	VERSION "0.0.1"
-	DESCRIPTION "A Remake of the classic Bricks Breaker game by Nongma SORGHO and Adam BONBON-PERIAC."
+	DESCRIPTION "A Remake of the classic Bricks Breaker game."
 	LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)

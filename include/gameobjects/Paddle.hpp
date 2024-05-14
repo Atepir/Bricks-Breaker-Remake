@@ -54,7 +54,7 @@ namespace GameObjects
         {
             if (pInstance == nullptr)
             {
-                pInstance = std::make_shared<Paddle>(Point(420, 620), Vector(30, 30), 140, 40, 0, 5);
+                pInstance = std::make_shared<Paddle>(Point(420, 620), Vector(20, 0), 140, 40, 0, 5);
             }
             return pInstance;
         }
@@ -62,7 +62,7 @@ namespace GameObjects
         void resetPaddle()
         {
             position = Point(420, 620);
-            velocity = Vector(30, 30);
+            velocity = Vector(20, 0);
             angle = 0;
             angularVelocity = 5;
         }

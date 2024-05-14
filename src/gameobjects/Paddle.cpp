@@ -44,11 +44,11 @@ void Paddle<eMapType::Basic>::handleMouseMove(bool right)
 {
     if (right)
     {
-        position.x += velocity.x / 1.12;
+        position.x += velocity.x;
     }
     else
     {
-        position.x -= velocity.x / 1.12;
+        position.x -= velocity.x;
     }
 }
 

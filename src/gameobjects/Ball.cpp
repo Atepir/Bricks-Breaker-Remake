@@ -34,7 +34,7 @@ void Ball<eMapType::Circular>::update()
 
     // if distance from the center is greater than the radius of the circle
     double distanceFromCenter = sqrt(pow(position.x - renderer->getScreenWidth() / 2, 2) + pow(position.y - renderer->getScreenHeight() / 2, 2));
-    if (distanceFromCenter > 400 - BORDER_WIDTH)
+    if (distanceFromCenter > renderer->getScreenWidth() / 2 - 30)
     {
         // has fallen off the screen
         // notify the observers that the ball has fallen
@@ -82,8 +82,8 @@ void Ball<eMapType::Basic>::collide(std::shared_ptr<GameObject> pOther)
             double distanceFromCenter = ballCenter - paddleCenter;
             double normalizedDistance = distanceFromCenter / (pOther->getWidth() / 2);
             double bounceAngle = normalizedDistance * 45;
-            velocity.x = 10 * sin(bounceAngle * M_PI / 180);
-            velocity.y = -10 * cos(bounceAngle * M_PI / 180);
+            velocity.x = 12 * sin(bounceAngle * M_PI / 180);
+            velocity.y = -12 * cos(bounceAngle * M_PI / 180);
         }
         else if (pOther->getEntityType() == GameObjectType::GameObjectBrick)
         {
@@ -116,6 +116,7 @@ void Ball<eMapType::Circular>::collide(std::shared_ptr<GameObject> pOther)
         {
             // ball collision with paddle on circular map
             // we have to take into account the angle of the paddle
+            double paddleAngle = pOther->getAngle();
             double paddleCenterX = pOther->getPosition().x + pOther->getWidth() / 2;
             double paddleCenterY = pOther->getPosition().y + pOther->getHeight() / 2;
             double ballCenterX = position.x + getWidth() / 2;
@@ -125,22 +126,10 @@ void Ball<eMapType::Circular>::collide(std::shared_ptr<GameObject> pOther)
             double distance = sqrt(distanceX * distanceX + distanceY * distanceY);
             double normalizedDistanceX = distanceX / distance;
             double normalizedDistanceY = distanceY / distance;
-            double bounceAngle = 0;
-            if (distanceX > 0)
-            {
-                bounceAngle = -atan(distanceY / distanceX);
-            }
-            else
-            {
-                bounceAngle = M_PI - atan(distanceY / -distanceX);
-            }
-            // if it is on paddle right side, we have to add 180 degrees to the bounce angle
-            if (distanceX > 0)
-            {
-                bounceAngle += M_PI;
-            }
-            velocity.x = 10 * cos(bounceAngle);
-            velocity.y = 10 * sin(bounceAngle);
+            double bounceAngle = atan2(normalizedDistanceY, normalizedDistanceX) * 180 / M_PI;
+            double angleDifference = bounceAngle - paddleAngle;
+            velocity.x = 10 * cos(angleDifference * M_PI / 180);
+            velocity.y = 10 * sin(angleDifference * M_PI / 180);
         }
         else if (pOther->getEntityType() == GameObjectType::GameObjectBrick)
         {

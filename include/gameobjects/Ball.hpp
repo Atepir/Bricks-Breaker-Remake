@@ -40,24 +40,25 @@ namespace GameObjects
         int mId;
         BallType mType;
         double mRadius;
-        double mMass;
         std::vector<std::shared_ptr<IBallObserver>> mObservers;
         std::shared_ptr<Power> mPower;
 
     public:
-        Ball(BallType type, Point point, double radius, double mass) : GameObject(point, 30, 30, Vector(0, 2.5), 0, 0)
+        Ball(BallType type, Point point, double radius) : GameObject(point, 30, 30, Vector(0, 2.5), 0, 0), mType(type), mRadius(radius)
         {
-            this->mType = type;
-            this->mRadius = radius;
-            this->mMass = mass;
+            srand(time(0));
             this->texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Ball_Basic);
             this->entityType = GameObjectType::GameObjectBall;
+
+            if (MAP_TYPE == eMapType::Circular)
+            {
+                this->velocity = Vector(rand() % 3 + 0.5, rand() % 3 + 0.5);
+            }
         }
         ~Ball() {}
 
         BallType getType() const { return mType; }
         double getRadius() const { return mRadius; }
-        double getMass() const { return mMass; }
         int getId() const { return mId; }
         void setId(int pId) { mId = pId; }
 
