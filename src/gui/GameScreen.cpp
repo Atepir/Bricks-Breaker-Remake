@@ -65,7 +65,7 @@ void GameScreen::init()
 
     add(mScoreLabel);
 
-    Label levelLabel = Label("Level " + std::to_string(Resources::LevelManager::getCurrentLevel() + 1), {(double)mRenderer->getScreenWidth() / 2 - 80, 40}, 120, 30, eColor::ColorBlue);
+    Label levelLabel = Label("Level " + std::to_string(MAP_TYPE == eMapType::Basic ? Resources::LevelManager::getCurrentLevel() + 1 : Resources::LevelManager::getCurrentCircularLevel() + 1), {(double)mRenderer->getScreenWidth() / 2 - 80, 40}, 120, 30, eColor::ColorBlue);
     add(std::make_shared<Label>(levelLabel));
 
     switch (MAP_TYPE)

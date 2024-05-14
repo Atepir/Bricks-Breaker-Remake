@@ -22,14 +22,6 @@ enum class BallType
 	EXPLOSIVE
 };
 
-enum class Direction
-{
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT
-};
-
 enum class PaddleType
 {
 	BasicPaddle,
