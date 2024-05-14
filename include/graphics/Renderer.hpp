@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 
 #include <iostream>
 
@@ -10,6 +11,7 @@
 #include "resources/Enums.hpp"
 #include "resources/Constants.hpp"
 #include "graphics/Font.hpp"
+#include "graphics/Sound.hpp"
 
 using namespace Geometry;
 
@@ -92,6 +94,21 @@ namespace Graphics
                 std::cerr << TTF_GetError() << std::endl;
             }
             Font::setDefaultFont(font);
+
+            if (Mix_Init(MIX_INIT_MP3 | MIX_INIT_MOD) == 0)
+            {
+                std::cerr << "Failed to initialize SDL_mixer " << Mix_GetError() << std::endl;
+                exit(1);
+            }
+
+            if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+            {
+                std::cerr << "Error while initializing SDL" << std::endl;
+                exit(1);
+            }
+
+            Sound backgroundSound = Sound("sound/background.mp3");
+            backgroundSound.play(true);
         }
 
         void clear()
@@ -105,6 +122,7 @@ namespace Graphics
             SDL_DestroyRenderer(pRenderer);
             SDL_DestroyWindow(pWindow);
             TTF_Quit();
+            Mix_Quit();
             SDL_Quit();
         }
 
