@@ -147,6 +147,8 @@ void Ball<eMapType::Circular>::collide(std::shared_ptr<GameObject> pOther)
                 velocity.x = ballForce * cos(angleDifference * M_PI / 90);
                 velocity.y = -ballForce * sin(angleDifference * M_PI / 90);
             }
+
+            // Pas mal pas bien
             else if ((paddleAngle < 0 && paddleAngle > -90))
             {
                 velocity.x = ballForce * sin(-angleDifference * M_PI / 90);
@@ -155,11 +157,15 @@ void Ball<eMapType::Circular>::collide(std::shared_ptr<GameObject> pOther)
                 else
                     velocity.y = -ballForce * cos(angleDifference * M_PI / 90);
             }
+
+            // Inverse
             else if (paddleAngle > -270 && paddleAngle < -180)
             {
                 velocity.x = -ballForce * cos(angleDifference * M_PI / 90);
                 velocity.y = ballForce * sin(angleDifference * M_PI / 90);
             }
+
+            // Pas bon
             else // if (paddleAngle > 0 && paddleAngle < 90)
             {
                 if (distanceFromCenter > 0)
