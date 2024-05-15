@@ -71,6 +71,8 @@ namespace Graphics
                 exit(1);
             }
 
+            SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
+
             pRenderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
             if (pRenderer == nullptr)
             {
@@ -95,7 +97,9 @@ namespace Graphics
             }
             Font::setDefaultFont(font);
 
-            if (Mix_Init(MIX_INIT_MP3 | MIX_INIT_MOD) == 0)
+            SDL_AudioInit("waveout");
+
+            if (Mix_Init(MIX_INIT_MP3 | MIX_INIT_WAVPACK | MIX_INIT_MOD) == -1)
             {
                 std::cerr << "Failed to initialize SDL_mixer " << Mix_GetError() << std::endl;
                 exit(1);
@@ -106,9 +110,6 @@ namespace Graphics
                 std::cerr << "Error while initializing SDL" << std::endl;
                 exit(1);
             }
-
-            Sound backgroundSound = Sound("sound/background.mp3");
-            backgroundSound.play(true);
         }
 
         void clear()

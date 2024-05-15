@@ -8,6 +8,8 @@ using namespace Gui;
 
 void LevelCompleteScreen::init()
 {
+    mWinSound = std::make_unique<Sound>("sound/valorant-ace-sound.mp3");
+    mWinSound->play();
     double screenWidth = Graphics::Renderer::getInstance()->getScreenWidth();
     double screenHeight = Graphics::Renderer::getInstance()->getScreenHeight();
 

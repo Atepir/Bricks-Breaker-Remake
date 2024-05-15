@@ -42,6 +42,8 @@ namespace GameObjects
         double mRadius;
         std::vector<std::shared_ptr<IBallObserver>> mObservers;
         std::shared_ptr<Power> mPower;
+        std::unique_ptr<Sound> mCollisionSound;
+        std::unique_ptr<Sound> mFallSound;
 
     public:
         Ball(BallType type, Point point, double radius) : GameObject(point, 30, 30, Vector(0, 2.5), 0, 0), mType(type), mRadius(radius)
@@ -54,6 +56,9 @@ namespace GameObjects
             {
                 this->velocity = Vector(rand() % 3 + 0.5, rand() % 3 + 0.5);
             }
+
+            mCollisionSound = std::make_unique<Sound>("sound/collision.mp3");
+            mFallSound = std::make_unique<Sound>("sound/fall.mp3");
         }
         ~Ball() {}
 

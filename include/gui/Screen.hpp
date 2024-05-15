@@ -124,6 +124,7 @@ namespace Gui
     {
     private:
         std::shared_ptr<Texture> mBackground;
+        std::unique_ptr<Sound> mWinSound;
         int mScore;
 
     public:

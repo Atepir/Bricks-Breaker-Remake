@@ -12,17 +12,18 @@ void Ball<eMapType::Basic>::update()
     if (position.x < BORDER_WIDTH || position.x > renderer->getScreenWidth() - BORDER_WIDTH - getWidth())
     {
         velocity.x = -velocity.x;
+        mCollisionSound->play();
     }
 
     if (position.y < BORDER_WIDTH + MARGIN_TOP || position.y > renderer->getScreenHeight() - BORDER_WIDTH)
     {
         velocity.y = -velocity.y;
+        mCollisionSound->play();
     }
 
     if (position.y > renderer->getScreenHeight() - BORDER_WIDTH)
     {
-        // has fallen off the screen
-        position.y = renderer->getScreenHeight();
+        mFallSound->play();
         // notify the observers that the ball has fallen
         notifyObserversBallFallen();
     }
@@ -36,6 +37,7 @@ void Ball<eMapType::Circular>::update()
     double distanceFromCenter = sqrt(pow(position.x - renderer->getScreenWidth() / 2, 2) + pow(position.y - renderer->getScreenHeight() / 2, 2));
     if (distanceFromCenter > renderer->getScreenWidth() / 2 - 30)
     {
+        mFallSound->play();
         // has fallen off the screen
         // notify the observers that the ball has fallen
         notifyObserversBallFallen();
@@ -74,6 +76,7 @@ void Ball<eMapType::Basic>::collide(std::shared_ptr<GameObject> pOther)
     if (thisRight >= otherLeft && thisLeft <= otherRight &&
         thisBottom >= otherTop && thisTop <= otherBottom)
     {
+        mCollisionSound->play();
         if (pOther->getEntityType() == GameObjectType::GameObjectPaddle)
         {
             double paddleCenter = pOther->getPosition().x + pOther->getWidth() / 2;

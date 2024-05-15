@@ -25,6 +25,8 @@ namespace Core
 
         std::shared_ptr<Gui::Screen> mCurrentScreen, mNextScreen;
 
+        std::unique_ptr<Sound> mBackgroundMusic;
+
         void mainloop();
         void init();
 

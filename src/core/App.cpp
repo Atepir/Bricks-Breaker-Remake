@@ -30,10 +30,12 @@ void App::init()
 
     std::shared_ptr<Graphics::Renderer> graphics = Graphics::Renderer::getInstance();
     graphics->init();
+    mBackgroundMusic = std::make_unique<Sound>("sound/background.mp3");
 }
 
 void App::run()
 {
+    mBackgroundMusic->play(true);
     mainloop();
 }
 

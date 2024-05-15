@@ -3,7 +3,7 @@
 
 #include "resources/Enums.hpp"
 
-#define MAP_TYPE eMapType::Circular
+#define MAP_TYPE eMapType::Basic
 
 #define WINDOW_WIDTH 1024
 #define WINDOW_HEIGHT 768
