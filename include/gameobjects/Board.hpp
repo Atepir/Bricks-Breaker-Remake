@@ -16,6 +16,9 @@
 
 namespace GameObjects
 {
+    /**
+     * @brief Represents a board that is a collection of bricks
+     */
     template <eMapType mapType>
     class Board : public GameObject
     {
@@ -47,7 +50,7 @@ namespace GameObjects
         }
 
         void fillBasicBoard(std::string pPath);
-        void fillCircularBoard();
+        void fillCircularBoard(std::string pPath);
         void reset();
 
         bool isFinished()

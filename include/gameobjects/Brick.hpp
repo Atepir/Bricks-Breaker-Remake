@@ -13,9 +13,15 @@
 
 namespace GameObjects
 {
+    template <eMapType mapType>
     class Ball;
+
+    /**
+     * @brief Represents a brick object
+     */
     class Brick : public GameObject
     {
+        template <eMapType mapType>
         friend class Ball;
 
     private:
@@ -24,14 +30,16 @@ namespace GameObjects
         bool mDeleteFlag = false;
 
     public:
-        Brick(Point position, double width, double height, BrickType type, int health);
-        ~Brick();
+        Brick(Point position, double width, double height, BrickType type, int health, int angle);
+        ~Brick() {}
 
         void update() override;
-        void collide(std::shared_ptr<GameObject> pOther) override;
+        void collide(std::shared_ptr<GameObject> pOther) override {}
 
         bool getDeleteFlag() { return mDeleteFlag; }
     };
 }
+
+#include "gameobjects/Ball.hpp"
 
 #endif // __BRICK_HPP

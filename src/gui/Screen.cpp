@@ -2,71 +2,66 @@
 
 using namespace Gui;
 
-Screen::Screen()
-{
-}
-
 Screen::~Screen()
 {
-    for (auto &element : children)
+    for (auto &element : mChildren)
     {
         element.reset();
     }
 }
 
-void Screen::init()
-{
-}
-
 void Screen::render(Graphics::Renderer &renderer)
 {
-    // std::cout << "children size: " << children.size() << std::endl;
-    // std::cout << "Rendering screen" << std::endl;
-    for (auto &element : children)
+    for (auto &element : mChildren)
     {
         element->render(renderer);
     }
 }
 
-void Screen::update(double delta)
+void Screen::handleMouseDown(Point pClickPoint)
 {
-    for (auto &element : children)
+    for (auto &element : mChildren)
     {
-        element->update(delta);
+        element->handleMouseDown(pClickPoint);
     }
 }
 
-void Screen::handleMouseDown(Type_SDL_MouseButtonEvent event)
+void Screen::handleKeyDown(bool pRight)
 {
-    for (auto &element : children)
+    if (pRight)
+        for (auto &element : mMoveListeners)
+            element->keyDownRight();
+    else
+        for (auto &element : mMoveListeners)
+            element->keyDownLeft();
+}
+
+void Screen::handleMouseUp(Point pClickPoint)
+{
+    for (auto &element : mChildren)
     {
-        element->handleMouseDown(event);
+        element->handleMouseUp(pClickPoint);
     }
 }
 
-void Screen::handleMouseUp(Type_SDL_MouseButtonEvent event)
+void Screen::handleMouseMoveX(bool pRight)
 {
-    for (auto &element : children)
-    {
-        element->handleMouseUp(event);
-    }
+    for (auto &element : mMoveListeners)
+        element->handleMouseMove(pRight);
 }
 
-void Screen::resize(int width, int height)
+std::shared_ptr<UiElement> Screen::add(std::shared_ptr<UiElement> pElement)
 {
-    for (auto &element : children)
-    {
-        element->resize(width, height);
-    }
+    mChildren.push_back(pElement);
+    return pElement;
 }
 
-std::shared_ptr<UiElement> Screen::add(std::shared_ptr<UiElement> element)
+void Screen::addMoveListener(std::shared_ptr<IMoveListener> pListener)
 {
-    children.push_back(element);
-    return element;
+    mMoveListeners.push_back(pListener);
 }
 
-void Screen::remove(std::shared_ptr<UiElement> element)
+void Screen::remove(std::shared_ptr<UiElement> pElement)
 {
-    children.erase(std::remove(children.begin(), children.end(), element), children.end());
+    mChildren.erase(std::remove(mChildren.begin(), mChildren.end(), pElement), mChildren.end());
 }

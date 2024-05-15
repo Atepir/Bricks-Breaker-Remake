@@ -49,6 +49,9 @@ void ResourceManager::loadTextures()
     addTexture(eTextureKey::Texture_Paddle_Basic_Small,
                textureHelper->loadTexture("paddle_basic_small", 946, 837, 100, 70, 0, 0, 100, 70));
 
+    addTexture(eTextureKey::Texture_Paddle_Circular,
+               textureHelper->loadTexture("paddle_circular", 729, 478, 284, 70, 0, 0, 284, 70));
+
     // bricks
     addTexture(eTextureKey::Texture_Brick_Normal,
                textureHelper->loadTexture("brick_normal", 26, 22, 214, 72, 0, 0, 214, 72));
@@ -123,11 +126,6 @@ void ResourceManager::loadTextures()
     addTexture(eTextureKey::Texture_Board_Border_Background,
                Graphics::TextureHelper::loadTexture("board_border_background.bmp", "board_border_background"));
 
-    // std::cout << "Textures loaded" << std::endl;
-    // std::cout << "Number of textures loaded: " << mTextures.size() << std::endl;
-
-    // for (auto &texture : mTextures)
-    // {
-    //     std::cout << texture.second << std::endl;
-    // }
+    addTexture(eTextureKey::Texture_Circular_Board_Background,
+               Graphics::TextureHelper::loadTexture("circular_map_background.bmp", "circular_board_background"));
 }

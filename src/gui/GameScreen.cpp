@@ -20,6 +20,7 @@ GameScreen::GameScreen()
     this->mBoard->reset();
 
     this->mPaddle = Paddle<MAP_TYPE>::getInstance();
+    this->mPaddle->resetPaddle();
 
     this->mPowerFactory =
         PowerFactory::getInstance();
@@ -37,12 +38,14 @@ GameScreen::GameScreen()
 
     this->mHearts = std::vector<std::shared_ptr<Image>>();
 
-    this->mScoreLabel = std::make_shared<Label>(Label("Score: 0", {430, 0}, 200, 30, eColor::ColorBlue));
+    this->mScoreLabel = std::make_shared<Label>(Label("Score: 0", {(double)mRenderer->getScreenWidth() / 2 - 110, 0}, 200, 30, eColor::ColorBlue));
 }
 
 void GameScreen::init()
 {
-    Button backButton = Button("Quit", {920, 0}, 80, 30, eColor::ColorRed);
+    addMoveListener(mPaddle);
+
+    Button backButton = Button("Quit", {(double)mRenderer->getScreenWidth() - 100, 0}, 80, 30, eColor::ColorRed);
     backButton.setOnClickCallback(
         []()
         {
@@ -62,10 +65,19 @@ void GameScreen::init()
 
     add(mScoreLabel);
 
-    Label levelLabel = Label("Level " + std::to_string(Resources::LevelManager::getCurrentLevel() + 1), {460, 40}, 120, 30, eColor::ColorBlue);
+    Label levelLabel = Label("Level " + std::to_string(MAP_TYPE == eMapType::Basic ? Resources::LevelManager::getCurrentLevel() + 1 : Resources::LevelManager::getCurrentCircularLevel() + 1), {(double)mRenderer->getScreenWidth() / 2 - 80, 40}, 120, 30, eColor::ColorBlue);
     add(std::make_shared<Label>(levelLabel));
 
-    mBackground = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Board_Border_Background);
+    switch (MAP_TYPE)
+    {
+    case eMapType::Basic:
+        mBackground = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Board_Border_Background);
+        break;
+    case eMapType::Circular:
+        // mBackground = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Circular_Board_Background);
+        mBackground = nullptr;
+        break;
+    }
 }
 
 void GameScreen::render(Graphics::Renderer &renderer)
@@ -103,12 +115,21 @@ void GameScreen::render(Graphics::Renderer &renderer)
         Core::App::getInstance()->setScreen(std::make_shared<GameOverScreen>(mPlayer->getScore()));
     }
 
+    switch (MAP_TYPE)
+    {
+    case eMapType::Basic:
+        mRenderer->draw(mBackground->getTexture(), {(double)0, (double)80}, renderer.getScreenWidth(), renderer.getScreenHeight(), 0);
+        break;
+    case eMapType::Circular:
+        // mRenderer->draw(mBackground->getTexture(), {(double)0 + renderer.getDeltaWidth() / 2, (double)0 + renderer.getDeltaHeight() / 2}, 1024, 720, 0);
+        break;
+    }
+
     mBallFactory->update();
     mPaddle->update();
     mBoard->update();
     mPowerFactory->update();
 
-    mRenderer->draw(mBackground->getTexture(), {0, 80}, 1024, 700, 0);
     for (auto &brick : bricks)
     {
         brick->render(*mRenderer);
@@ -123,21 +144,4 @@ void GameScreen::render(Graphics::Renderer &renderer)
     {
         Core::App::getInstance()->setScreen(std::make_shared<LevelCompleteScreen>(mPlayer->getScore()));
     }
-}
-
-GameScreen::~GameScreen()
-{
-}
-
-void GameScreen::keyUp(std::shared_ptr<SDL_KeyboardEvent> event)
-{
-}
-
-void GameScreen::keyDown(std::shared_ptr<SDL_KeyboardEvent> event)
-{
-}
-
-void GameScreen::update(double delta)
-{
-    Screen::update(delta);
 }

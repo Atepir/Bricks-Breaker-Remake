@@ -19,10 +19,7 @@ void PowerFactory::setPlayer(std::shared_ptr<Core::Player> pPlayer)
 
 void PowerFactory::onBrickDestroyed(BrickType pBrickType, Point pBrickPosition)
 {
-  std::cout << "PowerFactory::onBrickDestroyed" << std::endl;
   int chance = rand() % 300;
-
-  std::cout << "Chance: " << chance << "\n";
 
   if (chance < 10)
   {
@@ -34,6 +31,10 @@ void PowerFactory::onBrickDestroyed(BrickType pBrickType, Point pBrickPosition)
   }
   else if (chance < 30)
   {
+    if (MAP_TYPE == eMapType::Circular)
+    {
+      return;
+    }
     createPower(PowerType::POWERDOWN_SHRINK_PADDLE, pBrickPosition);
   }
   else if (chance < 50)
@@ -42,6 +43,10 @@ void PowerFactory::onBrickDestroyed(BrickType pBrickType, Point pBrickPosition)
   }
   else if (chance < 70)
   {
+    if (MAP_TYPE == eMapType::Circular)
+    {
+      return;
+    }
     createPower(PowerType::POWERUP_EXPAND_PADDLE, pBrickPosition);
   }
   else if (chance < 100)

@@ -7,10 +7,14 @@
 #include <iostream>
 #include <string>
 
-#define DEFAULT_LIVES 3
+#define DEFAULT_LIVES 500
 
 namespace Core
 {
+    /**
+     * @brief Represents a player in the game
+     * @details A player has a score, lives and a name and can observe the ball and power objects
+     */
     class Player : public GameObjects::IBallObserver, public GameObjects::IPowerObserver
     {
     private:
@@ -73,8 +77,30 @@ namespace Core
 
         void onPaddleCollide(PowerType pPowerType) override
         {
-            if (pPowerType == PowerType::POWERUP_EXTRA_LIFE)
+            switch (pPowerType)
+            {
+            case PowerType::POWERUP_EXTRA_LIFE:
                 mLives++;
+                addScore(100);
+                break;
+            case PowerType::POWERUP_EXPAND_BALL:
+                addScore(50);
+                break;
+            case PowerType::POWERDOWN_SHRINK_BALL:
+                addScore(-50);
+                break;
+            case PowerType::POWERUP_EXPAND_PADDLE:
+                addScore(50);
+                break;
+            case PowerType::POWERDOWN_SHRINK_PADDLE:
+                addScore(-50);
+                break;
+            case PowerType::POWERUP_MULTI_BALL:
+                addScore(100);
+                break;
+            default:
+                break;
+            }
         }
     };
 }

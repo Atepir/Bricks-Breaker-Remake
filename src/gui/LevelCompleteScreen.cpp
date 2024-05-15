@@ -6,30 +6,51 @@
 
 using namespace Gui;
 
-LevelCompleteScreen::LevelCompleteScreen(int score)
-{
-    std::cout << "Level complete screen created" << std::endl;
-    mScore = score;
-}
-
 void LevelCompleteScreen::init()
 {
-    add(std::make_shared<Label>(Label("Level Complete!", {300, 100}, 500, 60)));
+    mWinSound = std::make_unique<Sound>("sound/valorant-ace-sound.mp3");
+    mWinSound->play();
+    double screenWidth = Graphics::Renderer::getInstance()->getScreenWidth();
+    double screenHeight = Graphics::Renderer::getInstance()->getScreenHeight();
+
+    add(std::make_shared<Label>(Label("Level Complete!", {screenWidth / 2 - 220, 100}, 500, 60)));
 
     std::string scoreText = "Your score: " + std::to_string(mScore);
-    add(std::make_shared<Label>(Label(scoreText, {380, 300}, 300, 50)));
+    add(std::make_shared<Label>(Label(scoreText, {screenWidth / 2 - 140, 300}, 300, 50)));
 
-    Button startButton = Button("Next level", {420, 500}, 250, 50, eColor::ColorBlue);
-    startButton.setOnClickCallback(
-        []()
-        {
-            Resources::LevelManager::setLevel(Resources::LevelManager::getCurrentLevel() + 1);
-            Core::App::getInstance()
-                ->setScreen(std::make_shared<GameScreen>());
-        });
-    add(std::make_shared<Button>(startButton));
+    bool hasNextLevel = true;
+    switch (MAP_TYPE)
+    {
+    case eMapType::Basic:
+        hasNextLevel = Resources::LevelManager::getCurrentLevel() < Resources::LevelManager::getNumberOfLevels();
+        break;
+    case eMapType::Circular:
+        hasNextLevel = Resources::LevelManager::getCurrentCircularLevel() < Resources::LevelManager::getNumberOfCircularLevels();
+        break;
+    }
+    if (hasNextLevel)
+    {
+        Button startButton = Button("Next level", {screenWidth / 2 - 100, 500}, 250, 50, eColor::ColorBlue);
+        startButton.setOnClickCallback(
+            []()
+            {
+                switch (MAP_TYPE)
+                {
+                case eMapType::Basic:
+                    Resources::LevelManager::setLevel(Resources::LevelManager::getCurrentLevel() + 1);
+                    break;
+                case eMapType::Circular:
+                    Resources::LevelManager::setCircularLevel(Resources::LevelManager::getCurrentCircularLevel() + 1);
+                    break;
+                }
 
-    Button exitButton = Button("Main menu", {400, 600}, 300, 50, eColor::ColorRed);
+                Core::App::getInstance()
+                    ->setScreen(std::make_shared<GameScreen>());
+            });
+        add(std::make_shared<Button>(startButton));
+    }
+
+    Button exitButton = Button("Main menu", {screenWidth / 2 - 120, 600}, 300, 50, eColor::ColorRed);
     exitButton.setOnClickCallback(
         []()
         {
@@ -46,11 +67,6 @@ void LevelCompleteScreen::init()
 
 void LevelCompleteScreen::render(Graphics::Renderer &renderer)
 {
-    renderer.draw(mBackground->getTexture(), {0, 0}, 1024, 800, 0);
+    renderer.draw(mBackground->getTexture(), {(double)0, (double)0}, renderer.getScreenWidth(), renderer.getScreenHeight(), 0);
     Screen::render(renderer);
-}
-
-LevelCompleteScreen::~LevelCompleteScreen()
-{
-    // background.reset();
 }

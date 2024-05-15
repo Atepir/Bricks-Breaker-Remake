@@ -3,9 +3,16 @@
 
 #include "resources/Enums.hpp"
 
-#define MAP_TYPE eMapType::Basic
+#define MAP_TYPE eMapType::Circular
+
+#define WINDOW_WIDTH 1024
+#define WINDOW_HEIGHT 768
+
+#define BOARD_WIDTH 800
+#define BOARD_HEIGHT 600
+
 #define MARGIN_TOP 80
-#define BORDER_WIDTH 44
+#define BORDER_WIDTH 32
 #define POWER_TIMEOUT 5
 
 #endif // __CONSTANTS_HPP

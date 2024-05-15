@@ -2,46 +2,69 @@
 
 using namespace GameObjects;
 
-Point gravityCenterPoint = Point(512, 360 - 20);
-
 void Paddle<eMapType::Basic>::update()
 {
-    const Uint8 *state = SDL_GetKeyboardState(NULL);
-
-    if (state[SDL_SCANCODE_LEFT])
-    {
-        position.x -= velocity.x;
-    }
-    if (state[SDL_SCANCODE_RIGHT])
-    {
-        position.x += velocity.x;
-    }
-
     // keep the paddle within the screen
     if (position.x < 0 + BORDER_WIDTH)
     {
         position.x = BORDER_WIDTH;
     }
-    if (position.x + width > 1024 - BORDER_WIDTH)
+    if (position.x + width > Graphics::Renderer::getInstance()->getScreenWidth() - BORDER_WIDTH)
     {
-        position.x = 1024 - width - BORDER_WIDTH;
+        position.x = Graphics::Renderer::getInstance()->getScreenWidth() - width - BORDER_WIDTH;
     }
-
-    // std::cout << "Paddle position: " << position.x << ", " << position.y << std::endl;
 }
 
 void Paddle<eMapType::Circular>::update()
 {
-    const Uint8 *state = SDL_GetKeyboardState(NULL);
-    double angle = 0;
+}
 
-    if (state[SDL_SCANCODE_LEFT])
+void Paddle<eMapType::Basic>::keyDownLeft()
+{
+    handleMouseMove(false);
+}
+
+void Paddle<eMapType::Basic>::keyDownRight()
+{
+    handleMouseMove(true);
+}
+
+void Paddle<eMapType::Circular>::keyDownLeft()
+{
+    handleMouseMove(false);
+}
+
+void Paddle<eMapType::Circular>::keyDownRight()
+{
+    handleMouseMove(true);
+}
+
+template <>
+void Paddle<eMapType::Basic>::handleMouseMove(bool right)
+{
+    if (right)
     {
-        angle = angularVelocity * M_PI / 180;
+        position.x += velocity.x;
     }
-    if (state[SDL_SCANCODE_RIGHT])
+    else
+    {
+        position.x -= velocity.x;
+    }
+}
+
+template <>
+void Paddle<eMapType::Circular>::handleMouseMove(bool right)
+{
+    double angle = 0;
+    Point gravityCenterPoint = Point(Graphics::Renderer::getInstance()->getScreenWidth() / 2 - 36, Graphics::Renderer::getInstance()->getScreenHeight() / 2 - 10);
+
+    if (right)
     {
         angle = -angularVelocity * M_PI / 180;
+    }
+    else
+    {
+        angle = angularVelocity * M_PI / 180;
     }
 
     double xM = position.x - gravityCenterPoint.x;
@@ -52,5 +75,5 @@ void Paddle<eMapType::Circular>::update()
     // update the angle of the paddle
     double newAngle = atan2(position.y - gravityCenterPoint.y, position.x - gravityCenterPoint.x);
     this->angle = newAngle * 180 / M_PI;
-    this->angle += 90;
+    this->angle -= 90;
 }
