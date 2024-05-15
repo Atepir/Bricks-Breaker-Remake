@@ -7,7 +7,7 @@
 #include <iostream>
 #include <string>
 
-#define DEFAULT_LIVES 5
+#define DEFAULT_LIVES 500
 
 namespace Core
 {

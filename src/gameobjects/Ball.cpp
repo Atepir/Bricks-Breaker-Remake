@@ -126,21 +126,28 @@ void Ball<eMapType::Circular>::collide(std::shared_ptr<GameObject> pOther)
             double bounceAngle = normalizedDistance * 20;
             double angleDifference = bounceAngle - paddleAngle;
 
+            // Bon à priori
             if (paddleAngle > -180 && paddleAngle < -90)
             {
                 velocity.x = 8 * cos(angleDifference * M_PI / 90);
                 velocity.y = -8 * sin(angleDifference * M_PI / 90);
             }
+
+            // Pas mal pas bien
             else if ((paddleAngle < 0 && paddleAngle > -90))
             {
-                velocity.x = 8 * sin(-angleDifference * M_PI / 90);
-                velocity.y = -8 * cos(angleDifference * M_PI / 90);
+                velocity.x = 8 * -cos(angleDifference * M_PI / 90);
+				velocity.y = - (8 * sin(angleDifference * M_PI / 90));
             }
+
+            // Inverse
             else if (paddleAngle > -270 && paddleAngle < -180)
             {
-                velocity.x = -8 * cos(angleDifference * M_PI / 90);
-                velocity.y = 8 * sin(angleDifference * M_PI / 90);
+                velocity.x = - (8 * -sin(angleDifference * M_PI / 90));
+                velocity.y = 8 * cos(angleDifference * M_PI / 90);
             }
+
+            // Pas bon
             else // if (paddleAngle > 0 && paddleAngle < 90)
             {
                 velocity.x = 8 * sin(-angleDifference * M_PI / 90);
