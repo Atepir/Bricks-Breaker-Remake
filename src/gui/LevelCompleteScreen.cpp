@@ -18,24 +18,37 @@ void LevelCompleteScreen::init()
     std::string scoreText = "Your score: " + std::to_string(mScore);
     add(std::make_shared<Label>(Label(scoreText, {screenWidth / 2 - 140, 300}, 300, 50)));
 
-    Button startButton = Button("Next level", {screenWidth / 2 - 100, 500}, 250, 50, eColor::ColorBlue);
-    startButton.setOnClickCallback(
-        []()
-        {
-            switch (MAP_TYPE)
+    bool hasNextLevel = true;
+    switch (MAP_TYPE)
+    {
+    case eMapType::Basic:
+        hasNextLevel = Resources::LevelManager::getCurrentLevel() < Resources::LevelManager::getNumberOfLevels();
+        break;
+    case eMapType::Circular:
+        hasNextLevel = Resources::LevelManager::getCurrentCircularLevel() < Resources::LevelManager::getNumberOfCircularLevels();
+        break;
+    }
+    if (hasNextLevel)
+    {
+        Button startButton = Button("Next level", {screenWidth / 2 - 100, 500}, 250, 50, eColor::ColorBlue);
+        startButton.setOnClickCallback(
+            []()
             {
-            case eMapType::Basic:
-                Resources::LevelManager::setLevel(Resources::LevelManager::getCurrentLevel() + 1);
-                break;
-            case eMapType::Circular:
-                Resources::LevelManager::setCircularLevel(Resources::LevelManager::getCurrentCircularLevel() + 1);
-                break;
-            }
+                switch (MAP_TYPE)
+                {
+                case eMapType::Basic:
+                    Resources::LevelManager::setLevel(Resources::LevelManager::getCurrentLevel() + 1);
+                    break;
+                case eMapType::Circular:
+                    Resources::LevelManager::setCircularLevel(Resources::LevelManager::getCurrentCircularLevel() + 1);
+                    break;
+                }
 
-            Core::App::getInstance()
-                ->setScreen(std::make_shared<GameScreen>());
-        });
-    add(std::make_shared<Button>(startButton));
+                Core::App::getInstance()
+                    ->setScreen(std::make_shared<GameScreen>());
+            });
+        add(std::make_shared<Button>(startButton));
+    }
 
     Button exitButton = Button("Main menu", {screenWidth / 2 - 120, 600}, 300, 50, eColor::ColorRed);
     exitButton.setOnClickCallback(

@@ -99,7 +99,7 @@ namespace Graphics
 
             SDL_AudioInit("waveout");
 
-            if (Mix_Init(MIX_INIT_MP3 | MIX_INIT_WAVPACK | MIX_INIT_MOD) == -1)
+            if (Mix_Init(MIX_INIT_MP3 | MIX_INIT_MOD) == -1)
             {
                 std::cerr << "Failed to initialize SDL_mixer " << Mix_GetError() << std::endl;
                 exit(1);

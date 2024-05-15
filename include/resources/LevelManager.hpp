@@ -35,11 +35,13 @@ namespace Resources
         getCurrentLevelPath() { return mLevelPaths[mCurrentLevel]; }
         static inline void setLevel(int pLevel) { mCurrentLevel = pLevel; }
         static inline int getCurrentLevel() { return mCurrentLevel; }
+        static inline int getNumberOfLevels() { return mLevelPaths.size(); }
 
         static inline std::string
         getCurrentCircularLevelPath() { return mCircularLevelPaths[mCurrentCircularLevel]; }
         static inline void setCircularLevel(int pLevel) { mCurrentCircularLevel = pLevel; }
         static inline int getCurrentCircularLevel() { return mCurrentCircularLevel; }
+        static inline int getNumberOfCircularLevels() { return mCircularLevelPaths.size(); }
     };
 }
 

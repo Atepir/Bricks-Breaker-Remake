@@ -77,8 +77,30 @@ namespace Core
 
         void onPaddleCollide(PowerType pPowerType) override
         {
-            if (pPowerType == PowerType::POWERUP_EXTRA_LIFE)
+            switch (pPowerType)
+            {
+            case PowerType::POWERUP_EXTRA_LIFE:
                 mLives++;
+                addScore(100);
+                break;
+            case PowerType::POWERUP_EXPAND_BALL:
+                addScore(50);
+                break;
+            case PowerType::POWERDOWN_SHRINK_BALL:
+                addScore(-50);
+                break;
+            case PowerType::POWERUP_EXPAND_PADDLE:
+                addScore(50);
+                break;
+            case PowerType::POWERDOWN_SHRINK_PADDLE:
+                addScore(-50);
+                break;
+            case PowerType::POWERUP_MULTI_BALL:
+                addScore(100);
+                break;
+            default:
+                break;
+            }
         }
     };
 }
