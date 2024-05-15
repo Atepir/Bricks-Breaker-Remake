@@ -47,6 +47,8 @@ void App::quit()
 
 void App::setScreen(std::shared_ptr<Gui::Screen> screen)
 {
+    mBackgroundMusic->stop();
+    mBackgroundMusic->play(true);
     mNextScreen = screen;
 }
 

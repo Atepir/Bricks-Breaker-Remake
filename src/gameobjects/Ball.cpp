@@ -21,6 +21,20 @@ void Ball<eMapType::Basic>::update()
         mCollisionSound->play();
     }
 
+    if (position.x < BORDER_WIDTH)
+    {
+        position.x = BORDER_WIDTH + 1;
+    }
+    else if (position.x > renderer->getScreenWidth() - BORDER_WIDTH - getWidth())
+    {
+        position.x = renderer->getScreenWidth() - BORDER_WIDTH - getWidth() - 1;
+    }
+
+    if (position.y < BORDER_WIDTH + MARGIN_TOP)
+    {
+        position.y = BORDER_WIDTH + MARGIN_TOP + 1;
+    }
+
     if (position.y > renderer->getScreenHeight() - BORDER_WIDTH)
     {
         mFallSound->play();
@@ -114,6 +128,7 @@ void Ball<eMapType::Circular>::collide(std::shared_ptr<GameObject> pOther)
     if (thisRight >= otherLeft && thisLeft <= otherRight &&
         thisBottom >= otherTop && thisTop <= otherBottom)
     {
+        mCollisionSound->play();
         if (pOther->getEntityType() == GameObjectType::GameObjectPaddle)
         {
             // ball collision with paddle on circular map
@@ -126,25 +141,32 @@ void Ball<eMapType::Circular>::collide(std::shared_ptr<GameObject> pOther)
             double bounceAngle = normalizedDistance * 20;
             double angleDifference = bounceAngle - paddleAngle;
 
+            double ballForce = 8;
             if (paddleAngle > -180 && paddleAngle < -90)
             {
-                velocity.x = 8 * cos(angleDifference * M_PI / 90);
-                velocity.y = -8 * sin(angleDifference * M_PI / 90);
+                velocity.x = ballForce * cos(angleDifference * M_PI / 90);
+                velocity.y = -ballForce * sin(angleDifference * M_PI / 90);
             }
             else if ((paddleAngle < 0 && paddleAngle > -90))
             {
-                velocity.x = 8 * sin(-angleDifference * M_PI / 90);
-                velocity.y = -8 * cos(angleDifference * M_PI / 90);
+                velocity.x = ballForce * sin(-angleDifference * M_PI / 90);
+                if (distanceFromCenter > 0)
+                    velocity.y = ballForce * cos(angleDifference * M_PI / 90);
+                else
+                    velocity.y = -ballForce * cos(angleDifference * M_PI / 90);
             }
             else if (paddleAngle > -270 && paddleAngle < -180)
             {
-                velocity.x = -8 * cos(angleDifference * M_PI / 90);
-                velocity.y = 8 * sin(angleDifference * M_PI / 90);
+                velocity.x = -ballForce * cos(angleDifference * M_PI / 90);
+                velocity.y = ballForce * sin(angleDifference * M_PI / 90);
             }
             else // if (paddleAngle > 0 && paddleAngle < 90)
             {
-                velocity.x = 8 * sin(-angleDifference * M_PI / 90);
-                velocity.y = -8 * cos(angleDifference * M_PI / 90);
+                if (distanceFromCenter > 0)
+                    velocity.x = ballForce * sin(-angleDifference * M_PI / 90);
+                else
+                    velocity.x = -ballForce * sin(-angleDifference * M_PI / 90);
+                velocity.y = -ballForce * cos(angleDifference * M_PI / 90);
             }
         }
         else if (pOther->getEntityType() == GameObjectType::GameObjectBrick)

@@ -20,18 +20,6 @@ namespace Graphics
         Sound(std::string pPath) : mPath(pPath)
         {
             mMusic = Mix_LoadMUS(pPath.c_str());
-            if (mMusic == nullptr)
-            {
-                std::cerr << "Failed to load music: " << pPath << " - " << Mix_GetError() << std::endl;
-            }
-            else if (mMusic == NULL)
-            {
-                std::cerr << "Failed to load music: " << pPath << " - " << Mix_GetError() << std::endl;
-            }
-            else
-            {
-                std::cout << "Music loaded successfully" << std::endl;
-            }
         }
 
         ~Sound()
