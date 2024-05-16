@@ -27,12 +27,12 @@ namespace Graphics
             Mix_FreeMusic(mMusic);
         }
 
-        void play(bool pLoop = false)
+        inline void play(bool pLoop = false)
         {
             Mix_PlayMusic(mMusic, pLoop ? -1 : 0);
         }
 
-        void stop()
+        inline void stop()
         {
             Mix_HaltMusic();
         }

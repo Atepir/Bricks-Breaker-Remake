@@ -2,9 +2,9 @@
 
 using namespace GameObjects;
 
-std::vector<std::vector<BrickType>> readBricksFromFile(std::string pPath)
+std::vector<std::vector<eBrickType>> readBricksFromFile(std::string pPath)
 {
-    std::vector<std::vector<BrickType>> bricks;
+    std::vector<std::vector<eBrickType>> bricks;
     std::ifstream file(pPath);
     try
     {
@@ -13,14 +13,14 @@ std::vector<std::vector<BrickType>> readBricksFromFile(std::string pPath)
             std::string line;
             while (std::getline(file, line))
             {
-                std::vector<BrickType> row;
+                std::vector<eBrickType> row;
                 for (char c : line)
                 {
                     if (c == '\n' || c == ' ' || c == ',')
                     {
                         continue;
                     }
-                    row.push_back(static_cast<BrickType>(c - '0'));
+                    row.push_back(static_cast<eBrickType>(c - '0'));
                 }
                 bricks.push_back(row);
             }
@@ -34,14 +34,14 @@ std::vector<std::vector<BrickType>> readBricksFromFile(std::string pPath)
     return bricks;
 }
 
-void Board<eMapType::Basic>::fillBasicBoard(std::string pPath)
+void Board<eMapType::Map_Basic>::fillBasicBoard(std::string pPath)
 {
     std::shared_ptr<Graphics::Renderer> renderer = Graphics::Renderer::getInstance();
     if (mBricks.size() > 0)
     {
         mBricks.clear();
     }
-    std::vector<std::vector<BrickType>> bricks = readBricksFromFile(pPath);
+    std::vector<std::vector<eBrickType>> bricks = readBricksFromFile(pPath);
     mBricks = std::vector<std::shared_ptr<Brick>>();
     for (int i = 0; i < 8; i++)
     {
@@ -54,12 +54,12 @@ void Board<eMapType::Basic>::fillBasicBoard(std::string pPath)
     }
 }
 
-GameObjects::Board<eMapType::Basic>::Board<eMapType::Basic>()
+GameObjects::Board<eMapType::Map_Basic>::Board<eMapType::Map_Basic>()
 {
     fillBasicBoard(Resources::LevelManager::getCurrentLevelPath());
 }
 
-void Board<eMapType::Circular>::fillCircularBoard(std::string pPath)
+void Board<eMapType::Map_Circular>::fillCircularBoard(std::string pPath)
 {
     std::shared_ptr<Graphics::Renderer> renderer = Graphics::Renderer::getInstance();
 
@@ -67,7 +67,7 @@ void Board<eMapType::Circular>::fillCircularBoard(std::string pPath)
     {
         mBricks.clear();
     }
-    std::vector<std::vector<BrickType>> bricks = readBricksFromFile(pPath);
+    std::vector<std::vector<eBrickType>> bricks = readBricksFromFile(pPath);
     mBricks = std::vector<std::shared_ptr<Brick>>();
 
     int angleDelta = 24;
@@ -86,17 +86,17 @@ void Board<eMapType::Circular>::fillCircularBoard(std::string pPath)
     }
 }
 
-GameObjects::Board<eMapType::Circular>::Board<eMapType::Circular>()
+GameObjects::Board<eMapType::Map_Circular>::Board<eMapType::Map_Circular>()
 {
     fillCircularBoard(Resources::LevelManager::getCurrentCircularLevelPath());
 }
 
-void Board<eMapType::Basic>::reset()
+void Board<eMapType::Map_Basic>::reset()
 {
     fillBasicBoard(Resources::LevelManager::getCurrentLevelPath());
 }
 
-void Board<eMapType::Circular>::reset()
+void Board<eMapType::Map_Circular>::reset()
 {
     fillCircularBoard(Resources::LevelManager::getCurrentCircularLevelPath());
 }

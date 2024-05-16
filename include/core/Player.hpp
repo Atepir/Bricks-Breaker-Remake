@@ -7,7 +7,7 @@
 #include <iostream>
 #include <string>
 
-#define DEFAULT_LIVES 500
+#define DEFAULT_LIVES 5
 
 namespace Core
 {
@@ -43,23 +43,23 @@ namespace Core
                 removeLife();
         }
 
-        void onBrickDestroyed(BrickType pBrickType) override
+        void onBrickDestroyed(eBrickType pBrickType, Point pBrickPosition) override
         {
             switch (pBrickType)
             {
-            case BrickType::BRICK_BLUE:
+            case eBrickType::Brick_Blue:
                 addScore(10);
                 break;
-            case BrickType::BRICK_GREEN:
+            case eBrickType::Brick_Green:
                 addScore(20);
                 break;
-            case BrickType::BRICK_VIOLET:
+            case eBrickType::Brick_Violet:
                 addScore(50);
                 break;
-            case BrickType::BRICK_YELLOW:
+            case eBrickType::Brick_Yellow:
                 addScore(100);
                 break;
-            case BrickType::BRICK_RED:
+            case eBrickType::Brick_Red:
                 addScore(200);
                 break;
             default:
@@ -67,35 +67,33 @@ namespace Core
             }
         }
 
-        void onBrickDestroyed(BrickType pBrickType, Point pBrickPosition) override {}
-
         friend std::ostream &operator<<(std::ostream &os, Player player)
         {
             os << "Player: " << player.getName() << " Score: " << player.getScore() << " Lives: " << player.getLives();
             return os;
         };
 
-        void onPaddleCollide(PowerType pPowerType) override
+        void onPaddleCollide(ePowerType pPowerType) override
         {
             switch (pPowerType)
             {
-            case PowerType::POWERUP_EXTRA_LIFE:
+            case ePowerType::PowerUp_Extra_Life:
                 mLives++;
                 addScore(100);
                 break;
-            case PowerType::POWERUP_EXPAND_BALL:
+            case ePowerType::PowerUp_Expand_Ball:
                 addScore(50);
                 break;
-            case PowerType::POWERDOWN_SHRINK_BALL:
+            case ePowerType::PowerDown_Shrink_Ball:
                 addScore(-50);
                 break;
-            case PowerType::POWERUP_EXPAND_PADDLE:
+            case ePowerType::PowerUp_Expand_Paddle:
                 addScore(50);
                 break;
-            case PowerType::POWERDOWN_SHRINK_PADDLE:
+            case ePowerType::PowerDown_Shrink_Paddle:
                 addScore(-50);
                 break;
-            case PowerType::POWERUP_MULTI_BALL:
+            case ePowerType::PowerUp_Multi_Ball:
                 addScore(100);
                 break;
             default:

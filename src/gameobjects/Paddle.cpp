@@ -2,7 +2,7 @@
 
 using namespace GameObjects;
 
-void Paddle<eMapType::Basic>::update()
+void Paddle<eMapType::Map_Basic>::update()
 {
     // keep the paddle within the screen
     if (position.x < 0 + BORDER_WIDTH)
@@ -15,32 +15,32 @@ void Paddle<eMapType::Basic>::update()
     }
 }
 
-void Paddle<eMapType::Circular>::update()
+void Paddle<eMapType::Map_Circular>::update()
 {
 }
 
-void Paddle<eMapType::Basic>::keyDownLeft()
+void Paddle<eMapType::Map_Basic>::keyDownLeft()
 {
     handleMouseMove(false);
 }
 
-void Paddle<eMapType::Basic>::keyDownRight()
+void Paddle<eMapType::Map_Basic>::keyDownRight()
 {
     handleMouseMove(true);
 }
 
-void Paddle<eMapType::Circular>::keyDownLeft()
+void Paddle<eMapType::Map_Circular>::keyDownLeft()
 {
     handleMouseMove(false);
 }
 
-void Paddle<eMapType::Circular>::keyDownRight()
+void Paddle<eMapType::Map_Circular>::keyDownRight()
 {
     handleMouseMove(true);
 }
 
 template <>
-void Paddle<eMapType::Basic>::handleMouseMove(bool right)
+void Paddle<eMapType::Map_Basic>::handleMouseMove(bool right)
 {
     if (right)
     {
@@ -53,7 +53,7 @@ void Paddle<eMapType::Basic>::handleMouseMove(bool right)
 }
 
 template <>
-void Paddle<eMapType::Circular>::handleMouseMove(bool right)
+void Paddle<eMapType::Map_Circular>::handleMouseMove(bool right)
 {
     double angle = 0;
     Point gravityCenterPoint = Point(Graphics::Renderer::getInstance()->getScreenWidth() / 2 - 36, Graphics::Renderer::getInstance()->getScreenHeight() / 2 - 10);

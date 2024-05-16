@@ -3,7 +3,7 @@
 using namespace Factories;
 using namespace GameObjects;
 
-void PowerFactory::createPower(PowerType pType, Point pPowerPosition)
+void PowerFactory::createPower(ePowerType pType, Point pPowerPosition)
 {
   std::shared_ptr<Power> power = std::make_shared<Power>(pType, pPowerPosition);
   power->addObserver(BallFactory::getInstance());
@@ -17,41 +17,41 @@ void PowerFactory::setPlayer(std::shared_ptr<Core::Player> pPlayer)
   mPlayer = pPlayer;
 }
 
-void PowerFactory::onBrickDestroyed(BrickType pBrickType, Point pBrickPosition)
+void PowerFactory::onBrickDestroyed(eBrickType pBrickType, Point pBrickPosition)
 {
   int chance = rand() % 300;
 
   if (chance < 10)
   {
-    createPower(PowerType::POWERUP_MULTI_BALL, pBrickPosition);
+    createPower(ePowerType::PowerUp_Multi_Ball, pBrickPosition);
   }
   else if (chance < 20)
   {
-    createPower(PowerType::POWERUP_EXTRA_LIFE, pBrickPosition);
+    createPower(ePowerType::PowerUp_Extra_Life, pBrickPosition);
   }
   else if (chance < 30)
   {
-    if (MAP_TYPE == eMapType::Circular)
+    if (MAP_TYPE == eMapType::Map_Circular)
     {
       return;
     }
-    createPower(PowerType::POWERDOWN_SHRINK_PADDLE, pBrickPosition);
+    createPower(ePowerType::PowerDown_Shrink_Paddle, pBrickPosition);
   }
   else if (chance < 50)
   {
-    createPower(PowerType::POWERDOWN_SHRINK_BALL, pBrickPosition);
+    createPower(ePowerType::PowerDown_Shrink_Ball, pBrickPosition);
   }
   else if (chance < 70)
   {
-    if (MAP_TYPE == eMapType::Circular)
+    if (MAP_TYPE == eMapType::Map_Circular)
     {
       return;
     }
-    createPower(PowerType::POWERUP_EXPAND_PADDLE, pBrickPosition);
+    createPower(ePowerType::PowerUp_Expand_Paddle, pBrickPosition);
   }
   else if (chance < 100)
   {
-    createPower(PowerType::POWERUP_EXPAND_BALL, pBrickPosition);
+    createPower(ePowerType::PowerUp_Expand_Ball, pBrickPosition);
   }
   else
   {

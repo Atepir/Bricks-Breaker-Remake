@@ -45,12 +45,11 @@ namespace Factories
 
 		void setPlayer(std::shared_ptr<Core::Player> pPlayer);
 
-		void createPower(PowerType pType, Point pPowerPosition);
+		void createPower(ePowerType pType, Point pPowerPosition);
 
 		void onBallFallen(int pBallId) override {}
 
-		void onBrickDestroyed(BrickType pBrickType) override {}
-		void onBrickDestroyed(BrickType pBrickType, Point pBrickPosition) override;
+		void onBrickDestroyed(eBrickType pBrickType, Point pBrickPosition) override;
 
 		void update();
 		void render(Graphics::Renderer &pRenderer);

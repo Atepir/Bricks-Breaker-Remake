@@ -15,6 +15,10 @@ namespace Factories
     private:
         static inline std::shared_ptr<BallFactory> pInstance = nullptr;
         std::vector<std::shared_ptr<GameObjects::Ball<MAP_TYPE>>> mBalls;
+
+        /**
+         * @brief List of objects observing the balls
+         */
         std::vector<std::shared_ptr<GameObjects::IBallObserver>> mBallObservers;
         int mLastGeneratedBallId = 0;
 
@@ -40,29 +44,48 @@ namespace Factories
             return pInstance;
         }
 
+        /**
+         * @brief Reset the balls
+         */
         void resetBalls()
         {
             mBalls.clear();
             mBallObservers.clear();
         }
 
-        void createBall(BallType pType);
+        /**
+         * @brief Create a ball of the given type and add it to the list of balls
+         * @param pType The type of the ball to be created
+         */
+        void createBall(eBallType pType);
+
+        /**
+         * @brief Destroy the ball with the given id and remove it from the list of balls
+         * @param pBallId The id of the ball to be destroyed
+         */
         void destroyBall(int pBallId);
 
         void update();
         void render(Graphics::Renderer &pRenderer);
         void collide(std::shared_ptr<GameObjects::GameObject> pOther);
 
+        /**
+         * @brief Add an observer to the ball factory
+         * @param observer The observer to be added
+         */
         void addObserver(std::shared_ptr<GameObjects::IBallObserver> observer);
 
-        void onPaddleCollide(PowerType pPowerType) override;
+        void onPaddleCollide(ePowerType pPowerType) override;
 
         int getBallCount() const { return mBalls.size(); }
 
+        /**
+         * @brief Callback for when a ball has fallen
+         * @param pBallId The id of the ball that has fallen
+         */
         void onBallFallen(int pBallId) override;
 
-        void onBrickDestroyed(BrickType pBrickType) override {}
-        void onBrickDestroyed(BrickType pBrickType, Point pBrickPosition) override {}
+        void onBrickDestroyed(eBrickType pBrickType, Point pBrickPosition) override {}
     };
 }
 

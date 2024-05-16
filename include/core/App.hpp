@@ -39,8 +39,16 @@ namespace Core
         void run();
         void quit();
 
+        /**
+         * @brief Set the screen to be displayed
+         * @param screen The screen to be displayed
+         */
         void setScreen(std::shared_ptr<Gui::Screen> screen);
 
+        /**
+         * @brief Get the current screen
+         * @return The current screen
+         */
         std::shared_ptr<Gui::Screen> getCurrentScreen();
     };
 }

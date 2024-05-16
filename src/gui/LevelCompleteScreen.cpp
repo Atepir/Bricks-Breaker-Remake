@@ -21,25 +21,25 @@ void LevelCompleteScreen::init()
     bool hasNextLevel = true;
     switch (MAP_TYPE)
     {
-    case eMapType::Basic:
+    case eMapType::Map_Basic:
         hasNextLevel = Resources::LevelManager::getCurrentLevel() < Resources::LevelManager::getNumberOfLevels();
         break;
-    case eMapType::Circular:
+    case eMapType::Map_Circular:
         hasNextLevel = Resources::LevelManager::getCurrentCircularLevel() < Resources::LevelManager::getNumberOfCircularLevels();
         break;
     }
     if (hasNextLevel)
     {
-        Button startButton = Button("Next level", {screenWidth / 2 - 100, 500}, 250, 50, eColor::ColorBlue);
+        Button startButton = Button("Next level", {screenWidth / 2 - 100, 500}, 250, 50, eColor::Color_Blue);
         startButton.setOnClickCallback(
             []()
             {
                 switch (MAP_TYPE)
                 {
-                case eMapType::Basic:
+                case eMapType::Map_Basic:
                     Resources::LevelManager::setLevel(Resources::LevelManager::getCurrentLevel() + 1);
                     break;
-                case eMapType::Circular:
+                case eMapType::Map_Circular:
                     Resources::LevelManager::setCircularLevel(Resources::LevelManager::getCurrentCircularLevel() + 1);
                     break;
                 }
@@ -50,7 +50,7 @@ void LevelCompleteScreen::init()
         add(std::make_shared<Button>(startButton));
     }
 
-    Button exitButton = Button("Main menu", {screenWidth / 2 - 120, 600}, 300, 50, eColor::ColorRed);
+    Button exitButton = Button("Main menu", {screenWidth / 2 - 120, 600}, 300, 50, eColor::Color_Red);
     exitButton.setOnClickCallback(
         []()
         {

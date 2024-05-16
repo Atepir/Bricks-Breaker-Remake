@@ -37,7 +37,11 @@ namespace Gui
 
         virtual ~Button() = default;
 
-        inline void handleMouseUp(Point pClickPoint) override
+        /**
+         * @brief Handles the mouse up event
+         * @param pClickPoint
+         */
+        void handleMouseUp(Point pClickPoint) override
         {
             if (
                 pClickPoint.x >= x - BUTTON_TEXT_PADDING &&

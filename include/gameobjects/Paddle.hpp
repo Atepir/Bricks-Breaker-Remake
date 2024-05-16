@@ -32,17 +32,17 @@ namespace GameObjects
         {
             switch (mapType)
             {
-            case eMapType::Basic:
+            case eMapType::Map_Basic:
                 texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Paddle_Basic);
                 break;
-            case eMapType::Circular:
+            case eMapType::Map_Circular:
                 texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Paddle_Circular);
                 this->width = 70;
                 this->height = 20;
                 break;
             }
 
-            this->entityType = GameObjectType::GameObjectPaddle;
+            this->entityType = eGameObjectType::GameObject_Paddle;
         }
 
         ~Paddle() {}
@@ -69,19 +69,19 @@ namespace GameObjects
 
         void update() override;
 
-        void collide(std::shared_ptr<GameObject> pOther) override
+        /**
+         * @brief Handles the collision of the paddle with a power
+         * @param pPowerType The type of the power that the paddle collided with
+         */
+        void onPaddleCollide(ePowerType pPowerType) override
         {
-        }
-
-        void onPaddleCollide(PowerType pPowerType) override
-        {
-            if (mapType == eMapType::Circular)
+            if (mapType == eMapType::Map_Circular)
             {
                 return;
             }
             switch (pPowerType)
             {
-            case PowerType::POWERDOWN_SHRINK_PADDLE:
+            case ePowerType::PowerDown_Shrink_Paddle:
                 width = 70;
                 texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Paddle_Basic_Small);
                 std::thread([this]()
@@ -91,7 +91,7 @@ namespace GameObjects
                                 texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Paddle_Basic); })
                     .detach();
                 break;
-            case PowerType::POWERUP_EXPAND_PADDLE:
+            case ePowerType::PowerUp_Expand_Paddle:
                 width = 210;
                 texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Paddle_Basic_Large);
 

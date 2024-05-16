@@ -2,12 +2,12 @@
 
 using namespace GameObjects;
 
-Power::Power(PowerType type, Point point) : GameObject(point, 26, 26, Vector(10, 10), 0, 10)
+Power::Power(ePowerType type, Point point) : GameObject(point, 26, 26, Vector(10, 10), 0, 10)
 {
     this->mPowerType = type;
-    this->entityType = GameObjectType::GameObjectPower;
+    this->entityType = eGameObjectType::GameObject_Power;
 
-    if (MAP_TYPE == eMapType::Circular)
+    if (MAP_TYPE == eMapType::Map_Circular)
     {
         this->velocity.x = rand() % 10 - 5;
         this->velocity.y = rand() % 10 - 5;
@@ -19,22 +19,22 @@ Power::Power(PowerType type, Point point) : GameObject(point, 26, 26, Vector(10,
 
     switch (type)
     {
-    case PowerType::POWERUP_EXTRA_LIFE:
+    case ePowerType::PowerUp_Extra_Life:
         texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Powerup_Extra_Life);
         break;
-    case PowerType::POWERUP_EXPAND_BALL:
+    case ePowerType::PowerUp_Expand_Ball:
         texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Powerup_Expand_Ball);
         break;
-    case PowerType::POWERUP_EXPAND_PADDLE:
+    case ePowerType::PowerUp_Expand_Paddle:
         texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Powerup_Expand_Paddle);
         break;
-    case PowerType::POWERUP_MULTI_BALL:
+    case ePowerType::PowerUp_Multi_Ball:
         texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Powerup_Multi_Ball);
         break;
-    case PowerType::POWERDOWN_SHRINK_BALL:
+    case ePowerType::PowerDown_Shrink_Ball:
         texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Powerdown_Shrink_Ball);
         break;
-    case PowerType::POWERDOWN_SHRINK_PADDLE:
+    case ePowerType::PowerDown_Shrink_Paddle:
         texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Powerdown_Shrink_Paddle);
         break;
     }
@@ -45,7 +45,7 @@ void Power::update()
     std::shared_ptr<Graphics::Renderer> renderer = Graphics::Renderer::getInstance();
     switch (MAP_TYPE)
     {
-    case eMapType::Basic:
+    case eMapType::Map_Basic:
     {
         position.y += velocity.y;
         if (position.x > renderer->getScreenWidth())
@@ -54,7 +54,7 @@ void Power::update()
         }
     }
     break;
-    case eMapType::Circular:
+    case eMapType::Map_Circular:
         double centerX = 1024 / 2;
         double centerY = 720 / 2;
         double distanceX = position.x - centerX;
@@ -93,7 +93,7 @@ void Power::collide(std::shared_ptr<GameObject> pOther)
     if (thisRight >= otherLeft && thisLeft <= otherRight &&
         thisBottom >= otherTop && thisTop <= otherBottom)
     {
-        if (pOther->getEntityType() == GameObjectType::GameObjectPaddle)
+        if (pOther->getEntityType() == eGameObjectType::GameObject_Paddle)
         {
             notifyObserversPaddleCollided();
             mDeleteFlag = true;

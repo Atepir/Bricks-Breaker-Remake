@@ -2,7 +2,7 @@
 
 using namespace GameObjects;
 
-void Ball<eMapType::Basic>::update()
+void Ball<eMapType::Map_Basic>::update()
 {
     std::shared_ptr<Graphics::Renderer> renderer = Graphics::Renderer::getInstance();
 
@@ -43,7 +43,7 @@ void Ball<eMapType::Basic>::update()
     }
 }
 
-void Ball<eMapType::Circular>::update()
+void Ball<eMapType::Map_Circular>::update()
 {
     std::shared_ptr<Graphics::Renderer> renderer = Graphics::Renderer::getInstance();
 
@@ -73,7 +73,7 @@ void Ball<eMapType::Circular>::update()
     position.y += velocity.y;
 }
 
-void Ball<eMapType::Basic>::collide(std::shared_ptr<GameObject> pOther)
+void Ball<eMapType::Map_Basic>::collide(std::shared_ptr<GameObject> pOther)
 {
     // Calculate the minimum and maximum coordinates of both objects
     double thisLeft = position.x;
@@ -91,7 +91,7 @@ void Ball<eMapType::Basic>::collide(std::shared_ptr<GameObject> pOther)
         thisBottom >= otherTop && thisTop <= otherBottom)
     {
         mCollisionSound->play();
-        if (pOther->getEntityType() == GameObjectType::GameObjectPaddle)
+        if (pOther->getEntityType() == eGameObjectType::GameObject_Paddle)
         {
             double paddleCenter = pOther->getPosition().x + pOther->getWidth() / 2;
             double ballCenter = position.x + getWidth() / 2;
@@ -101,7 +101,7 @@ void Ball<eMapType::Basic>::collide(std::shared_ptr<GameObject> pOther)
             velocity.x = 12 * sin(bounceAngle * M_PI / 180);
             velocity.y = -12 * cos(bounceAngle * M_PI / 180);
         }
-        else if (pOther->getEntityType() == GameObjectType::GameObjectBrick)
+        else if (pOther->getEntityType() == eGameObjectType::GameObject_Brick)
         {
             std::shared_ptr<Brick> brick = std::static_pointer_cast<Brick>(pOther);
             damageBrick(brick);
@@ -111,7 +111,7 @@ void Ball<eMapType::Basic>::collide(std::shared_ptr<GameObject> pOther)
     }
 }
 
-void Ball<eMapType::Circular>::collide(std::shared_ptr<GameObject> pOther)
+void Ball<eMapType::Map_Circular>::collide(std::shared_ptr<GameObject> pOther)
 {
     // Calculate the minimum and maximum coordinates of both objects
     double thisLeft = position.x;
@@ -129,7 +129,7 @@ void Ball<eMapType::Circular>::collide(std::shared_ptr<GameObject> pOther)
         thisBottom >= otherTop && thisTop <= otherBottom)
     {
         mCollisionSound->play();
-        if (pOther->getEntityType() == GameObjectType::GameObjectPaddle)
+        if (pOther->getEntityType() == eGameObjectType::GameObject_Paddle)
         {
             // ball collision with paddle on circular map
             // we have to take into account the angle of the paddle
@@ -175,7 +175,7 @@ void Ball<eMapType::Circular>::collide(std::shared_ptr<GameObject> pOther)
                 velocity.y = -ballForce * cos(angleDifference * M_PI / 90);
             }
         }
-        else if (pOther->getEntityType() == GameObjectType::GameObjectBrick)
+        else if (pOther->getEntityType() == eGameObjectType::GameObject_Brick)
         {
             std::shared_ptr<Brick> brick = std::static_pointer_cast<Brick>(pOther);
             damageBrick(brick);

@@ -12,34 +12,34 @@ namespace Graphics
     class FPS
     {
     private:
-        float intervalMs;
-        int frames;
-        int lastTime;
-        int current;
+        float mIntervalMs;
+        int mFrames;
+        int mLastTime;
+        int mCurrent;
 
     public:
-        FPS(float intervalMs) : frames(0), current(0), intervalMs(intervalMs)
+        FPS(float intervalMs) : mFrames(0), mCurrent(0), mIntervalMs(intervalMs)
         {
-            lastTime = SDL_GetTicks();
+            mLastTime = SDL_GetTicks();
         }
 
         void update()
         {
-            frames++;
-            if (lastTime < SDL_GetTicks() - intervalMs)
+            mFrames++;
+            if (mLastTime < SDL_GetTicks() - mIntervalMs)
             {
-                lastTime = SDL_GetTicks();
-                current = frames;
-                frames = 0;
+                mLastTime = SDL_GetTicks();
+                mCurrent = mFrames;
+                mFrames = 0;
             }
         }
 
         void delay()
         {
-            int frameTicks = SDL_GetTicks() - lastTime;
-            if (frameTicks < intervalMs)
+            int frameTicks = SDL_GetTicks() - mLastTime;
+            if (frameTicks < mIntervalMs)
             {
-                SDL_Delay(intervalMs - frameTicks);
+                SDL_Delay(mIntervalMs - frameTicks);
             }
         }
     };

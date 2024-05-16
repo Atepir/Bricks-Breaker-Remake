@@ -23,7 +23,7 @@ namespace Core
         EventManager() = default;
         ~EventManager() = default;
 
-        static std::shared_ptr<EventManager> getInstance()
+        static inline std::shared_ptr<EventManager> getInstance()
         {
             if (pInstance == nullptr)
             {
@@ -32,7 +32,10 @@ namespace Core
             return pInstance;
         }
 
-        void handleEvents()
+        /**
+         * @brief Handles the events
+         */
+        inline void handleEvents()
         {
             SDL_Event event;
             const Uint8 *state = SDL_GetKeyboardState(NULL);
@@ -70,7 +73,7 @@ namespace Core
                     if (app != nullptr)
                         if (app->getCurrentScreen() != nullptr)
                         {
-                            Point mousePosition = { (double)event.button.x, (double)event.button.y};
+                            Point mousePosition = {(double)event.button.x, (double)event.button.y};
                             app->getCurrentScreen()->handleMouseUp(mousePosition);
                         }
                 case SDL_MOUSEMOTION:

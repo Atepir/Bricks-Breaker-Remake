@@ -27,6 +27,9 @@ namespace GameObjects
 
         static inline std::shared_ptr<Board> pInstance = nullptr;
 
+        void fillBasicBoard(std::string pPath);
+        void fillCircularBoard(std::string pPath);
+
     public:
         Board();
         ~Board()
@@ -49,16 +52,19 @@ namespace GameObjects
             return pInstance;
         }
 
-        void fillBasicBoard(std::string pPath);
-        void fillCircularBoard(std::string pPath);
         void reset();
 
-        bool isFinished()
+        /**
+         * @brief Either or not the current level is finished
+         * @return true
+         * @return false
+         */
+        inline bool isFinished()
         {
             return mBricks.size() <= 0;
         }
 
-        std::vector<std::shared_ptr<Brick>> getBricks() { return mBricks; }
+        inline std::vector<std::shared_ptr<Brick>> getBricks() { return mBricks; }
 
         void update() override
         {
@@ -75,8 +81,6 @@ namespace GameObjects
                 }
             }
         }
-
-        void collide(std::shared_ptr<GameObject> pOther) override {}
     };
 }
 

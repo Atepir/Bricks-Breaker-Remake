@@ -16,7 +16,7 @@ void GameOverScreen::init()
     std::string scoreText = "Your score: " + std::to_string(mScore);
     add(std::make_shared<Label>(Label(scoreText, {screenWidth / 2 - 140, 300}, 300, 50)));
 
-    Button startButton = Button("Play again", {screenWidth / 2 - 100, 500}, 250, 50, eColor::ColorBlue);
+    Button startButton = Button("Play again", {screenWidth / 2 - 100, 500}, 250, 50, eColor::Color_Blue);
     startButton.setOnClickCallback(
         []()
         {
@@ -24,7 +24,7 @@ void GameOverScreen::init()
         });
     add(std::make_shared<Button>(startButton));
 
-    Button exitButton = Button("Main menu", {screenWidth / 2 - 120, 600}, 300, 50, eColor::ColorRed);
+    Button exitButton = Button("Main menu", {screenWidth / 2 - 120, 600}, 300, 50, eColor::Color_Red);
     exitButton.setOnClickCallback(
         []()
         {

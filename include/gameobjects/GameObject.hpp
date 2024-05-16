@@ -20,7 +20,7 @@ namespace GameObjects
     class GameObject : public IDrawable
     {
     protected:
-        GameObjectType entityType;
+        eGameObjectType entityType;
         Point position;
         Vector velocity;
 
@@ -46,15 +46,15 @@ namespace GameObjects
 
         ~GameObject() {}
 
-        double getWidth() { return width; }
-        double getHeight() { return height; }
-        double getAngle() { return angle; }
+        inline double getWidth() const { return width; }
+        inline double getHeight() const { return height; }
+        inline double getAngle() const { return angle; }
 
-        Point getPosition() { return position; }
+        inline Point getPosition() const { return position; }
 
-        GameObjectType getEntityType() { return entityType; }
+        inline eGameObjectType getEntityType() const { return entityType; }
 
-        void render(Graphics::Renderer &pRenderer) override
+        inline void render(Graphics::Renderer &pRenderer) override
         {
             pRenderer.draw(texture->getTexture(), position, width, height, angle);
         }
