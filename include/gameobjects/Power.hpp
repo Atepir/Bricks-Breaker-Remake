@@ -23,7 +23,12 @@ namespace GameObjects
     class IPowerObserver
     {
     public:
-        virtual void onPaddleCollide(PowerType pPowerType) = 0;
+        /**
+         * @brief Called when a power object collides with a paddle
+         *
+         * @param pPowerType
+         */
+        virtual void onPaddleCollide(ePowerType pPowerType) = 0;
     };
 
     /**
@@ -33,24 +38,24 @@ namespace GameObjects
     class Power : public GameObject
     {
     private:
-        PowerType mPowerType;
+        ePowerType mPowerType;
         bool mDeleteFlag = false;
         std::vector<std::shared_ptr<IPowerObserver>> mPowerObservers;
 
+        void notifyObserversPaddleCollided();
+
     public:
-        Power(PowerType type, Point point);
+        Power(ePowerType type, Point point);
         ~Power() {}
 
         void update();
         void collide(std::shared_ptr<GameObject> pOther);
 
-        PowerType getType() const { return mPowerType; }
+        ePowerType getType() const { return mPowerType; }
 
         void addObserver(std::shared_ptr<IPowerObserver> pPowerObserver);
 
-        void notifyObserversPaddleCollided();
-
-        bool getDeleteFlag() { return mDeleteFlag; }
+        bool getDeleteFlag() const { return mDeleteFlag; }
     };
 }
 

@@ -26,7 +26,7 @@ namespace Graphics
 		~Texture() { SDL_DestroyTexture(getTexture()); }
 
 		inline void setTexture(Type_SDL_Texture pTexture) { mTexture = pTexture; }
-		inline Type_SDL_Texture getTexture() { return mTexture; }
+		inline Type_SDL_Texture getTexture() const { return mTexture; }
 
 		int getWidth() const { return mWidth; }
 		int getHeight() const { return mHeight; }

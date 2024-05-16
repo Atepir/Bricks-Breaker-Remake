@@ -20,12 +20,12 @@ namespace Gui
         Graphics::Font font;
 
     public:
-        Label(std::string text, Point position, int width, int height, eColor color = eColor::ColorWhite) : UiElement(position.x, position.y, width, height)
+        Label(std::string text, Point position, int width, int height, eColor color = eColor::Color_White) : UiElement(position.x, position.y, width, height)
         {
             font = Graphics::Font(text, color);
         }
 
-        inline void setText(std::string pText, eColor color = eColor::ColorWhite)
+        inline void setText(std::string pText, eColor color = eColor::Color_White)
         {
             text = pText;
             font.setText(pText, color);

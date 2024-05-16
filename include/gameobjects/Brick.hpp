@@ -25,18 +25,17 @@ namespace GameObjects
         friend class Ball;
 
     private:
-        BrickType mType;
+        eBrickType mType;
         int mHealth;
         bool mDeleteFlag = false;
 
     public:
-        Brick(Point position, double width, double height, BrickType type, int health, int angle);
+        Brick(Point position, double width, double height, eBrickType type, int health, int angle);
         ~Brick() {}
 
         void update() override;
-        void collide(std::shared_ptr<GameObject> pOther) override {}
 
-        bool getDeleteFlag() { return mDeleteFlag; }
+        bool getDeleteFlag() const { return mDeleteFlag; }
     };
 }
 

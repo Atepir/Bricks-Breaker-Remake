@@ -62,8 +62,8 @@ namespace Graphics
 
         Type_SDL_Surface getSurface() const { return mSurface; }
 
-        int getWidth() const { return mWidth; }
-        int getHeight() const { return mHeight; }
+        inline int getWidth() const { return mWidth; }
+        inline int getHeight() const { return mHeight; }
 
         static inline void setDefaultFont(Type_TTF_Font pFont) { mDefaultFont = pFont; }
     };

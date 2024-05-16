@@ -3,7 +3,7 @@
 using namespace Factories;
 using namespace GameObjects;
 
-void BallFactory::createBall(BallType pType)
+void BallFactory::createBall(eBallType pType)
 {
     std::shared_ptr<Ball<MAP_TYPE>> ball = nullptr;
     int windowWidth = Graphics::Renderer::getInstance()->getScreenWidth();
@@ -16,7 +16,7 @@ void BallFactory::createBall(BallType pType)
 
     int ballY = windowHeight / 2 + 50;
 
-    if (MAP_TYPE == eMapType::Circular)
+    if (MAP_TYPE == eMapType::Map_Circular)
     {
         ballX = windowWidth / 2;
         ballY = windowHeight / 2 + 20;
@@ -24,8 +24,8 @@ void BallFactory::createBall(BallType pType)
 
     switch (pType)
     {
-    case BallType::NORMAL:
-        ball = std::make_shared<Ball<MAP_TYPE>>(BallType::NORMAL, Point(ballX, ballY), 30);
+    case eBallType::Ball_Normal:
+        ball = std::make_shared<Ball<MAP_TYPE>>(eBallType::Ball_Normal, Point(ballX, ballY), 30);
         ball->setId(mLastGeneratedBallId++);
         break;
     default:
@@ -82,7 +82,7 @@ void BallFactory::onBallFallen(int pBallId)
     if (mBalls.size() == 1)
     {
         mBalls.clear();
-        createBall(BallType::NORMAL);
+        createBall(eBallType::Ball_Normal);
     }
     else
     {
@@ -108,26 +108,26 @@ void BallFactory::addObserver(std::shared_ptr<GameObjects::IBallObserver> pObser
     mBallObservers.push_back(pObserver);
 }
 
-void BallFactory::onPaddleCollide(PowerType pPowerType)
+void BallFactory::onPaddleCollide(ePowerType pPowerType)
 {
     switch (pPowerType)
     {
-    case PowerType::POWERUP_EXPAND_BALL:
+    case ePowerType::PowerUp_Expand_Ball:
         for (auto &ball : mBalls)
         {
             ball->expand();
         }
         break;
-    case PowerType::POWERDOWN_SHRINK_BALL:
+    case ePowerType::PowerDown_Shrink_Ball:
         for (auto &ball : mBalls)
         {
             ball->shrink();
         }
         break;
-    case PowerType::POWERUP_MULTI_BALL:
+    case ePowerType::PowerUp_Multi_Ball:
         for (int i = 0; i < 2; i++)
         {
-            createBall(BallType::NORMAL);
+            createBall(eBallType::Ball_Normal);
         }
         break;
     default:

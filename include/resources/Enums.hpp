@@ -3,37 +3,37 @@
 
 enum eMapType
 {
-	Basic,
-	Circular
+	Map_Basic,
+	Map_Circular
 };
 
-enum class BrickType
+enum class eBrickType
 {
-	BRICK_BLUE,
-	BRICK_GREEN,
-	BRICK_VIOLET,
-	BRICK_YELLOW,
-	BRICK_RED
+	Brick_Blue,
+	Brick_Green,
+	Brick_Violet,
+	Brick_Yellow,
+	Brick_Red
 };
 
-enum class BallType
+enum class eBallType
 {
-	NORMAL,
-	EXPLOSIVE
+	Ball_Normal,
+	Ball_Explosive
 };
 
-enum class PaddleType
+enum class ePaddleType
 {
-	BasicPaddle,
-	CircularPaddle,
+	Paddle_Basic,
+	Paddle_Circular,
 };
 
-enum class GameObjectType
+enum class eGameObjectType
 {
-	GameObjectBall,
-	GameObjectPaddle,
-	GameObjectBrick,
-	GameObjectPower,
+	GameObject_Ball,
+	GameObject_Paddle,
+	GameObject_Brick,
+	GameObject_Power,
 };
 
 enum class eTextureKey
@@ -66,26 +66,26 @@ enum class eTextureKey
 	Texture_Powerup_Multi_Ball,
 };
 
-enum PowerType
+enum ePowerType
 {
-	POWERUP_EXPAND_BALL,
-	POWERDOWN_SHRINK_BALL,
-	POWERUP_EXPAND_PADDLE,
-	POWERDOWN_SHRINK_PADDLE,
-	POWERUP_EXTRA_LIFE,
-	POWERUP_MULTI_BALL
+	PowerUp_Expand_Ball,
+	PowerDown_Shrink_Ball,
+	PowerUp_Expand_Paddle,
+	PowerDown_Shrink_Paddle,
+	PowerUp_Extra_Life,
+	PowerUp_Multi_Ball
 };
 
 enum eColor
 {
-	ColorWhite = 0,
-	ColorBlack = 1,
-	ColorRed = 2,
-	ColorGreen = 3,
-	ColorBlue = 4,
-	ColorYellow = 5,
-	ColorCyan = 6,
-	ColorMagenta = 7
+	Color_White = 0,
+	Color_Black = 1,
+	Color_Red = 2,
+	Color_Green = 3,
+	Color_Blue = 4,
+	Color_Yellow = 5,
+	Color_Cyan = 6,
+	Color_Magenta = 7
 };
 
 #endif

@@ -37,7 +37,7 @@ namespace Graphics
         int mScreenHeight;
 
     public:
-        Renderer() : pWindow(nullptr), pRenderer(nullptr), mScreenWidth(WINDOW_WIDTH), mScreenHeight(WINDOW_HEIGHT) {}
+        Renderer() : pWindow(nullptr), pRenderer(nullptr), mScreenWidth(INITIAL_WINDOW_WIDTH), mScreenHeight(INITIAL_WINDOW_HEIGHT) {}
 
         Renderer(const Renderer &) = delete;
         void operator=(const Renderer &) = delete;
@@ -178,15 +178,15 @@ namespace Graphics
 
         int getDeltaWidth() const
         {
-            if (mScreenWidth > WINDOW_WIDTH)
-                return mScreenWidth - WINDOW_WIDTH;
+            if (mScreenWidth > INITIAL_WINDOW_WIDTH)
+                return mScreenWidth - INITIAL_WINDOW_WIDTH;
             return 0;
         }
 
         int getDeltaHeight() const
         {
-            if (mScreenHeight > WINDOW_HEIGHT)
-                return mScreenHeight - WINDOW_HEIGHT;
+            if (mScreenHeight > INITIAL_WINDOW_HEIGHT)
+                return mScreenHeight - INITIAL_WINDOW_HEIGHT;
             return 0;
         }
     };

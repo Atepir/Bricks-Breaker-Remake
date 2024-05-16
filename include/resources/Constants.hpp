@@ -3,10 +3,10 @@
 
 #include "resources/Enums.hpp"
 
-#define MAP_TYPE eMapType::Circular
+#define MAP_TYPE eMapType::Map_Circular
 
-#define WINDOW_WIDTH 1024
-#define WINDOW_HEIGHT 768
+#define INITIAL_WINDOW_WIDTH 1024
+#define INITIAL_WINDOW_HEIGHT 768
 
 #define BOARD_WIDTH 800
 #define BOARD_HEIGHT 600

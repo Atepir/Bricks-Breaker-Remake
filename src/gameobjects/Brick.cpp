@@ -2,31 +2,31 @@
 
 using namespace GameObjects;
 
-Brick::Brick(Point position, double width, double height, BrickType type, int health, int angle) : GameObject(position, width, height, {0, 0}, angle, 0)
+Brick::Brick(Point position, double width, double height, eBrickType type, int health, int angle) : GameObject(position, width, height, {0, 0}, angle, 0)
 {
     this->mType = type;
     this->mHealth = health;
 
     switch (mType)
     {
-    case BrickType::BRICK_BLUE:
+    case eBrickType::Brick_Blue:
         texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Normal);
         break;
-    case BrickType::BRICK_GREEN:
+    case eBrickType::Brick_Green:
         texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Green);
         break;
-    case BrickType::BRICK_VIOLET:
+    case eBrickType::Brick_Violet:
         texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Violet);
         break;
-    case BrickType::BRICK_YELLOW:
+    case eBrickType::Brick_Yellow:
         texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Yellow);
         break;
-    case BrickType::BRICK_RED:
+    case eBrickType::Brick_Red:
         texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Red);
         break;
     }
 
-    this->entityType = GameObjectType::GameObjectBrick;
+    this->entityType = eGameObjectType::GameObject_Brick;
 }
 
 void Brick::update()
@@ -35,19 +35,19 @@ void Brick::update()
     {
         switch (mType)
         {
-        case BrickType::BRICK_BLUE:
+        case eBrickType::Brick_Blue:
             texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Normal_Damaged);
             break;
-        case BrickType::BRICK_GREEN:
+        case eBrickType::Brick_Green:
             texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Green_Damaged);
             break;
-        case BrickType::BRICK_VIOLET:
+        case eBrickType::Brick_Violet:
             texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Violet_Damaged);
             break;
-        case BrickType::BRICK_YELLOW:
+        case eBrickType::Brick_Yellow:
             texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Yellow_Damaged);
             break;
-        case BrickType::BRICK_RED:
+        case eBrickType::Brick_Red:
             texture = Resources::ResourceManager::getInstance()->getTexture(eTextureKey::Texture_Brick_Red_Damaged);
             break;
         }
