@@ -3,7 +3,8 @@
 
 ## 📱 Screenshots
 <p align="center">
-![image](https://github.com/user-attachments/assets/b2f5cc50-1310-4bee-bab4-335f5023b25f)
+  <img src="https://github.com/user-attachments/assets/b2f5cc50-1310-4bee-bab4-335f5023b25f" alt="img1" width="640px" />
+  <img src="https://github.com/user-attachments/assets/ce14a082-91a0-4a50-9b47-a86e0c6bce2e" alt="img1" width="640px" />
 </p>
 
 
