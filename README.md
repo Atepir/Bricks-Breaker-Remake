@@ -1,6 +1,8 @@
 # Bricks Breaker ! (Remake)
 ## Projet de Programmation avancée en C++
 
+## 📱 Screenshots
+
 # Credits
 
 ## Sound effects
